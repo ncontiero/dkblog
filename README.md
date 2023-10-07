@@ -9,6 +9,7 @@ A blog using Next.Js.
 - [Next.Js](https://nextjs.org/)
 - [TailwindCSS](https://tailwindcss.com/)
 - [shadcn/ui](https://ui.shadcn.com/)
+- [Prisma](https://www.prisma.io/)
 
 ## Install and run the project
 
