@@ -1,0 +1,57 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "postgresql"
+  url               = env("DATABASE_URL") // uses connection pooling
+  directUrl         = env("DATABASE_URL_NON_POOLING") // uses a direct connection
+  shadowDatabaseUrl = env("DATABASE_URL_NON_POOLING") // used for migrations
+}
+
+enum PostStatus {
+  PUBLISHED
+  DRAFTED
+  PRIVATED
+}
+
+model User {
+  id         String   @id @default(cuid())
+  externalId String   @unique @map("external_id")
+  username   String   @unique
+  email      String   @unique
+  image      String   @default("https://img.clerk.com/preview.png")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  Post Post[]
+
+  @@map("users")
+}
+
+model Post {
+  id          String     @id @default(cuid())
+  userId      String     @map("user_id")
+  title       String
+  description String
+  content     String
+  slug        String     @unique
+  status      PostStatus @default(DRAFTED)
+  postedOn    DateTime   @default(now()) @map("posted_on")
+
+  user User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  tags Tag[]
+
+  @@map("posts")
+}
+
+model Tag {
+  id          String  @id @default(cuid())
+  title       String  @unique
+  description String?
+  image       String?
+  slug        String  @unique
+
+  posts Post[]
+
+  @@map("tags")
+}
