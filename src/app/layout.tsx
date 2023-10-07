@@ -1,11 +1,14 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
-import { Inter } from "next/font/google";
+import { Merriweather_Sans as MerriweatherSans } from "next/font/google";
 
 import { SITE_BASEURL, SITE_LOCALE, SITE_NAME } from "@/utils/constants";
 
-const inter = Inter({ subsets: ["latin"] });
+const merriweatherSans = MerriweatherSans({
+  subsets: ["latin"],
+  variable: "--font-merriweather-sans",
+});
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_BASEURL),
@@ -48,8 +51,8 @@ export const metadata: Metadata = {
 };
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>{children}</body>
+    <html lang="en" className={merriweatherSans.variable}>
+      <body>{children}</body>
     </html>
   );
 }

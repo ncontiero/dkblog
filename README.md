@@ -8,6 +8,7 @@ A blog using Next.Js.
 
 - [Next.Js](https://nextjs.org/)
 - [TailwindCSS](https://tailwindcss.com/)
+- [shadcn/ui](https://ui.shadcn.com/)
 
 ## Install and run the project
 
