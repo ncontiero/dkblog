@@ -1,0 +1,9 @@
+{
+  "name": "DkBlog",
+  "short_name": "DkBlog",
+  "description": "A blog using Next.Js.",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#7c3aed",
+  "background_color": "#000000"
+}
