@@ -4,6 +4,8 @@ import type { ReactNode } from "react";
 import { Merriweather_Sans as MerriweatherSans } from "next/font/google";
 
 import { SITE_BASEURL, SITE_LOCALE, SITE_NAME } from "@/utils/constants";
+import { ThemeProvider } from "@/components/ThemeProvider";
+import { Header } from "@/components/Header";
 
 const merriweatherSans = MerriweatherSans({
   subsets: ["latin"],
@@ -52,7 +54,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className={merriweatherSans.variable}>
-      <body>{children}</body>
+      <body>
+        <ThemeProvider attribute="class" defaultTheme="system">
+          <Header />
+          <div className="pt-16 sm:container">{children}</div>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }
