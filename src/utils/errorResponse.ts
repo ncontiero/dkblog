@@ -1,6 +1,7 @@
 import { ZodError } from "zod";
 
 export function errorResponse(error: unknown) {
+  const headers = { "content-type": "application/json" };
   const errObj = {
     message: error instanceof Error ? error.message : error,
     code: error instanceof Error ? error.name : undefined,
@@ -10,12 +11,12 @@ export function errorResponse(error: unknown) {
 
   if (error instanceof ZodError) {
     return new Response(JSON.stringify(error.issues), {
-      headers: { "content-type": "application/json" },
+      headers,
       status: 400,
     });
   }
   return new Response(JSON.stringify(errObj), {
-    headers: { "content-type": "application/json" },
+    headers,
     status: errObj.status,
   });
 }
