@@ -2,9 +2,10 @@ import type { Metadata, ResolvingMetadata } from "next";
 import type { PostWithUserAndTags } from "@/utils/types";
 import { notFound } from "next/navigation";
 import { API_URL } from "@/utils/constants";
-import { dateParser } from "@/utils/dateParser";
+import { format } from "date-fns";
 
 import { Tag } from "@/components/Tag";
+import { UserHoverCard } from "@/components/UserHoverCard";
 
 export const revalidate = 60;
 
@@ -67,7 +68,7 @@ export default async function PostPage({ params }: Props) {
     notFound();
   }
 
-  const posted = dateParser(new Date(post.postedOn));
+  const postedOn = new Date(post.postedOn);
 
   return (
     <div className="bg-secondary sm:rounded-md">
@@ -79,15 +80,17 @@ export default async function PostPage({ params }: Props) {
           className="flex aspect-[1000_/_420] items-center justify-center object-contain sm:rounded-t-md"
         />
       )}
-      <div className="p-4 pt-6 sm:p-10">
+      <div className="p-4 pt-6 sm:p-10 sm:pt-8">
+        <div className="-ml-2">
+          <UserHoverCard
+            user={post.user}
+            postDate={postedOn}
+            postPage
+            postDateFormatted={`Posted on ${format(postedOn, "MMM d, yyyy")}`}
+          />
+        </div>
         <div className="px-1">
-          <time
-            dateTime={post.postedOn.toString()}
-            className="text-xs font-light"
-          >
-            Posted on {posted.postDateFormat}, {posted.year}
-          </time>
-          <h1 className="relative my-2 w-full scroll-m-20 text-4xl font-bold tracking-tight">
+          <h1 className="relative mb-2 mt-4 w-full scroll-m-20 text-4xl font-bold tracking-tight">
             {post.title}
           </h1>
           {post.tags && post.tags.length > 0 && (

@@ -12,7 +12,7 @@ type Props = {
 };
 
 async function getTags(): Promise<TagWithPosts[]> {
-  const res = await fetch(`${API_URL}/tags?include=posts.tags`);
+  const res = await fetch(`${API_URL}/tags?include=posts.user.tags`);
   return await res.json();
 }
 

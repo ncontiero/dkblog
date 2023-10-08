@@ -1,17 +1,15 @@
 import type { PostWithUserAndTags } from "@/utils/types";
 
-import { dateParser } from "@/utils/dateParser";
 import { cn } from "@/lib/utils";
 
 import Link from "next/link";
 import { Tag } from "./Tag";
+import { UserHoverCard } from "./UserHoverCard";
 
 export function PostCard({
   className,
   ...post
 }: PostWithUserAndTags & { className?: string }) {
-  const postDate = new Date(post.postedOn);
-
   return (
     <div
       className={cn(
@@ -19,24 +17,24 @@ export function PostCard({
         className,
       )}
     >
-      <time dateTime={postDate.toISOString()} className="text-xs font-light">
-        {dateParser(postDate).postDateFormat}
-      </time>
-      <h2 className="text-2xl font-bold">
-        <Link
-          href={`/p/${post.slug}`}
-          className="duration-200 hover:opacity-70"
-        >
-          {post.title}
-        </Link>
-      </h2>
-      {post.tags && post.tags.length > 0 && (
-        <div className="mt-2 flex flex-wrap gap-0.5">
-          {post.tags.map((tag) => (
-            <Tag key={tag.id} tag={tag} />
-          ))}
-        </div>
-      )}
+      <UserHoverCard user={post.user} postDate={new Date(post.postedOn)} />
+      <div className="pl-12">
+        <h2 className="text-2xl font-bold">
+          <Link
+            href={`/p/${post.slug}`}
+            className="rounded-md duration-200 hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          >
+            {post.title}
+          </Link>
+        </h2>
+        {post.tags && post.tags.length > 0 && (
+          <div className="mt-2 flex flex-wrap gap-0.5">
+            {post.tags.map((tag) => (
+              <Tag key={tag.id} tag={tag} />
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 }
