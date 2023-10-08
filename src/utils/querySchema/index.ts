@@ -3,17 +3,12 @@ import { postsInclude } from "./posts";
 import { tagsInclude } from "./tags";
 import { optional } from "./utils";
 
-const limit = optional
-  .transform((val) => (val ? parseInt(val) : 10))
-  .refine((val) => val > 0 && val <= 50, {
-    message: "Limit must be between 1 and 50",
-    path: ["limit"],
-  });
+const limit = optional.transform((val) => (val ? parseInt(val) : undefined));
 
 const page = optional
   .transform((val) => (val ? parseInt(val) : 1))
   .refine((val) => val > 0, {
-    message: "Page must be between 1",
+    message: "Page must be greater than 0",
     path: ["page"],
   });
 

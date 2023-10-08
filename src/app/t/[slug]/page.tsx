@@ -1,5 +1,4 @@
 import type { Metadata, ResolvingMetadata } from "next";
-import type { Tag } from "@prisma/client";
 import type { TagWithPosts } from "@/utils/types";
 import { notFound } from "next/navigation";
 
@@ -12,16 +11,12 @@ type Props = {
   params: { slug: string };
 };
 
-async function getTags(): Promise<Tag[]> {
-  const res = await fetch(`${API_URL}/tags`);
-  return await res.json();
-}
-async function getTag(slug: string): Promise<TagWithPosts | null> {
-  const res = await fetch(`${API_URL}/tags/${slug}?include=posts.tags`);
+async function getTags(): Promise<TagWithPosts[]> {
+  const res = await fetch(`${API_URL}/tags?include=posts.tags`);
   return await res.json();
 }
 
-export async function generateStaticParams(): Promise<Props["params"][]> {
+export async function generateStaticParams() {
   const tags = await getTags();
 
   return tags.map((t) => ({
@@ -35,7 +30,7 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { slug } = params;
 
-  const tag = await getTag(slug);
+  const tag = (await getTags()).find((t) => t.slug === slug);
 
   if (!tag) {
     notFound();
@@ -64,7 +59,7 @@ export async function generateMetadata(
 }
 
 export default async function TagPage({ params }: Props) {
-  const tag = await getTag(params.slug);
+  const tag = (await getTags()).find((t) => t.slug === params.slug);
 
   if (!tag) {
     notFound();

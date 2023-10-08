@@ -4,7 +4,7 @@ export const tagsInclude = optional.transform((val) => {
   if (!val) return null;
   const subColumns = val.split(".");
 
-  const include = {
+  return {
     posts: subColumns.includes("posts") && {
       select: {
         id: true,
@@ -21,8 +21,4 @@ export const tagsInclude = optional.transform((val) => {
       },
     },
   };
-
-  console.log(subColumns);
-  console.log(include);
-  return include;
 });

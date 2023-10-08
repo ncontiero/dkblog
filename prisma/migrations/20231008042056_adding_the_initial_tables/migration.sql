@@ -20,6 +20,7 @@ CREATE TABLE "posts" (
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "content" TEXT NOT NULL,
+    "image" TEXT,
     "slug" TEXT NOT NULL,
     "status" "PostStatus" NOT NULL DEFAULT 'DRAFTED',
     "posted_on" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

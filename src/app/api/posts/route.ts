@@ -13,10 +13,14 @@ export async function GET(request: Request) {
       orderBy: params.get("orderBy"),
       filter: params.get("filter"),
     });
+    const skipLimit = parseInt(limit?.toString() || "10");
+    if (typeof limit === "number" && limit <= 0) {
+      throw new Error("Limit must be greater than 0");
+    }
 
     const posts = await prisma.post.findMany({
       include,
-      skip: page === 1 ? 0 : (page - 1) * limit,
+      skip: page === 1 ? 0 : (page - 1) * skipLimit,
       take: limit,
       orderBy,
       where: filter,
@@ -26,6 +30,6 @@ export async function GET(request: Request) {
       headers: { "content-type": "application/json" },
     });
   } catch (error) {
-    return errorResponse(error);
+    return errorResponse(error, ["Limit must be greater than 0"]);
   }
 }

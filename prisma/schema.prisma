@@ -34,6 +34,7 @@ model Post {
   title       String
   description String
   content     String
+  image       String?
   slug        String     @unique
   status      PostStatus @default(DRAFTED)
   postedOn    DateTime   @default(now()) @map("posted_on")
