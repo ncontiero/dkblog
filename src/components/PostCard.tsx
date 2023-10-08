@@ -13,13 +13,13 @@ export function PostCard({
   return (
     <div
       className={cn(
-        "relative w-1/2 gap-2 rounded-md bg-secondary p-6",
+        "relative w-1/2 gap-2 rounded-none bg-secondary p-6 sm:rounded-md",
         className,
       )}
     >
       <UserHoverCard user={post.user} postDate={new Date(post.postedOn)} />
-      <div className="pl-12">
-        <h2 className="text-2xl font-bold">
+      <div className="sm:pl-12">
+        <h2 className="text-xl font-bold sm:text-2xl">
           <Link
             href={`/p/${post.slug}`}
             className="rounded-md duration-200 hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"

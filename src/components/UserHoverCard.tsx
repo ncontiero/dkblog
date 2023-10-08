@@ -29,9 +29,9 @@ export function UserHoverCard({
           href={`/u/${user.username}`}
           className={`group mb-2 flex w-fit items-center ${
             postPage ? "gap-3" : "gap-2"
-          } rounded-md px-3 ${
-            postPage ? "py-2" : "py-1"
-          } duration-200 hover:bg-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring`}
+          } rounded-md sm:px-3 ${
+            postPage ? "py-2" : "sm:py-1"
+          } duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:hover:bg-background`}
         >
           <Image
             src={user.image}

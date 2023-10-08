@@ -1,5 +1,6 @@
 import type { PostWithUserAndTags } from "@/utils/types";
 
+import { compareDesc } from "date-fns";
 import { API_URL } from "@/utils/constants";
 import { PostCard } from "@/components/PostCard";
 
@@ -11,12 +12,14 @@ async function getPosts(): Promise<PostWithUserAndTags[]> {
 }
 
 export default async function HomePage() {
-  const posts = await getPosts();
+  const posts = (await getPosts()).sort((a, b) =>
+    compareDesc(new Date(a.postedOn), new Date(b.postedOn)),
+  );
 
   return (
     <div className="mt-10 flex flex-col items-center justify-center gap-4">
       {posts.map((post) => (
-        <PostCard key={post.slug} {...post} />
+        <PostCard key={post.slug} className="w-full lg:w-1/2" {...post} />
       ))}
     </div>
   );
