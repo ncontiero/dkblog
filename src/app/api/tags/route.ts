@@ -1,12 +1,12 @@
 import { prisma } from "@/lib/prisma";
 import { errorResponse } from "@/utils/errorResponse";
-import { postsQuerySchema } from "@/utils/querySchema";
+import { tagsQuerySchema } from "@/utils/querySchema";
 
 export async function GET(request: Request) {
   try {
     const params = new URL(request.url).searchParams;
 
-    const { include, limit, page, filter, orderBy } = postsQuerySchema.parse({
+    const { include, limit, page, filter, orderBy } = tagsQuerySchema.parse({
       include: params.get("include"),
       limit: params.get("limit"),
       page: params.get("page"),
@@ -14,7 +14,7 @@ export async function GET(request: Request) {
       filter: params.get("filter"),
     });
 
-    const posts = await prisma.post.findMany({
+    const tags = await prisma.tag.findMany({
       include,
       skip: page === 1 ? 0 : (page - 1) * limit,
       take: limit,
@@ -22,7 +22,7 @@ export async function GET(request: Request) {
       where: filter,
     });
 
-    return new Response(JSON.stringify(posts), {
+    return new Response(JSON.stringify(tags), {
       headers: { "content-type": "application/json" },
     });
   } catch (error) {

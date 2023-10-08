@@ -1,17 +1,7 @@
 import { z } from "zod";
-
-const optional = z.string().nullable();
-
-const include = optional.transform((val) => {
-  if (!val) return null;
-  const valArray = val.split(",");
-  return {
-    user: valArray.includes("user") && {
-      select: { id: true, username: true, image: true, createdAt: true },
-    },
-    tags: valArray.includes("tags"),
-  };
-});
+import { postsInclude } from "./posts";
+import { tagsInclude } from "./tags";
+import { optional } from "./utils";
 
 const limit = optional
   .transform((val) => (val ? parseInt(val) : 10))
@@ -43,5 +33,21 @@ const filter = optional
     };
   });
 
-export const queryParams = { include, limit, page, orderBy, filter };
-export const querySchema = z.object(queryParams);
+const params = {
+  limit,
+  page,
+  orderBy,
+  filter,
+};
+
+export const postsQueryParams = {
+  include: postsInclude,
+  ...params,
+};
+export const tagsQueryParams = {
+  include: tagsInclude,
+  ...params,
+};
+
+export const postsQuerySchema = z.object(postsQueryParams);
+export const tagsQuerySchema = z.object(tagsQueryParams);

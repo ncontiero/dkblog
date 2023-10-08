@@ -1,12 +1,13 @@
 import { ZodError } from "zod";
 
-export function errorResponse(error: unknown) {
+export function errorResponse(error: unknown, errMessages: string[] = []) {
   const headers = { "content-type": "application/json" };
+
   const errObj = {
     message: error instanceof Error ? error.message : error,
     code: error instanceof Error ? error.name : undefined,
     status:
-      error instanceof Error && error.message === "Post not found" ? 404 : 500,
+      error instanceof Error && errMessages.includes(error.message) ? 404 : 500,
   };
 
   if (error instanceof ZodError) {
