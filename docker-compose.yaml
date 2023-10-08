@@ -12,3 +12,10 @@ services:
       - ${POSTGRES_PORT}:5432
     volumes:
       - postgres_data:/var/lib/postgresql/data
+
+  pg_admin:
+    image: dpage/pgadmin4
+    env_file:
+      - .env
+    ports:
+      - 5050:80

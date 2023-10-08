@@ -1,3 +1,4 @@
+import "./mdx.css";
 import type { Metadata, ResolvingMetadata } from "next";
 import type { PostWithUserAndTags } from "@/utils/types";
 import { notFound } from "next/navigation";
@@ -6,6 +7,7 @@ import { format } from "date-fns";
 
 import { Tag } from "@/components/Tag";
 import { UserHoverCard } from "@/components/UserHoverCard";
+import { Mdx } from "@/components/Mdx";
 
 export const revalidate = 60;
 
@@ -67,7 +69,6 @@ export default async function PostPage({ params }: Props) {
   if (!post) {
     notFound();
   }
-
   const postedOn = new Date(post.postedOn);
 
   return (
@@ -81,7 +82,7 @@ export default async function PostPage({ params }: Props) {
         />
       )}
       <div className="p-4 pt-6 sm:p-10 sm:pt-8">
-        <div className="-ml-2">
+        <div className="sm:-ml-2">
           <UserHoverCard
             user={post.user}
             postDate={postedOn}
@@ -89,7 +90,7 @@ export default async function PostPage({ params }: Props) {
             postDateFormatted={`Posted on ${format(postedOn, "MMM d, yyyy")}`}
           />
         </div>
-        <div className="px-1">
+        <div className="sm:px-1">
           <h1 className="relative mb-2 mt-4 w-full scroll-m-20 text-4xl font-bold tracking-tight">
             {post.title}
           </h1>
@@ -100,6 +101,9 @@ export default async function PostPage({ params }: Props) {
               ))}
             </div>
           )}
+        </div>
+        <div className="prose prose-quoteless pl-1 pt-7 dark:prose-invert">
+          <Mdx mdx={post.content} />
         </div>
       </div>
     </div>

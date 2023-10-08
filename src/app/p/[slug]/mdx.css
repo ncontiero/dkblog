@@ -1,0 +1,38 @@
+[data-rehype-pretty-code-fragment] code {
+  @apply grid w-full break-words rounded-none border-0 bg-black p-0 text-base text-white;
+  counter-reset: line;
+  box-decoration-break: clone;
+}
+[data-rehype-pretty-code-fragment] pre {
+  @apply bg-black;
+}
+[data-rehype-pretty-code-fragment] [data-line] {
+  @apply border-l-2 border-transparent px-4;
+}
+[data-rehype-pretty-code-fragment] .line {
+  @apply w-fit px-1.5 py-1;
+}
+/* [data-rehype-pretty-code-fragment] code > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 1rem;
+  margin-right: 1rem;
+  text-align: right;
+  color: gray;
+} */
+[data-rehype-pretty-code-fragment] .line--highlighted {
+  @apply border-l-2 border-primary bg-secondary-foreground dark:bg-secondary;
+}
+[data-rehype-pretty-code-fragment] .line--highlighted span {
+  @apply relative;
+}
+[data-rehype-pretty-code-fragment] .word--highlighted {
+  @apply rounded-sm bg-secondary/20 shadow-[0_0_0_4px_hsl(var(--secondary)/0.2)] dark:bg-secondary dark:shadow-[0_0_0_4px_hsl(var(--secondary))];
+}
+[data-rehype-pretty-code-title] {
+  @apply mt-4 px-4 py-2 text-sm font-medium;
+}
+[data-rehype-pretty-code-title] + pre {
+  @apply mt-0;
+}

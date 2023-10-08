@@ -23,7 +23,7 @@ export function UserHoverCard({
   postPage = false,
 }: UserHoverCardProps) {
   return (
-    <HoverCard>
+    <HoverCard openDelay={200} closeDelay={200}>
       <HoverCardTrigger asChild>
         <Link
           href={`/u/${user.username}`}

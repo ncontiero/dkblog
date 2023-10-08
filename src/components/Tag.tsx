@@ -13,7 +13,7 @@ export function Tag({ tag, className, ...props }: TagProps) {
     <Link
       href={`/t/${tag.slug}`}
       className={cn(
-        `rounded-md border border-transparent p-1 text-sm font-light duration-200 hover:border-[hsl(var(--tag-color))] hover:bg-[hsl(var(--tag-color)/0.2)] focus-visible:border-[hsl(var(--tag-color))] focus-visible:bg-[hsl(var(--tag-color)/0.2)] focus-visible:outline-none`,
+        `rounded-md border border-transparent p-1 text-sm duration-200 hover:border-[hsl(var(--tag-color))] hover:bg-[hsl(var(--tag-color)/0.2)] focus-visible:border-[hsl(var(--tag-color))] focus-visible:bg-[hsl(var(--tag-color)/0.2)] focus-visible:outline-none dark:font-light`,
         className,
       )}
       style={{
