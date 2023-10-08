@@ -33,6 +33,7 @@ CREATE TABLE "tags" (
     "title" TEXT NOT NULL,
     "description" TEXT,
     "image" TEXT,
+    "color" TEXT DEFAULT 'var(--primary)',
     "slug" TEXT NOT NULL,
 
     CONSTRAINT "tags_pkey" PRIMARY KEY ("id")

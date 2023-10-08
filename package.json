@@ -10,6 +10,7 @@
     "start": "next start",
     "lint": "next lint --dir . && eslint . && prettier . -c",
     "lint:fix": "eslint --fix . && prettier . -w",
+    "prisma:seed": "tsx prisma/seed.ts",
     "prepare": "husky install",
     "pre-commit": "lint-staged"
   },
@@ -42,11 +43,15 @@
     "prettier-plugin-tailwindcss": "^0.5.4",
     "prisma": "^5.4.1",
     "tailwindcss": "3.3.3",
+    "tsx": "^3.13.0",
     "typescript": "5.2.2"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,json,css,md}": [
       "pnpm run lint:fix"
     ]
+  },
+  "prisma": {
+    "seed": "pnpm run prisma:seed"
   }
 }

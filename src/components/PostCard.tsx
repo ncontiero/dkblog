@@ -31,7 +31,7 @@ export function PostCard({
         </Link>
       </h2>
       {post.tags && post.tags.length > 0 && (
-        <div className="mt-1.5 flex flex-wrap gap-0.5">
+        <div className="mt-2 flex flex-wrap gap-0.5">
           {post.tags.map((tag) => (
             <Tag key={tag.id} tag={tag} />
           ))}

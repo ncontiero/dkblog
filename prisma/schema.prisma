@@ -49,6 +49,7 @@ model Tag {
   title       String  @unique
   description String?
   image       String?
+  color       String? @default("var(--primary)")
   slug        String  @unique
 
   posts Post[]

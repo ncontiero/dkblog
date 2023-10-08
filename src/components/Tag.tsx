@@ -13,12 +13,17 @@ export function Tag({ tag, className, ...props }: TagProps) {
     <Link
       href={`/t/${tag.slug}`}
       className={cn(
-        "rounded-md border border-transparent p-1 text-sm font-light duration-200 hover:border-primary/60 hover:bg-primary/20 focus-visible:border-primary focus-visible:bg-primary/30 focus-visible:outline-none",
+        `rounded-md border border-transparent p-1 text-sm font-light duration-200 hover:border-[hsl(var(--tag-color))] hover:bg-[hsl(var(--tag-color)/0.2)] focus-visible:border-[hsl(var(--tag-color))] focus-visible:bg-[hsl(var(--tag-color)/0.2)] focus-visible:outline-none`,
         className,
       )}
+      style={{
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        "--tag-color": `${tag.color}`,
+      }}
       {...props}
     >
-      #{tag.title}
+      #{tag.slug}
     </Link>
   );
 }
