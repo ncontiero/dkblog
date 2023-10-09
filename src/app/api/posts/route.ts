@@ -1,6 +1,9 @@
+import { PostStatus } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { errorResponse } from "@/utils/errorResponse";
 import { postsQuerySchema } from "@/utils/querySchema";
+import { z } from "zod";
+import { slugify } from "@/utils/slugify";
 
 export async function GET(request: Request) {
   try {
@@ -31,5 +34,48 @@ export async function GET(request: Request) {
     });
   } catch (error) {
     return errorResponse(error, ["Limit must be greater than 0"]);
+  }
+}
+
+const createPostSchema = z.object({
+  title: z.string(),
+  description: z.string(),
+  content: z.string(),
+  image: z.string().optional(),
+  status: z
+    .string()
+    .optional()
+    .transform((status) => (status || "DRAFTED") as PostStatus)
+    .refine((status) => Object.values(PostStatus).includes(status), {
+      message: `Invalid status. Must be one of: ${Object.values(
+        PostStatus,
+      ).join(", ")}`,
+    }),
+  userId: z.string().cuid(),
+});
+
+export async function POST(request: Request) {
+  try {
+    const { title, description, content, status, userId, image } =
+      createPostSchema.parse(await request.json());
+    const slug = slugify(title);
+
+    const post = await prisma.post.create({
+      data: {
+        title,
+        description,
+        content,
+        image,
+        status,
+        userId,
+        slug,
+      },
+    });
+
+    return new Response(JSON.stringify(post), {
+      headers: { "content-type": "application/json" },
+    });
+  } catch (error) {
+    return errorResponse(error);
   }
 }

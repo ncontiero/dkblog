@@ -43,6 +43,10 @@ export const tagsQueryParams = {
   include: tagsInclude,
   ...params,
 };
+export const updateSlugParam = z
+  .string()
+  .transform((val) => val === "true")
+  .optional();
 
 export const postsQuerySchema = z.object(postsQueryParams);
 export const tagsQuerySchema = z.object(tagsQueryParams);
