@@ -29,6 +29,7 @@ function AnchorLink({
       href={href}
       asChild={!!isInside}
       className={cn("no-underline", className)}
+      style={{ fontSize: "inherit", lineHeight: "inherit" }}
       {...props}
     >
       {isInside ? <NextLink href={href!}>{children}</NextLink> : children}
@@ -47,13 +48,16 @@ function HeadingLinked({
   ...props
 }: HeadingLinkedProps) {
   const Comp = as;
+  const childrenHasAnchor = children && typeof children === "object";
+  const className =
+    "group flex w-fit items-center rounded-md no-underline underline-offset-4 ring-offset-background duration-200 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:opacity-70";
 
-  return id ? (
+  return id && !childrenHasAnchor ? (
     <Comp id={id} {...props}>
       <NextLink
         href={`#${id}`}
         aria-label="Link to section"
-        className="group flex w-fit items-center rounded-md no-underline underline-offset-4 ring-offset-background duration-200 hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:opacity-70"
+        className={className}
       >
         {children}
         <LinkIcon
@@ -63,7 +67,9 @@ function HeadingLinked({
       </NextLink>
     </Comp>
   ) : (
-    <Comp id={id} {...props} />
+    <Comp id={id} className={className} {...props}>
+      {children}
+    </Comp>
   );
 }
 
@@ -248,8 +254,8 @@ export async function Mdx({ mdx }: { mdx: string }) {
         mdxOptions: {
           remarkPlugins: [remarkGfm],
           rehypePlugins: [
-            rehypeSlug,
             rehypeSanitize,
+            rehypeSlug,
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
             [rehypePrettyCode, rehypePrettyCodeOptions],
