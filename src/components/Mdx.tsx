@@ -8,6 +8,7 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
 import rehypePrettyCode, { type Options } from "rehype-pretty-code";
+import rehypeSanitize from "rehype-sanitize";
 
 import { Link } from "./ui/Link";
 import NextLink from "next/link";
@@ -246,10 +247,11 @@ export async function Mdx({ mdx }: { mdx: string }) {
       options={{
         mdxOptions: {
           remarkPlugins: [remarkGfm],
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
           rehypePlugins: [
             rehypeSlug,
+            rehypeSanitize,
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             [rehypePrettyCode, rehypePrettyCodeOptions],
           ],
         },
