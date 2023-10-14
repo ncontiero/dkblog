@@ -4,7 +4,7 @@ import type {
   ImgHTMLAttributes,
 } from "react";
 
-import { MDXRemote } from "next-mdx-remote/rsc";
+import { MDXRemote, type MDXRemoteProps } from "next-mdx-remote/rsc";
 import remarkGfm from "remark-gfm";
 import rehypeSlug from "rehype-slug";
 import rehypePrettyCode, { type Options } from "rehype-pretty-code";
@@ -245,23 +245,22 @@ const rehypePrettyCodeOptions: Options = {
   },
 };
 
+export const mdxOptions: MDXRemoteProps["options"] = {
+  mdxOptions: {
+    remarkPlugins: [remarkGfm],
+    rehypePlugins: [
+      rehypeSanitize,
+      rehypeSlug,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      [rehypePrettyCode, rehypePrettyCodeOptions],
+    ],
+    format: "md",
+  },
+};
+
 export async function Mdx({ mdx }: { mdx: string }) {
   return (
-    <MDXRemote
-      source={mdx}
-      components={components}
-      options={{
-        mdxOptions: {
-          remarkPlugins: [remarkGfm],
-          rehypePlugins: [
-            rehypeSanitize,
-            rehypeSlug,
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            [rehypePrettyCode, rehypePrettyCodeOptions],
-          ],
-        },
-      }}
-    />
+    <MDXRemote source={mdx} components={components} options={mdxOptions} />
   );
 }
