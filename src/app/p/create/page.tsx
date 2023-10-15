@@ -8,10 +8,12 @@ import {
   useRef,
   useState,
 } from "react";
+import { useRouter } from "next/navigation";
 
 import type { PostStatus } from "@prisma/client";
 import { slugify } from "@/utils/slugify";
 import { API_URL } from "@/utils/constants";
+import { toast } from "react-toastify";
 
 import { Button } from "@/components/ui/Button";
 import { ScrollArea } from "@/components/ui/ScrollArea";
@@ -21,7 +23,6 @@ import { MdRenderer } from "@/components/MdRenderer";
 import { LoadingPreview } from "./LoadingPreview";
 import { InputFile } from "@/components/ui/InputFile";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 
 interface EditValuesProps {
   title: string;
@@ -47,7 +48,7 @@ export default function CreatePostPage() {
   const uploadImage = useCallback(
     async (img?: File) => {
       if (!img) {
-        return null;
+        return undefined;
       }
 
       const formData = new FormData();
@@ -57,18 +58,19 @@ export default function CreatePostPage() {
         method: "POST",
         body: formData,
       });
-      return await res.json();
+      return (await res.json()).image || undefined;
     },
     [editValues.title],
   );
 
   const submitData = useCallback(
     async (status: PostStatus = "DRAFTED") => {
-      const { image } = await uploadImage(editValues.image);
+      const toastLoading = toast.loading("Creating post...");
+      const img = await uploadImage(editValues.image);
       const data = {
         title: editValues.title,
         content: editValues.content,
-        image,
+        image: img,
         status,
         description: "A simple description",
         userId: "clngyij5e0000bqyavsnlpd6d",
@@ -85,6 +87,11 @@ export default function CreatePostPage() {
         setTimeout(async () => {
           router.push(`/p/${(await res.json()).slug}`);
         }, 1000);
+        toast.dismiss(toastLoading);
+        toast.success("Post created successfully! Wait while we redirect you");
+      } else {
+        toast.dismiss(toastLoading);
+        toast.error("Failed to create post");
       }
     },
     [editValues, router, uploadImage],
@@ -138,7 +145,10 @@ export default function CreatePostPage() {
                       <Button
                         variant="destructive"
                         className="py-4 sm:py-6 sm:text-base"
-                        onClick={() => setImgPreview(undefined)}
+                        onClick={() => {
+                          setEditValues({ ...editValues, image: undefined });
+                          setImgPreview(undefined);
+                        }}
                       >
                         Remove
                       </Button>
@@ -206,8 +216,20 @@ export default function CreatePostPage() {
         </ScrollArea>
       </Tabs>
       <div className="fixed bottom-0 z-20 flex w-full max-w-4xl gap-2 bg-background px-2 py-4 sm:px-0">
-        <Button onClick={() => submitData("PUBLISHED")}>Publish</Button>
-        <Button variant="ghost" onClick={() => submitData()}>
+        <Button
+          onClick={() => submitData("PUBLISHED")}
+          disabled={!(editValues.title !== "" || editValues.content !== "")}
+          className="disabled:cursor-not-allowed"
+          type="button"
+        >
+          Publish
+        </Button>
+        <Button
+          variant="ghost"
+          onClick={() => submitData()}
+          disabled={!(editValues.title !== "" || editValues.content !== "")}
+          className="disabled:cursor-not-allowed"
+        >
           Save draft
         </Button>
       </div>

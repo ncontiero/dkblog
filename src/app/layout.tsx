@@ -1,8 +1,10 @@
+import "react-toastify/dist/ReactToastify.min.css";
 import "./globals.css";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import { Merriweather_Sans as MerriweatherSans } from "next/font/google";
 
+import { ToastContainer } from "react-toastify";
 import { SITE_BASEURL, SITE_LOCALE, SITE_NAME } from "@/utils/constants";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Header } from "@/components/Header";
@@ -57,6 +59,17 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <body>
         <ThemeProvider attribute="class" defaultTheme="system">
           <Header />
+          <ToastContainer
+            autoClose={3000}
+            position="top-right"
+            theme="dark"
+            newestOnTop={true}
+            pauseOnFocusLoss={false}
+            limit={3}
+            toastClassName="bg-background"
+            bodyClassName="text-foreground"
+            progressClassName="bg-primary"
+          />
           <div className="pt-16 sm:container">{children}</div>
         </ThemeProvider>
       </body>
