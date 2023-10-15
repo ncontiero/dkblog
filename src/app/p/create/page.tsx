@@ -1,7 +1,13 @@
 "use client";
 
 import "../mdx.css";
-import { useEffect, useRef, useState } from "react";
+import {
+  type ChangeEvent,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 import { Button } from "@/components/ui/Button";
 import { ScrollArea } from "@/components/ui/ScrollArea";
@@ -9,6 +15,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 import { Textarea } from "@/components/ui/Textarea";
 import { MdRenderer } from "@/components/MdRenderer";
 import { LoadingPreview } from "./LoadingPreview";
+import { InputFile } from "@/components/ui/InputFile";
+import Image from "next/image";
 
 interface EditValuesProps {
   title: string;
@@ -30,6 +38,19 @@ export default function CreatePostPage() {
     }
   }, []);
 
+  const handleImage = useCallback(
+    (e: ChangeEvent<HTMLInputElement>) => {
+      if (e.target.files && e.target.files[0].type.startsWith("image/")) {
+        setImgPreview(URL.createObjectURL(e.target.files[0]));
+        setEditValues({
+          ...editValues,
+          image: e.target.files[0],
+        });
+      }
+    },
+    [editValues],
+  );
+
   return (
     <>
       <Tabs defaultValue="edit">
@@ -41,36 +62,44 @@ export default function CreatePostPage() {
           <TabsContent value="edit">
             <>
               <div className="px-4 py-4 sm:px-16">
-                <div className="mb-6">
-                  <Button
-                    variant="outlinePrimary"
-                    className="cursor-pointer bg-secondary py-4 ring-offset-background focus-within:bg-primary focus-within:text-primary-foreground focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2 sm:py-6 sm:text-base"
-                    asChild
-                  >
-                    <label htmlFor="cover-image">
-                      <input
-                        type="file"
-                        id="cover-image"
-                        className="w-[0px]"
-                        accept="image/*"
-                        onChange={(e) => {
-                          if (
-                            e.target.files &&
-                            e.target.files[0].type.startsWith("image/")
-                          ) {
-                            setImgPreview(
-                              URL.createObjectURL(e.target.files[0]),
-                            );
-                            setEditValues({
-                              ...editValues,
-                              image: e.target.files[0],
-                            });
-                          }
-                        }}
+                <div className="mb-6 flex">
+                  {imgPreview && (
+                    <div className="relative mr-3 h-[105px] w-[250px]">
+                      <Image
+                        src={imgPreview}
+                        alt="Post image preview"
+                        fill
+                        className="aspect-video rounded-md object-cover"
                       />
-                      Add a cover image
-                    </label>
-                  </Button>
+                    </div>
+                  )}
+                  {imgPreview ? (
+                    <div className="flex gap-1">
+                      <InputFile
+                        variant="outlinePrimary"
+                        className="bg-secondary py-4 text-foreground focus-within:bg-primary focus-within:text-primary-foreground sm:py-6 sm:text-base"
+                        id="cover-image"
+                        accept="image/*"
+                        labelText="Change"
+                        onChange={handleImage}
+                      />
+                      <Button
+                        variant="destructive"
+                        className="py-4 sm:py-6 sm:text-base"
+                        onClick={() => setImgPreview(undefined)}
+                      >
+                        Remove
+                      </Button>
+                    </div>
+                  ) : (
+                    <InputFile
+                      variant="outlinePrimary"
+                      className="bg-secondary py-4 text-foreground focus-within:bg-primary focus-within:text-primary-foreground sm:py-6 sm:text-base"
+                      id="cover-image"
+                      accept="image/*"
+                      onChange={handleImage}
+                    />
+                  )}
                 </div>
                 <Textarea
                   className="resize-none border-transparent bg-secondary pl-0 text-3xl font-bold sm:text-5xl sm:font-extrabold"
