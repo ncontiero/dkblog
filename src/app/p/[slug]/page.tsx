@@ -1,4 +1,4 @@
-import "./mdx.css";
+import "../mdx.css";
 import type { Metadata, ResolvingMetadata } from "next";
 import type { PostWithUserAndTags } from "@/utils/types";
 import { notFound } from "next/navigation";
@@ -7,7 +7,7 @@ import { format } from "date-fns";
 
 import { Tag } from "@/components/Tag";
 import { UserHoverCard } from "@/components/UserHoverCard";
-import { Mdx } from "@/components/Mdx";
+import { MdRenderer } from "@/components/MdRenderer";
 
 export const revalidate = 60;
 
@@ -103,7 +103,7 @@ export default async function PostPage({ params }: Props) {
           )}
         </div>
         <div className="prose prose-quoteless pl-1 pt-7 dark:prose-invert">
-          <Mdx mdx={post.content} />
+          <MdRenderer.Server content={post.content} />
         </div>
       </div>
     </div>

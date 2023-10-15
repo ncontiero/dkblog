@@ -1,14 +1,5 @@
-import type {
-  AnchorHTMLAttributes,
-  HTMLAttributes,
-  ImgHTMLAttributes,
-} from "react";
-
-import { MDXRemote, type MDXRemoteProps } from "next-mdx-remote/rsc";
-import remarkGfm from "remark-gfm";
-import rehypeSlug from "rehype-slug";
-import rehypePrettyCode, { type Options } from "rehype-pretty-code";
-import rehypeSanitize from "rehype-sanitize";
+import type { AnchorHTMLAttributes, HTMLAttributes } from "react";
+import type { Components } from "rehype-react";
 
 import { Link } from "./ui/Link";
 import NextLink from "next/link";
@@ -73,8 +64,10 @@ function HeadingLinked({
   );
 }
 
-export const components = {
-  h1: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-expect-error
+export const MdComponents: Components = {
+  h1: ({ className, ...props }) => (
     <HeadingLinked
       className={cn(
         "relative mt-2 w-full scroll-m-20 text-4xl font-bold tracking-tight",
@@ -83,7 +76,7 @@ export const components = {
       {...props}
     />
   ),
-  h2: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
+  h2: ({ className, ...props }) => (
     <HeadingLinked
       as="h2"
       className={cn(
@@ -93,7 +86,7 @@ export const components = {
       {...props}
     />
   ),
-  h3: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
+  h3: ({ className, ...props }) => (
     <HeadingLinked
       as="h3"
       className={cn(
@@ -103,7 +96,7 @@ export const components = {
       {...props}
     />
   ),
-  h4: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
+  h4: ({ className, ...props }) => (
     <HeadingLinked
       as="h4"
       className={cn(
@@ -113,7 +106,7 @@ export const components = {
       {...props}
     />
   ),
-  h5: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
+  h5: ({ className, ...props }) => (
     <HeadingLinked
       as="h5"
       className={cn(
@@ -123,7 +116,7 @@ export const components = {
       {...props}
     />
   ),
-  h6: ({ className, ...props }: HTMLAttributes<HTMLHeadingElement>) => (
+  h6: ({ className, ...props }) => (
     <HeadingLinked
       as="h6"
       className={cn(
@@ -133,28 +126,26 @@ export const components = {
       {...props}
     />
   ),
-  a: (props: AnchorHTMLAttributes<HTMLAnchorElement>) => (
-    <AnchorLink {...props} />
-  ),
-  p: ({ className, ...props }: HTMLAttributes<HTMLParagraphElement>) => (
+  a: (props) => <AnchorLink {...props} />,
+  p: ({ className, ...props }) => (
     <p
       className={cn("leading-7 [&:not(:first-child)]:mt-6", className)}
       {...props}
     />
   ),
-  ul: ({ className, ...props }: HTMLAttributes<HTMLUListElement>) => (
+  ul: ({ className, ...props }) => (
     <ul className={cn("my-6 list-disc pl-8", className)} {...props} />
   ),
-  ol: ({ className, ...props }: HTMLAttributes<HTMLOListElement>) => (
+  ol: ({ className, ...props }) => (
     <ol className={cn("my-6 list-decimal pl-8", className)} {...props} />
   ),
-  li: ({ className, ...props }: HTMLAttributes<HTMLLIElement>) => (
+  li: ({ className, ...props }) => (
     <li
       className={cn("my-1 marker:text-muted-foreground", className)}
       {...props}
     />
   ),
-  blockquote: ({ className, ...props }: HTMLAttributes<HTMLQuoteElement>) => (
+  blockquote: ({ className, ...props }) => (
     <blockquote
       className={cn(
         "mt-6 border-l-2 border-zinc-400 pl-3 font-normal text-foreground/70 dark:border-zinc-600 [&>*]:text-foreground/70",
@@ -163,7 +154,7 @@ export const components = {
       {...props}
     />
   ),
-  img: ({ className, alt, ...props }: ImgHTMLAttributes<HTMLImageElement>) => (
+  img: ({ className, alt, ...props }) => (
     // eslint-disable-next-line @next/next/no-img-element
     <img
       className={cn(
@@ -177,12 +168,12 @@ export const components = {
   hr: ({ ...props }) => (
     <hr className="my-4 border-zinc-400 md:my-8" {...props} />
   ),
-  table: ({ className, ...props }: HTMLAttributes<HTMLTableElement>) => (
+  table: ({ className, ...props }) => (
     <div className="my-6 w-full overflow-y-auto">
       <table className={cn("w-full", className)} {...props} />
     </div>
   ),
-  tr: ({ className, ...props }: HTMLAttributes<HTMLTableRowElement>) => (
+  tr: ({ className, ...props }) => (
     <tr
       className={cn(
         "m-0 border-t border-zinc-300 p-0 even:bg-zinc-100",
@@ -191,7 +182,7 @@ export const components = {
       {...props}
     />
   ),
-  th: ({ className, ...props }: HTMLAttributes<HTMLTableCellElement>) => (
+  th: ({ className, ...props }) => (
     <th
       className={cn(
         "border border-zinc-200 px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right",
@@ -200,7 +191,7 @@ export const components = {
       {...props}
     />
   ),
-  td: ({ className, ...props }: HTMLAttributes<HTMLTableCellElement>) => (
+  td: ({ className, ...props }) => (
     <td
       className={cn(
         "border border-zinc-200 px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right",
@@ -209,7 +200,7 @@ export const components = {
       {...props}
     />
   ),
-  pre: ({ className, ...props }: HTMLAttributes<HTMLPreElement>) => (
+  pre: ({ className, ...props }) => (
     <pre
       className={cn(
         "my-4 overflow-x-auto rounded-lg bg-black px-0 py-4",
@@ -218,7 +209,7 @@ export const components = {
       {...props}
     />
   ),
-  code: ({ className, ...props }: HTMLAttributes<HTMLPreElement>) => (
+  code: ({ className, ...props }) => (
     <code
       className={cn(
         "relative rounded bg-secondary-foreground/10 px-1.5 py-1 font-mono",
@@ -228,39 +219,3 @@ export const components = {
     />
   ),
 };
-
-const rehypePrettyCodeOptions: Options = {
-  theme: "dracula",
-  keepBackground: false,
-  onVisitLine(node) {
-    if (node.children.length === 0) {
-      node.children = [{ type: "text", value: " " }];
-    }
-  },
-  onVisitHighlightedLine(node) {
-    node.properties.className = ["line--highlighted"];
-  },
-  onVisitHighlightedChars(node) {
-    node.properties.className = ["word--highlighted"];
-  },
-};
-
-export const mdxOptions: MDXRemoteProps["options"] = {
-  mdxOptions: {
-    remarkPlugins: [remarkGfm],
-    rehypePlugins: [
-      rehypeSanitize,
-      rehypeSlug,
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      [rehypePrettyCode, rehypePrettyCodeOptions],
-    ],
-    format: "md",
-  },
-};
-
-export async function Mdx({ mdx }: { mdx: string }) {
-  return (
-    <MDXRemote source={mdx} components={components} options={mdxOptions} />
-  );
-}

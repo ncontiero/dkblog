@@ -11,7 +11,7 @@ export default function CreatePostLayout({
   children: ReactNode;
 }) {
   return (
-    <div className="mx-auto my-0 min-h-screen max-w-3xl sm:mt-2">
+    <div className="relative mx-auto my-0 min-h-screen w-full max-w-4xl sm:mt-2">
       {children}
     </div>
   );
