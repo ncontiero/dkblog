@@ -21,6 +21,7 @@ import { MdRenderer } from "@/components/MdRenderer";
 import { LoadingPreview } from "./LoadingPreview";
 import { InputFile } from "@/components/ui/InputFile";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 interface EditValuesProps {
   title: string;
@@ -29,6 +30,7 @@ interface EditValuesProps {
 }
 
 export default function CreatePostPage() {
+  const router = useRouter();
   const contentRef = useRef<HTMLTextAreaElement>(null);
   const [imgPreview, setImgPreview] = useState<string | undefined>("");
   const [editValues, setEditValues] = useState<EditValuesProps>({
@@ -71,15 +73,21 @@ export default function CreatePostPage() {
         description: "A simple description",
         userId: "clngyij5e0000bqyavsnlpd6d",
       };
-      await fetch(`${API_URL}/posts`, {
+      const res = await fetch(`${API_URL}/posts`, {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
           "Content-Type": "application/json",
         },
       });
+
+      if (res.ok) {
+        setTimeout(async () => {
+          router.push(`/p/${(await res.json()).slug}`);
+        }, 1000);
+      }
     },
-    [editValues, uploadImage],
+    [editValues, router, uploadImage],
   );
 
   const handleImage = useCallback(
