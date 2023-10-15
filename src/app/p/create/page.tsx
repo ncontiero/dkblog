@@ -9,6 +9,10 @@ import {
   useState,
 } from "react";
 
+import type { PostStatus } from "@prisma/client";
+import { slugify } from "@/utils/slugify";
+import { API_URL } from "@/utils/constants";
+
 import { Button } from "@/components/ui/Button";
 import { ScrollArea } from "@/components/ui/ScrollArea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
@@ -37,6 +41,46 @@ export default function CreatePostPage() {
       contentRef.current.style.minHeight = 560 + "px";
     }
   }, []);
+
+  const uploadImage = useCallback(
+    async (img?: File) => {
+      if (!img) {
+        return null;
+      }
+
+      const formData = new FormData();
+      formData.append("file", img);
+      formData.append("filename", slugify(editValues.title));
+      const res = await fetch(`${API_URL}/upload`, {
+        method: "POST",
+        body: formData,
+      });
+      return await res.json();
+    },
+    [editValues.title],
+  );
+
+  const submitData = useCallback(
+    async (status: PostStatus = "DRAFTED") => {
+      const { image } = await uploadImage(editValues.image);
+      const data = {
+        title: editValues.title,
+        content: editValues.content,
+        image,
+        status,
+        description: "A simple description",
+        userId: "clngyij5e0000bqyavsnlpd6d",
+      };
+      await fetch(`${API_URL}/posts`, {
+        method: "POST",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+    },
+    [editValues, uploadImage],
+  );
 
   const handleImage = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -154,8 +198,10 @@ export default function CreatePostPage() {
         </ScrollArea>
       </Tabs>
       <div className="fixed bottom-0 z-20 flex w-full max-w-4xl gap-2 bg-background px-2 py-4 sm:px-0">
-        <Button>Publish</Button>
-        <Button variant="ghost">Save draft</Button>
+        <Button onClick={() => submitData("PUBLISHED")}>Publish</Button>
+        <Button variant="ghost" onClick={() => submitData()}>
+          Save draft
+        </Button>
       </div>
     </>
   );

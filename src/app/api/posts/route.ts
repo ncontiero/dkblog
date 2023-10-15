@@ -4,6 +4,7 @@ import { errorResponse } from "@/utils/errorResponse";
 import { postsQuerySchema } from "@/utils/querySchema";
 import { z } from "zod";
 import { slugify } from "@/utils/slugify";
+import crypto from "node:crypto";
 
 export async function GET(request: Request) {
   try {
@@ -58,7 +59,11 @@ export async function POST(request: Request) {
   try {
     const { title, description, content, status, userId, image } =
       createPostSchema.parse(await request.json());
-    const slug = slugify(title);
+
+    let slug = slugify(title);
+    if (await prisma.post.findUnique({ where: { slug: slugify(title) } })) {
+      slug = `${slug}-${crypto.randomBytes(4).toString("hex")}`;
+    }
 
     const post = await prisma.post.create({
       data: {
