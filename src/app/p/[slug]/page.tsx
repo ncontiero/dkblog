@@ -1,9 +1,8 @@
 import "../mdx.css";
 import type { Metadata, ResolvingMetadata } from "next";
-import type { PostWithUserAndTags } from "@/utils/types";
 import { notFound } from "next/navigation";
-import { API_URL } from "@/utils/constants";
 import { format } from "date-fns";
+import { getPosts } from "@/utils/data";
 
 import { Tag } from "@/components/Tag";
 import { UserHoverCard } from "@/components/UserHoverCard";
@@ -14,11 +13,6 @@ export const revalidate = 60;
 type Props = {
   params: { slug: string };
 };
-
-async function getPosts(): Promise<PostWithUserAndTags[]> {
-  const res = await fetch(`${API_URL}/posts?include=user,tags`);
-  return await res.json();
-}
 
 export async function generateStaticParams(): Promise<Props["params"][]> {
   const posts = await getPosts();

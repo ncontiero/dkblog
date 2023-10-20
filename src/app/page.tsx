@@ -1,18 +1,12 @@
-import type { PostWithUserAndTags } from "@/utils/types";
-
+import { getPosts } from "@/utils/data";
 import { compareDesc } from "date-fns";
-import { API_URL } from "@/utils/constants";
+
 import { PostCard } from "@/components/PostCard";
 
 export const revalidate = 60;
 
-async function getPosts(): Promise<PostWithUserAndTags[]> {
-  const res = await fetch(`${API_URL}/posts?include=user,tags`);
-  return res.json();
-}
-
 export default async function HomePage() {
-  const posts = (await getPosts()).sort((a, b) =>
+  const posts = (await getPosts(["userId", "content", "image"])).sort((a, b) =>
     compareDesc(new Date(a.postedOn), new Date(b.postedOn)),
   );
 

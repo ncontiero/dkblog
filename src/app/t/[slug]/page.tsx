@@ -1,22 +1,15 @@
 import type { Metadata, ResolvingMetadata } from "next";
-import type { TagWithPosts } from "@/utils/types";
 import { notFound } from "next/navigation";
 import { compareDesc } from "date-fns";
+import { getTags } from "@/utils/data";
 
 import { PostCard } from "@/components/PostCard";
-import { API_URL } from "@/utils/constants";
 
 export const revalidate = 60;
 
 type Props = {
   params: { slug: string };
 };
-
-async function getTags(): Promise<TagWithPosts[]> {
-  return await fetch(`${API_URL}/tags?include=posts.user.tags`).then((res) =>
-    res.json(),
-  );
-}
 
 export async function generateStaticParams() {
   const tags = await getTags();
