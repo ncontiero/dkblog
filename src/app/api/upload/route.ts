@@ -1,43 +1,27 @@
 import { errorResponse } from "@/utils/errorResponse";
-import fs from "node:fs";
-import crypto from "node:crypto";
+import { saveFile } from "@/utils/saveFile";
 
 export async function POST(request: Request) {
   try {
     const formData = await request.formData();
     const file = formData.get("file") as Blob;
-    const field = formData.get("field") || "posts";
-    const id = crypto.randomBytes(10).toString("hex");
-    let filename = formData.get("filename") || id;
+    const field = formData.get("field")?.toString() || "posts";
 
     if (!file) {
       throw new Error("No file provided");
     }
-    if (
-      !field.toString().includes("posts") &&
-      !field.toString().includes("tags")
-    ) {
+    if (!field.includes("posts") && !field.includes("tags")) {
       throw new Error("Invalid field");
     }
     if (!file.type.startsWith("image/")) {
       throw new Error("Invalid file type");
     }
 
-    const uploadFolder = "uploads";
-    const outputFolder = `${process.cwd()}/public/${uploadFolder}/${field}`;
-    fs.mkdirSync(outputFolder, { recursive: true });
+    const { fileURL } = await saveFile(file, {
+      folder: `${field}`,
+    });
 
-    if (fs.existsSync(`${outputFolder}/${filename}.jpg`)) {
-      filename = `${filename}-${id}`;
-    }
-
-    const newFile = fs.createWriteStream(`${outputFolder}/${filename}.jpg`);
-    newFile.write(Buffer.from(await file.arrayBuffer()));
-    newFile.close();
-
-    const path = `/${uploadFolder}/${field}/${filename}.jpg`;
-
-    return new Response(JSON.stringify({ image: path }), {
+    return new Response(JSON.stringify({ image: fileURL }), {
       headers: { "content-type": "application/json" },
     });
   } catch (e) {

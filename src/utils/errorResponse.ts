@@ -7,7 +7,7 @@ export function errorResponse(error: unknown, errMessages: string[] = []) {
     message: error instanceof Error ? error.message : error,
     code: error instanceof Error ? error.name : undefined,
     status:
-      error instanceof Error && errMessages.includes(error.message) ? 404 : 500,
+      error instanceof Error && errMessages.includes(error.message) ? 400 : 500,
   };
 
   if (error instanceof ZodError) {

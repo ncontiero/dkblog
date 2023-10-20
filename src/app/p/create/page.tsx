@@ -11,7 +11,6 @@ import {
 import { useRouter } from "next/navigation";
 
 import type { PostStatus } from "@prisma/client";
-import { slugify } from "@/utils/slugify";
 import { API_URL } from "@/utils/constants";
 import { toast } from "react-toastify";
 
@@ -45,23 +44,19 @@ export default function CreatePostPage() {
     }
   }, []);
 
-  const uploadImage = useCallback(
-    async (img?: File) => {
-      if (!img) {
-        return undefined;
-      }
+  const uploadImage = useCallback(async (img?: File) => {
+    if (!img) {
+      return undefined;
+    }
 
-      const formData = new FormData();
-      formData.append("file", img);
-      formData.append("filename", slugify(editValues.title));
-      const res = await fetch(`${API_URL}/upload`, {
-        method: "POST",
-        body: formData,
-      });
-      return (await res.json()).image || undefined;
-    },
-    [editValues.title],
-  );
+    const formData = new FormData();
+    formData.append("file", img);
+    const res = await fetch(`${API_URL}/upload`, {
+      method: "POST",
+      body: formData,
+    });
+    return (await res.json()).image || undefined;
+  }, []);
 
   const submitData = useCallback(
     async (status: PostStatus = "DRAFTED") => {
