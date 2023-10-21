@@ -26,7 +26,7 @@ export function UserHoverCard({
     <HoverCard openDelay={200} closeDelay={200}>
       <HoverCardTrigger asChild>
         <Link
-          href={`/u/${user.username}`}
+          href={`/${user.username}`}
           className={`group mb-2 flex w-fit items-center ${
             postPage ? "gap-3" : "gap-2"
           } rounded-md sm:px-3 ${
@@ -55,7 +55,7 @@ export function UserHoverCard({
       </HoverCardTrigger>
       <HoverCardContent>
         <Link
-          href={`/u/${user.username}`}
+          href={`/${user.username}`}
           className="group flex items-center space-x-3"
         >
           <Image

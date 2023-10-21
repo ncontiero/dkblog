@@ -1,4 +1,3 @@
-import "../mdx.css";
 import type { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
 import { format } from "date-fns";
@@ -33,7 +32,8 @@ export async function generateMetadata(
     return notFound();
   }
 
-  const postUrl = `${(await parent).metadataBase}p/${post.slug}`;
+  const postPath = `${post.user.username}/${post.slug}`;
+  const postUrl = `${(await parent).metadataBase}${postPath}`;
 
   return {
     title: post.title,

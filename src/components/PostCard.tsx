@@ -21,7 +21,7 @@ export function PostCard({
       <div className="sm:pl-12">
         <h2 className="text-xl font-bold sm:text-2xl">
           <Link
-            href={`/p/${post.slug}`}
+            href={`/${post.user.username}/${post.slug}`}
             className="rounded-md duration-200 hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           >
             {post.title}

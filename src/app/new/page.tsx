@@ -1,6 +1,5 @@
 "use client";
 
-import "../mdx.css";
 import {
   type ChangeEvent,
   useCallback,
