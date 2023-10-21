@@ -1,19 +1,15 @@
 import { Storage, type UploadOptions } from "@google-cloud/storage";
+import { env } from "@/env.mjs";
 
 const storage = new Storage({
-  projectId: process.env.GS_PROJECT_ID,
+  projectId: env.GS_PROJECT_ID,
   credentials: {
-    client_email: process.env.GS_CLIENT_EMAIL,
-    private_key: process.env.GS_PRIVATE_KEY,
+    client_email: env.GS_CLIENT_EMAIL,
+    private_key: env.GS_PRIVATE_KEY,
   },
 });
 
-const bucketName = process.env.GS_BUCKET_NAME;
-
-if (!bucketName) {
-  throw new Error("Missing GS_BUCKET_NAME environment variable");
-}
-
+const bucketName = env.GS_BUCKET_NAME;
 const bucket = storage.bucket(bucketName);
 
 export async function uploadFile(name: string, options: UploadOptions = {}) {

@@ -11,6 +11,7 @@
     "lint": "next lint --dir . && eslint . && prettier . -c",
     "lint:fix": "eslint --fix . && prettier . -w",
     "prisma:seed": "tsx prisma/seed.ts",
+    "postinstall": "prisma generate",
     "prepare": "husky install",
     "pre-commit": "lint-staged"
   },
@@ -22,6 +23,7 @@
     "@radix-ui/react-scroll-area": "^1.0.5",
     "@radix-ui/react-slot": "^1.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
+    "@t3-oss/env-nextjs": "^0.7.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "date-fns": "^2.30.0",

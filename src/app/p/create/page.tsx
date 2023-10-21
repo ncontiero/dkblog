@@ -11,7 +11,7 @@ import {
 import { useRouter } from "next/navigation";
 
 import type { PostStatus } from "@prisma/client";
-import { API_URL } from "@/utils/constants";
+import { env } from "@/env.mjs";
 import { toast } from "react-toastify";
 
 import { Button } from "@/components/ui/Button";
@@ -51,7 +51,7 @@ export default function CreatePostPage() {
 
     const formData = new FormData();
     formData.append("file", img);
-    const res = await fetch(`${API_URL}/upload`, {
+    const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/upload`, {
       method: "POST",
       body: formData,
     });
@@ -70,7 +70,7 @@ export default function CreatePostPage() {
         description: "A simple description",
         userId: "clngyij5e0000bqyavsnlpd6d",
       };
-      const res = await fetch(`${API_URL}/posts`, {
+      const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/posts`, {
         method: "POST",
         body: JSON.stringify(data),
         headers: {
