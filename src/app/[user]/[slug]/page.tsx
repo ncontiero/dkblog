@@ -1,4 +1,5 @@
 import type { Metadata, ResolvingMetadata } from "next";
+import { cache } from "react";
 import { notFound } from "next/navigation";
 import { format } from "date-fns";
 import { getPosts } from "@/utils/data";
@@ -6,30 +7,32 @@ import { getPosts } from "@/utils/data";
 import { Tag } from "@/components/Tag";
 import { UserHoverCard } from "@/components/UserHoverCard";
 import { MdRenderer } from "@/components/MdRenderer";
+import Image from "next/image";
 
 export const revalidate = 60;
 
 type Props = {
-  params: { slug: string };
+  params: { user: string; slug: string };
 };
+
+const getUserPost = cache(async ({ user, slug }: Props["params"]) => {
+  const posts = await getPosts(undefined, {
+    where: { status: "PUBLISHED", user: { username: user }, slug },
+  });
+  return posts[0];
+});
 
 export async function generateStaticParams(): Promise<Props["params"][]> {
   const posts = await getPosts(undefined, { where: { status: "PUBLISHED" } });
 
-  return posts.map((p) => ({
-    slug: p.slug,
-  }));
+  return posts.map((post) => ({ user: post.user.username, slug: post.slug }));
 }
 
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const { slug } = params;
-
-  const post = (
-    await getPosts(undefined, { where: { status: "PUBLISHED" } })
-  ).find((p) => p.slug === slug);
+  const post = await getUserPost({ ...params });
   if (!post) {
     return notFound();
   }
@@ -60,9 +63,7 @@ export async function generateMetadata(
 }
 
 export default async function PostPage({ params }: Props) {
-  const post = (
-    await getPosts(undefined, { where: { status: "PUBLISHED" } })
-  ).find((p) => p.slug === params.slug);
+  const post = await getUserPost({ ...params });
 
   if (!post) {
     notFound();
@@ -72,14 +73,17 @@ export default async function PostPage({ params }: Props) {
   return (
     <div className="bg-secondary sm:rounded-md">
       {post.image && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          src={post.image}
-          alt={post.title}
-          className="flex aspect-[1000_/_420] items-center justify-center object-contain sm:rounded-t-md"
-        />
+        <div className="relative mr-3 h-full w-full">
+          <Image
+            src={post.image}
+            alt="Post image preview"
+            width={1000}
+            height={420}
+            className="flex aspect-[1000_/_420] items-center justify-center object-contain sm:rounded-t-md"
+          />
+        </div>
       )}
-      <div className="p-4 pt-6 sm:p-10 sm:pt-8">
+      <div className="p-4 sm:p-10 sm:pt-6">
         <div className="sm:-ml-2">
           <UserHoverCard
             user={post.user}
@@ -89,7 +93,7 @@ export default async function PostPage({ params }: Props) {
           />
         </div>
         <div className="sm:px-1">
-          <h1 className="relative mb-2 mt-4 w-full scroll-m-20 text-4xl font-bold tracking-tight">
+          <h1 className="relative mb-2 mt-4 w-full scroll-m-20 text-3xl tracking-tight sm:text-4xl sm:font-bold">
             {post.title}
           </h1>
           {post.tags && post.tags.length > 0 && (
