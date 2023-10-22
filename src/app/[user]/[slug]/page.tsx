@@ -14,7 +14,7 @@ type Props = {
 };
 
 export async function generateStaticParams(): Promise<Props["params"][]> {
-  const posts = await getPosts();
+  const posts = await getPosts(undefined, { where: { status: "PUBLISHED" } });
 
   return posts.map((p) => ({
     slug: p.slug,
@@ -27,7 +27,9 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { slug } = params;
 
-  const post = (await getPosts()).find((p) => p.slug === slug);
+  const post = (
+    await getPosts(undefined, { where: { status: "PUBLISHED" } })
+  ).find((p) => p.slug === slug);
   if (!post) {
     return notFound();
   }
@@ -58,7 +60,9 @@ export async function generateMetadata(
 }
 
 export default async function PostPage({ params }: Props) {
-  const post = (await getPosts()).find((p) => p.slug === params.slug);
+  const post = (
+    await getPosts(undefined, { where: { status: "PUBLISHED" } })
+  ).find((p) => p.slug === params.slug);
 
   if (!post) {
     notFound();

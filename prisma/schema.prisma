@@ -23,7 +23,7 @@ model User {
   image      String   @default("https://img.clerk.com/preview.png")
   createdAt  DateTime @default(now()) @map("created_at")
 
-  Post Post[]
+  posts Post[]
 
   @@map("users")
 }

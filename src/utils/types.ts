@@ -7,3 +7,6 @@ export interface PostWithUserAndTags extends Post {
 export interface TagWithPosts extends Tag {
   posts: PostWithUserAndTags[];
 }
+export interface UserWithPosts extends User {
+  posts: PostWithUserAndTags[];
+}

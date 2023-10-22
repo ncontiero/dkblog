@@ -71,7 +71,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             bodyClassName="text-foreground"
             progressClassName="bg-primary"
           />
-          <div className="pt-16 sm:container">{children}</div>
+          <div className="pt-16">{children}</div>
         </ThemeProvider>
       </body>
     </html>
