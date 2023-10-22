@@ -9,7 +9,7 @@ import {
 } from "react";
 import { useRouter } from "next/navigation";
 
-import type { PostStatus } from "@prisma/client";
+import type { PostStatus, Tag as TagType } from "@prisma/client";
 import { env } from "@/env.mjs";
 import { toast } from "react-toastify";
 
@@ -21,27 +21,39 @@ import { MdRenderer } from "@/components/MdRenderer";
 import { LoadingPreview } from "./LoadingPreview";
 import { InputFile } from "@/components/ui/InputFile";
 import Image from "next/image";
+import { SelectTag } from "./SelectTag";
+import { Tag } from "@/components/Tag";
 
 interface EditValuesProps {
   title: string;
   image?: File;
   content: string;
+  tags?: TagType[];
 }
 
 export default function CreatePostPage() {
   const router = useRouter();
   const contentRef = useRef<HTMLTextAreaElement>(null);
+  const [tags, setTags] = useState<TagType[]>([]);
   const [imgPreview, setImgPreview] = useState<string | undefined>("");
   const [editValues, setEditValues] = useState<EditValuesProps>({
     title: "",
     content: "",
+    tags: [],
   });
 
+  const getTags = useCallback(async () => {
+    const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/tags`);
+    const data = (await res.json()) as TagType[];
+    setTags(data);
+  }, []);
+
   useEffect(() => {
+    getTags();
     if (contentRef.current) {
       contentRef.current.style.minHeight = 560 + "px";
     }
-  }, []);
+  }, [getTags]);
 
   const uploadImage = useCallback(async (img?: File) => {
     if (!img) {
@@ -64,6 +76,7 @@ export default function CreatePostPage() {
       const data = {
         title: editValues.title,
         content: editValues.content,
+        tags: editValues.tags?.map((tag) => tag.slug),
         image: img,
         status,
         description: "A simple description",
@@ -104,6 +117,7 @@ export default function CreatePostPage() {
     },
     [editValues],
   );
+  console.log(editValues.tags);
 
   return (
     <>
@@ -167,6 +181,30 @@ export default function CreatePostPage() {
                   }
                   value={editValues?.title}
                 />
+                <ul className="mt-2 flex">
+                  <li>
+                    <SelectTag
+                      tags={tags}
+                      selectedTags={editValues.tags || []}
+                      setSelectedTags={(tags) =>
+                        setEditValues({ ...editValues, tags })
+                      }
+                      setTags={setTags}
+                    />
+                  </li>
+                  {editValues.tags?.slice(0, 3).map((tag, i) => (
+                    <li key={i} className="ml-2">
+                      <SelectTag
+                        tags={tags}
+                        selectedTags={editValues.tags || []}
+                        setSelectedTags={(tags) =>
+                          setEditValues({ ...editValues, tags })
+                        }
+                        setTags={setTags}
+                      />
+                    </li>
+                  ))}
+                </ul>
               </div>
               <div
                 className="mb-10 h-full p-4 sm:px-16"
@@ -204,6 +242,13 @@ export default function CreatePostPage() {
                   <h1 className="relative mb-2 mt-4 w-full scroll-m-20 text-4xl font-bold tracking-tight">
                     {editValues.title}
                   </h1>
+                  {editValues.tags && editValues.tags.length > 0 && (
+                    <div className="mt-1.5 flex flex-wrap gap-0.5">
+                      {editValues.tags.map((tag) => (
+                        <Tag key={tag.id} tag={tag} />
+                      ))}
+                    </div>
+                  )}
                   <MdRenderer.Client content={editValues.content} />
                 </div>
               </div>

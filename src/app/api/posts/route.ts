@@ -53,12 +53,13 @@ const createPostSchema = z.object({
         PostStatus,
       ).join(", ")}`,
     }),
+  tags: z.string().array().optional(),
   userId: z.string().cuid(),
 });
 
 export async function POST(request: Request) {
   try {
-    const { title, description, content, status, userId, image } =
+    const { title, description, content, status, userId, image, tags } =
       createPostSchema.parse(await request.json());
     const slug = `${slugify(title)}-${crypto.randomBytes(4).toString("hex")}`;
 
@@ -71,6 +72,7 @@ export async function POST(request: Request) {
         status,
         userId,
         slug,
+        tags: { connect: tags?.map((tag) => ({ slug: tag })) },
       },
       include: { user: { select: { username: true } } },
     });
