@@ -79,7 +79,7 @@ export default async function PostPage({ params }: Props) {
             alt="Post image preview"
             width={1000}
             height={420}
-            className="flex aspect-[1000_/_420] items-center justify-center object-contain sm:rounded-t-md"
+            className="flex items-center justify-center object-contain sm:rounded-t-md"
           />
         </div>
       )}

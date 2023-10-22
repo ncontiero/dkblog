@@ -1,7 +1,13 @@
-import { forwardRef, type InputHTMLAttributes } from "react";
+import { forwardRef, type ReactNode, type InputHTMLAttributes } from "react";
 
 import { cva, type VariantProps } from "class-variance-authority";
 import { Button } from "./Button";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+  TooltipProvider,
+} from "./Tooltip";
 import { cn } from "@/lib/utils";
 
 const inputFileVariants = cva(
@@ -40,6 +46,7 @@ interface InputFileProps extends InputHTMLAttributes<HTMLInputElement> {
   variant?: VariantProps<typeof inputFileVariants>["variant"];
   btnSize?: VariantProps<typeof inputFileVariants>["size"];
   labelText?: string;
+  tooltipContent?: ReactNode;
 }
 
 export const InputFile = forwardRef<HTMLInputElement, InputFileProps>(
@@ -50,22 +57,36 @@ export const InputFile = forwardRef<HTMLInputElement, InputFileProps>(
       btnSize,
       labelText = "Add a cover image",
       id,
+      tooltipContent,
       ...props
     },
     ref,
   ) => {
     return (
-      <Button
-        variant={variant}
-        size={btnSize}
-        className={cn(inputFileVariants({ variant, className }))}
-        asChild
-      >
-        <label htmlFor={id}>
-          <input type="file" className="w-[0px]" id={id} ref={ref} {...props} />
-          {labelText}
-        </label>
-      </Button>
+      <TooltipProvider>
+        <Tooltip delayDuration={100}>
+          <TooltipTrigger asChild>
+            <Button
+              variant={variant}
+              size={btnSize}
+              className={cn(inputFileVariants({ variant, className }))}
+              asChild
+            >
+              <label htmlFor={id}>
+                <input
+                  type="file"
+                  className="w-[0px]"
+                  id={id}
+                  ref={ref}
+                  {...props}
+                />
+                {labelText}
+              </label>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent>{tooltipContent}</TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
     );
   },
 );

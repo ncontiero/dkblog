@@ -19,7 +19,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 import { Textarea } from "@/components/ui/Textarea";
 import { MdRenderer } from "@/components/MdRenderer";
 import { LoadingPreview } from "./LoadingPreview";
-import { InputFile } from "@/components/ui/InputFile";
+import { InputFile as InputFilePrimitive } from "@/components/ui/InputFile";
 import Image from "next/image";
 import { SelectTag } from "./SelectTag";
 import { Tag } from "@/components/Tag";
@@ -117,7 +117,27 @@ export default function CreatePostPage() {
     },
     [editValues],
   );
-  console.log(editValues.tags);
+
+  const InputFile = () => {
+    return (
+      <InputFilePrimitive
+        variant="outlinePrimary"
+        className="bg-secondary py-4 text-foreground focus-within:bg-primary focus-within:text-primary-foreground sm:py-6 sm:text-base"
+        id="cover-image"
+        accept="image/*"
+        onChange={handleImage}
+        tooltipContent={
+          <>
+            <p className="text-sm">Only images are allowed.</p>
+            <p className="text-sm">Maximum file size is 5MB.</p>
+            <p className="text-sm">
+              Use a ration of 1000:420 for best results.
+            </p>
+          </>
+        }
+      />
+    );
+  };
 
   return (
     <>
@@ -143,14 +163,7 @@ export default function CreatePostPage() {
                   )}
                   {imgPreview ? (
                     <div className="flex gap-1">
-                      <InputFile
-                        variant="outlinePrimary"
-                        className="bg-secondary py-4 text-foreground focus-within:bg-primary focus-within:text-primary-foreground sm:py-6 sm:text-base"
-                        id="cover-image"
-                        accept="image/*"
-                        labelText="Change"
-                        onChange={handleImage}
-                      />
+                      <InputFile />
                       <Button
                         variant="destructive"
                         className="border border-transparent py-4 sm:py-6 sm:text-base"
@@ -163,13 +176,7 @@ export default function CreatePostPage() {
                       </Button>
                     </div>
                   ) : (
-                    <InputFile
-                      variant="outlinePrimary"
-                      className="bg-secondary py-4 text-foreground focus-within:bg-primary focus-within:text-primary-foreground sm:py-6 sm:text-base"
-                      id="cover-image"
-                      accept="image/*"
-                      onChange={handleImage}
-                    />
+                    <InputFile />
                   )}
                 </div>
                 <Textarea
@@ -234,7 +241,7 @@ export default function CreatePostPage() {
                       alt="Post image preview"
                       width={1000}
                       height={420}
-                      className="-mt-2.5 flex aspect-[1000_/_420] items-center justify-center object-contain sm:rounded-t-md"
+                      className="-mt-2.5 flex items-center justify-center object-contain sm:rounded-t-md"
                     />
                   </div>
                 )}
