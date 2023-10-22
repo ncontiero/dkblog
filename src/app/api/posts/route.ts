@@ -5,6 +5,7 @@ import { postsQuerySchema } from "@/utils/querySchema";
 import { z } from "zod";
 import { slugify } from "@/utils/slugify";
 import crypto from "node:crypto";
+import { exclude } from "@/utils/data";
 
 export async function GET(request: Request) {
   try {
@@ -59,11 +60,7 @@ export async function POST(request: Request) {
   try {
     const { title, description, content, status, userId, image } =
       createPostSchema.parse(await request.json());
-
-    let slug = slugify(title);
-    if (await prisma.post.findUnique({ where: { slug: slugify(title) } })) {
-      slug = `${slug}-${crypto.randomBytes(4).toString("hex")}`;
-    }
+    const slug = `${slugify(title)}-${crypto.randomBytes(4).toString("hex")}`;
 
     const post = await prisma.post.create({
       data: {
@@ -75,9 +72,10 @@ export async function POST(request: Request) {
         userId,
         slug,
       },
+      include: { user: { select: { username: true } } },
     });
 
-    return new Response(JSON.stringify(post), {
+    return new Response(JSON.stringify(exclude(post, ["userId"])), {
       headers: { "content-type": "application/json" },
     });
   } catch (error) {

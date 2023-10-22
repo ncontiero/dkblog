@@ -70,7 +70,9 @@ export function UserHoverCard({
             {user.username}
           </h4>
         </Link>
-        <Button className="mt-4 w-full">Follow</Button>
+        <Button className="mt-4 w-full" size="sm">
+          Follow
+        </Button>
         <div className="flex items-center pt-4">
           <CalendarDays className="mr-2 h-4 w-4 opacity-70" />{" "}
           <span className="text-xs text-muted-foreground">

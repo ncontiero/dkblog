@@ -67,7 +67,7 @@ export default function CreatePostPage() {
         image: img,
         status,
         description: "A simple description",
-        userId: "clngyij5e0000bqyavsnlpd6d",
+        userId: "clo0o2v4a0001bqo8w2xl2ova",
       };
       const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/posts`, {
         method: "POST",
@@ -78,8 +78,9 @@ export default function CreatePostPage() {
       });
 
       if (res.ok) {
+        const post = await res.json();
         setTimeout(async () => {
-          router.push(`/p/${(await res.json()).slug}`);
+          router.push(`/${post.user.username}/${post.slug}`);
         }, 1000);
         toast.dismiss(toastLoading);
         toast.success("Post created successfully! Wait while we redirect you");
@@ -138,7 +139,7 @@ export default function CreatePostPage() {
                       />
                       <Button
                         variant="destructive"
-                        className="py-4 sm:py-6 sm:text-base"
+                        className="border border-transparent py-4 sm:py-6 sm:text-base"
                         onClick={() => {
                           setEditValues({ ...editValues, image: undefined });
                           setImgPreview(undefined);
@@ -189,12 +190,15 @@ export default function CreatePostPage() {
             {editValues.content !== "" && editValues.title !== "" ? (
               <div className="w-full">
                 {imgPreview && (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img
-                    src={imgPreview}
-                    alt={editValues.title}
-                    className="-mt-2.5 flex aspect-[1000_/_420] items-center justify-center object-contain sm:rounded-t-md"
-                  />
+                  <div className="relative mr-3 h-full w-full">
+                    <Image
+                      src={imgPreview}
+                      alt="Post image preview"
+                      width={1000}
+                      height={420}
+                      className="-mt-2.5 flex aspect-[1000_/_420] items-center justify-center object-contain sm:rounded-t-md"
+                    />
+                  </div>
                 )}
                 <div className="w-full px-4 py-4 sm:px-16">
                   <h1 className="relative mb-2 mt-4 w-full scroll-m-20 text-4xl font-bold tracking-tight">
