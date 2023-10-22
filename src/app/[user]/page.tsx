@@ -96,7 +96,9 @@ export default async function UserPage({ params }: Props) {
             <CalendarDays className="mr-2 h-4 w-4 opacity-70" />{" "}
             <span className="text-xs text-muted-foreground">
               Joined on{" "}
-              <time dateTime={new Date().toISOString()}>{joinedOn}</time>
+              <time dateTime={new Date(user.createdAt).toISOString()}>
+                {joinedOn}
+              </time>
             </span>
           </div>
         </div>
