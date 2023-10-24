@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@google-cloud/storage':
-    specifier: ^7.3.1
-    version: 7.3.1
+    specifier: ^7.3.2
+    version: 7.3.2
   '@prisma/client':
     specifier: 5.4.2
     version: 5.4.2(prisma@5.4.2)
@@ -486,8 +486,8 @@ packages:
     engines: {node: '>=14'}
     dev: false
 
-  /@google-cloud/storage@7.3.1:
-    resolution: {integrity: sha512-6QqLDLSBClHxIstjR6E35d5sdTtlGdiqxM+pOCZ2CXW3CrATdJIBs5wc5aiIfILk/qhsvQmzzI8QbAGt0JKBzw==}
+  /@google-cloud/storage@7.3.2:
+    resolution: {integrity: sha512-tf3Rn+7pt9284IRr5S6haI8IOJ/0tZQ0UgQSUa+/VThYmTysSIW6a8pdYMeHVO3ZqAoT4JwNUvkj8hYlp9mLWA==}
     engines: {node: '>=14'}
     dependencies:
       '@google-cloud/paginator': 5.0.0
