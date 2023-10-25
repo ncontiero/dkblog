@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { ModeToggle } from "./ThemeToggle";
 
 export function Header() {
@@ -11,7 +12,20 @@ export function Header() {
         >
           DkBlog
         </Link>
-        <ModeToggle />
+        <div className="flex items-center gap-2">
+          <SignedOut>
+            <Link
+              href="/sign-in"
+              className="flex h-full items-center justify-center gap-2 rounded-md p-2 font-bold uppercase ring-ring duration-200 hover:text-primary focus:text-primary focus:outline-none focus:ring-2 active:opacity-70 sm:w-auto sm:px-4 sm:py-2"
+            >
+              Login
+            </Link>
+          </SignedOut>
+          <ModeToggle />
+          <SignedIn>
+            <UserButton afterSignOutUrl="/" userProfileMode="modal" />
+          </SignedIn>
+        </div>
       </div>
     </header>
   );

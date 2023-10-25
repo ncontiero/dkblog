@@ -27,6 +27,10 @@ export const env = createEnv({
     GS_PROJECT_ID: z.string().min(1),
     GS_CLIENT_EMAIL: z.string().email(),
     GS_PRIVATE_KEY: z.string().min(1),
+
+    // Clerk
+    CLERK_SECRET_KEY: z.string().min(1),
+    CLERK_WEBHOOK_SIGNING_SECRET: z.string().min(1),
   },
   /**
    * Specify your client-side environment variables schema here. This way you can ensure the app
@@ -37,6 +41,13 @@ export const env = createEnv({
     NEXT_PUBLIC_IMG_DOMAINS: z.string().transform((val) => val.split(",")),
     // API
     NEXT_PUBLIC_API_URL: z.string().url().default("http://localhost:3000/api"),
+    // Clerk
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
+    // Clerk URLs
+    NEXT_PUBLIC_CLERK_SIGN_IN_URL: z.string().default("/sign-in"),
+    NEXT_PUBLIC_CLERK_SIGN_UP_URL: z.string().default("/sign-up"),
+    NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL: z.string().default("/"),
+    NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL: z.string().default("/"),
   },
   runtimeEnv: {
     // Node
@@ -53,12 +64,25 @@ export const env = createEnv({
     GS_PROJECT_ID: process.env.GS_PROJECT_ID,
     GS_CLIENT_EMAIL: process.env.GS_CLIENT_EMAIL,
     GS_PRIVATE_KEY: process.env.GS_PRIVATE_KEY,
+    // Clerk
+    CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
+    CLERK_WEBHOOK_SIGNING_SECRET: process.env.CLERK_WEBHOOK_SIGNING_SECRET,
 
     // Client
     // ----------------------------
     NEXT_PUBLIC_IMG_DOMAINS: process.env.NEXT_PUBLIC_IMG_DOMAINS,
     // API
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+    // Clerk
+    NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY:
+      process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
+    // Clerk URLs
+    NEXT_PUBLIC_CLERK_SIGN_IN_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL,
+    NEXT_PUBLIC_CLERK_SIGN_UP_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL,
+    NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL:
+      process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL,
+    NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL:
+      process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

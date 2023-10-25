@@ -7,8 +7,84 @@ import { Merriweather_Sans as MerriweatherSans } from "next/font/google";
 
 import { env } from "@/env.mjs";
 import { ToastContainer } from "react-toastify";
+import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { unstable_createTheme as unstableCreateTheme } from "@clerk/themes";
 import { Header } from "@/components/Header";
+
+export const clerkTheme = unstableCreateTheme({
+  elements: {
+    card: "bg-card border border-primary/50",
+    modalCloseButton:
+      "text-foreground hover:bg-secondary/80 active:bg-secondary focus:ring focus:ring-ring",
+    identityPreview: "bg-secondary",
+    identityPreviewText: "text-foreground/60",
+    identityPreviewEditButton: "text-primary/90 hover:text-primary",
+    headerTitle: "text-foreground",
+    headerSubtitle: "text-foreground/60",
+    formHeaderTitle: "text-foreground",
+    formHeaderSubtitle: "text-foreground/60",
+    formFieldLabel: "text-foreground",
+    formFieldInput:
+      "border-input bg-background text-foreground ring-ring focus:ring-1 dark:border-zinc-700",
+    formFieldInputShowPasswordButton:
+      "text-foreground/40 hover:text-foreground/70",
+    formFieldWarningText: "text-foreground/60",
+    formFieldSuccessText: "text-foreground/60",
+    formButtonPrimary:
+      "bg-primary/80 duration-300 hover:bg-primary focus:bg-primary focus:ring focus:ring-ring",
+    formButtonReset:
+      "hover:bg-primary/20 text-primary duration-300 focus:ring focus:ring-ring",
+    formResendCodeLink: "text-primary hover:text-primary",
+    formFieldAction__password: "text-primary hover:text-primary",
+    headerBackRow: {
+      a: { color: "hsl(var(--primary))" },
+      "a:hover": { color: "hsl(var(--primary))" },
+      "a:active": { color: "hsl(var(--primary))" },
+      "a:focus": { boxShadow: "hsl(var(--primary)) 0px 0px 0px 3px" },
+    },
+    otpCodeFieldInput:
+      "border-b-2 border-border text-foreground focus:border-primary",
+    alternativeMethodsBlockButton:
+      "text-foreground border border-input hover:bg-secondary active:bg-secondary focus:ring focus:ring-ring",
+    main: {
+      ".cl-internal-rsjg4y": {
+        color: "hsl(var(--foreground)/0.6)",
+      },
+      ".cl-internal-1b63r8w": {
+        color: "hsl(var(--foreground))",
+      },
+    },
+    footerActionLink:
+      "text-primary hover:text-primary focus:ring focus:ring-ring",
+    footerActionText: "text-foreground/60",
+    userPreviewMainIdentifier: "text-foreground",
+    userPreviewSecondaryIdentifier: "text-foreground/60",
+    userButtonPopoverActionButton:
+      "hover:bg-secondary/60 focus-visible:bg-secondary/60 active:bg-secondary",
+    userButtonPopoverActionButtonText: "text-foreground/60",
+    userButtonPopoverActionButtonIcon: "text-foreground/40",
+    userButtonPopoverFooter: "hidden",
+    profileSectionTitle: "border-b border-border",
+    profileSectionTitleText: "text-foreground",
+    profileSectionContent: {
+      "p:not(.cl-internal-fqx4fd)": { color: "hsl(var(--foreground))" },
+      ".cl-internal-fqx4fd": { color: "hsl(var(--foreground)/0.6)" },
+    },
+    profileSectionPrimaryButton:
+      "text-primary hover:bg-primary/20 active:bg-primary/30 focus:ring focus:ring-ring",
+    accordionTriggerButton:
+      "text-foreground hover:bg-secondary/80 focus:ring focus:ring-ring active:bg-secondary",
+    navbarButton:
+      "text-foreground/80 data-[active=true]:text-foreground hover:bg-secondary focus:ring focus:ring-ring",
+    avatarImageActionsUpload:
+      "text-primary hover:text-primary focus:ring focus:ring-ring",
+    breadcrumbsItem__currentPage: "text-foreground",
+    breadcrumbsItem: "text-foreground/60 focus:ring focus:ring-ring",
+    breadcrumbsItemDivider: "text-foreground/60",
+    badge: "text-primary bg-primary/20",
+  },
+});
 
 const merriweatherSans = MerriweatherSans({
   subsets: ["latin"],
@@ -56,24 +132,26 @@ export const metadata: Metadata = {
 };
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en" className={merriweatherSans.variable}>
-      <body>
-        <ThemeProvider attribute="class" defaultTheme="system">
-          <Header />
-          <ToastContainer
-            autoClose={3000}
-            position="top-right"
-            theme="dark"
-            newestOnTop={true}
-            pauseOnFocusLoss={false}
-            limit={3}
-            toastClassName="bg-background"
-            bodyClassName="text-foreground"
-            progressClassName="bg-primary"
-          />
-          <div className="pt-16">{children}</div>
-        </ThemeProvider>
-      </body>
-    </html>
+    <ClerkProvider appearance={{ baseTheme: clerkTheme }}>
+      <html lang="en" className={merriweatherSans.variable}>
+        <body>
+          <ThemeProvider attribute="class" defaultTheme="system">
+            <Header />
+            <ToastContainer
+              autoClose={3000}
+              position="top-right"
+              theme="dark"
+              newestOnTop={true}
+              pauseOnFocusLoss={false}
+              limit={3}
+              toastClassName="bg-background"
+              bodyClassName="text-foreground"
+              progressClassName="bg-primary"
+            />
+            <div className="pt-16">{children}</div>
+          </ThemeProvider>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
