@@ -111,8 +111,8 @@ dependencies:
     specifier: ^1.0.7
     version: 1.0.7(tailwindcss@3.3.5)
   unified:
-    specifier: ^11.0.3
-    version: 11.0.3
+    specifier: ^11.0.4
+    version: 11.0.4
   zod:
     specifier: ^3.22.4
     version: 3.22.4
@@ -5465,7 +5465,7 @@ packages:
     dependencies:
       '@types/hast': 3.0.2
       hast-util-to-jsx-runtime: 2.2.0
-      unified: 11.0.3
+      unified: 11.0.4
     dev: false
 
   /rehype-sanitize@6.0.0:
@@ -5490,7 +5490,7 @@ packages:
     dependencies:
       '@types/hast': 3.0.2
       hast-util-to-html: 9.0.0
-      unified: 11.0.3
+      unified: 11.0.4
     dev: false
 
   /remark-gfm@4.0.0:
@@ -5501,7 +5501,7 @@ packages:
       micromark-extension-gfm: 3.0.0
       remark-parse: 11.0.0
       remark-stringify: 11.0.0
-      unified: 11.0.3
+      unified: 11.0.4
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -5512,7 +5512,7 @@ packages:
       '@types/mdast': 4.0.2
       mdast-util-from-markdown: 2.0.0
       micromark-util-types: 2.0.0
-      unified: 11.0.3
+      unified: 11.0.4
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -5523,7 +5523,7 @@ packages:
       '@types/hast': 3.0.2
       '@types/mdast': 4.0.2
       mdast-util-to-hast: 13.0.2
-      unified: 11.0.3
+      unified: 11.0.4
       vfile: 6.0.1
     dev: false
 
@@ -5532,7 +5532,7 @@ packages:
     dependencies:
       '@types/mdast': 4.0.2
       mdast-util-to-markdown: 2.1.0
-      unified: 11.0.3
+      unified: 11.0.4
     dev: false
 
   /requires-port@1.0.0:
@@ -6215,8 +6215,8 @@ packages:
       which-boxed-primitive: 1.0.2
     dev: true
 
-  /unified@11.0.3:
-    resolution: {integrity: sha512-jlCV402P+YDcFcB2VcN/n8JasOddqIiaxv118wNBoZXEhOn+lYG7BR4Bfg2BwxvlK58dwbuH2w7GX2esAjL6Mg==}
+  /unified@11.0.4:
+    resolution: {integrity: sha512-apMPnyLjAX+ty4OrNap7yumyVAMlKx5IWU2wlzzUdYJO9A8f1p9m/gywF/GM2ZDFcjQPrx59Mc90KwmxsoklxQ==}
     dependencies:
       '@types/unist': 3.0.1
       bail: 2.0.2
