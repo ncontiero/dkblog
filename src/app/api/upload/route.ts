@@ -1,8 +1,14 @@
+import { auth } from "@clerk/nextjs";
 import { errorResponse } from "@/utils/errorResponse";
 import { saveFile } from "@/utils/saveFile";
 
 export async function POST(request: Request) {
   try {
+    const { userId } = auth();
+    if (!userId) {
+      throw new Error("Unauthorized");
+    }
+
     const formData = await request.formData();
     const file = formData.get("file") as Blob;
     const field = formData.get("field")?.toString() || "posts";

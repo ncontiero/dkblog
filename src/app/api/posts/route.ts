@@ -1,3 +1,4 @@
+import { auth } from "@clerk/nextjs";
 import { PostStatus } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { errorResponse } from "@/utils/errorResponse";
@@ -54,14 +55,23 @@ const createPostSchema = z.object({
       ).join(", ")}`,
     }),
   tags: z.string().array().optional(),
-  userId: z.string().cuid(),
+  userId: z.string().min(5),
 });
 
 export async function POST(request: Request) {
   try {
+    const { userId: clerkUserId } = auth();
+    if (!clerkUserId) {
+      throw new Error("Unauthorized");
+    }
+
     const { title, description, content, status, userId, image, tags } =
       createPostSchema.parse(await request.json());
     const slug = `${slugify(title)}-${crypto.randomBytes(4).toString("hex")}`;
+
+    if (userId !== clerkUserId) {
+      throw new Error("Unauthorized");
+    }
 
     const post = await prisma.post.create({
       data: {
@@ -70,9 +80,9 @@ export async function POST(request: Request) {
         content,
         image,
         status,
-        userId,
         slug,
         tags: { connect: tags?.map((tag) => ({ slug: tag })) },
+        user: { connect: { externalId: userId } },
       },
       include: { user: { select: { username: true } } },
     });

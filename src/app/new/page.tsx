@@ -7,7 +7,8 @@ import {
   useRef,
   useState,
 } from "react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import { useAuth } from "@clerk/nextjs";
 
 import type { PostStatus, Tag as TagType } from "@prisma/client";
 import { env } from "@/env.mjs";
@@ -32,6 +33,7 @@ interface EditValuesProps {
 }
 
 export default function CreatePostPage() {
+  const { isLoaded, userId } = useAuth();
   const router = useRouter();
   const contentRef = useRef<HTMLTextAreaElement>(null);
   const [tags, setTags] = useState<TagType[]>([]);
@@ -72,37 +74,43 @@ export default function CreatePostPage() {
   const submitData = useCallback(
     async (status: PostStatus = "DRAFTED") => {
       const toastLoading = toast.loading("Creating post...");
-      const img = await uploadImage(editValues.image);
-      const data = {
-        title: editValues.title,
-        content: editValues.content,
-        tags: editValues.tags?.map((tag) => tag.slug),
-        image: img,
-        status,
-        description: "A simple description",
-        userId: "clo0o2v4a0001bqo8w2xl2ova",
-      };
-      const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/posts`, {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+      try {
+        const img = await uploadImage(editValues.image);
+        const data = {
+          title: editValues.title,
+          content: editValues.content,
+          tags: editValues.tags?.map((tag) => tag.slug),
+          image: img,
+          status,
+          description: "A simple description",
+          userId,
+        };
+        const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/posts`, {
+          method: "POST",
+          body: JSON.stringify(data),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
 
-      if (res.ok) {
-        const post = await res.json();
-        setTimeout(async () => {
-          router.push(`/${post.user.username}/${post.slug}`);
-        }, 1000);
-        toast.dismiss(toastLoading);
-        toast.success("Post created successfully! Wait while we redirect you");
-      } else {
+        if (res.ok) {
+          const post = await res.json();
+          setTimeout(async () => {
+            router.push(`/${post.user.username}/${post.slug}`);
+          }, 1000);
+          toast.dismiss(toastLoading);
+          toast.success(
+            "Post created successfully! Wait while we redirect you",
+          );
+        } else {
+          throw new Error("Failed to create post");
+        }
+      } catch (err) {
         toast.dismiss(toastLoading);
         toast.error("Failed to create post");
       }
     },
-    [editValues, router, uploadImage],
+    [editValues, router, uploadImage, userId],
   );
 
   const handleImage = useCallback(
@@ -138,6 +146,10 @@ export default function CreatePostPage() {
       />
     );
   };
+
+  if (!isLoaded || !userId) {
+    redirect("/sign-in?redirect_url=/new");
+  }
 
   return (
     <>

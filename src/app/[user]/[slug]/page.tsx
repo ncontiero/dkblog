@@ -2,12 +2,15 @@ import type { Metadata, ResolvingMetadata } from "next";
 import { cache } from "react";
 import { notFound } from "next/navigation";
 import { format } from "date-fns";
+import { currentUser } from "@clerk/nextjs";
 import { getPosts } from "@/utils/data";
 
 import { Tag } from "@/components/Tag";
 import { UserHoverCard } from "@/components/UserHoverCard";
 import { MdRenderer } from "@/components/MdRenderer";
 import Image from "next/image";
+import { Button } from "@/components/ui/Button";
+import Link from "next/link";
 
 export const revalidate = 60;
 
@@ -16,8 +19,10 @@ type Props = {
 };
 
 const getUserPost = cache(async ({ user, slug }: Props["params"]) => {
+  const clerkUser = await currentUser();
+  const status = clerkUser?.username === user ? undefined : "PUBLISHED";
   const posts = await getPosts(undefined, {
-    where: { status: "PUBLISHED", user: { username: user }, slug },
+    where: { status, user: { username: user }, slug },
   });
   return posts[0];
 });
@@ -63,6 +68,7 @@ export async function generateMetadata(
 }
 
 export default async function PostPage({ params }: Props) {
+  const user = await currentUser();
   const post = await getUserPost({ ...params });
 
   if (!post) {
@@ -84,13 +90,18 @@ export default async function PostPage({ params }: Props) {
         </div>
       )}
       <div className="p-4 sm:p-10 sm:pt-6">
-        <div className="sm:-ml-2">
+        <div className="flex items-center justify-between sm:-ml-2">
           <UserHoverCard
             user={post.user}
             postDate={postedOn}
             postPage
             postDateFormatted={`Posted on ${format(postedOn, "MMM d, yyyy")}`}
           />
+          {user && user.username === post.user.username && (
+            <Button asChild>
+              <Link href={`/${user.username}/${post.slug}/edit`}>Edit</Link>
+            </Button>
+          )}
         </div>
         <div className="sm:px-1">
           <h1 className="relative mb-2 mt-4 w-full scroll-m-20 text-3xl tracking-tight sm:text-4xl sm:font-bold">

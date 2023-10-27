@@ -1,3 +1,4 @@
+import { auth } from "@clerk/nextjs";
 import { PostStatus } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { errorResponse } from "@/utils/errorResponse";
@@ -50,6 +51,11 @@ export async function PATCH(
   { params }: { params: { slug: string } },
 ) {
   try {
+    const { userId: clerkUserId } = auth();
+    if (!clerkUserId) {
+      throw new Error("Unauthorized");
+    }
+
     const { searchParams } = new URL(request.url);
     const updateSlug = updateSlugParam.parse(searchParams.get("updateSlug"));
 
@@ -57,15 +63,24 @@ export async function PATCH(
     const newSlug =
       updatePost.title && updateSlug ? slugify(updatePost.title) : undefined;
 
-    let post = await prisma.post.findUnique({ where: { slug: params.slug } });
+    let post = await prisma.post.findUnique({
+      where: { slug: params.slug },
+      include: { user: { select: { externalId: true } } },
+    });
     if (!post) {
       throw new Error("Post not found");
     }
+    if (post.user.externalId !== clerkUserId) {
+      throw new Error("Unauthorized");
+    }
+    console.log(post);
 
     post = await prisma.post.update({
       where: { slug: params.slug },
+      include: { user: { select: { externalId: true } } },
       data: { ...updatePost, slug: newSlug },
     });
+    console.log(post);
     return new Response(JSON.stringify(post), {
       headers: { "content-type": "application/json" },
     });
