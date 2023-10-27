@@ -1,19 +1,15 @@
 import type { Tag } from "@prisma/client";
 import { useState } from "react";
 
-import { Input } from "@/components/ui/Input";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/Popover";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/Popover";
 import {
   Command,
   CommandEmpty,
   CommandGroup,
   CommandInput,
   CommandItem,
-} from "@/components/ui/Command";
+} from "../ui/Command";
+import { Button } from "../ui/Button";
 import { X } from "lucide-react";
 
 interface SelectTagProps {
@@ -21,6 +17,7 @@ interface SelectTagProps {
   setTags: (tags: Tag[]) => void;
   selectedTags: Tag[];
   setSelectedTags: (tags: Tag[]) => void;
+  initialValue?: Tag;
 }
 
 export function SelectTag({
@@ -28,9 +25,10 @@ export function SelectTag({
   setTags,
   selectedTags,
   setSelectedTags,
+  initialValue,
 }: SelectTagProps) {
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState<Tag>();
+  const [value, setValue] = useState<Tag | undefined>(initialValue);
 
   return (
     <Popover
@@ -66,22 +64,14 @@ export function SelectTag({
             </button>
           </div>
         ) : (
-          <Input
-            type="text"
-            placeholder={
-              value
-                ? selectedTags.find((tag) => tag === value)?.slug
-                : selectedTags.length === 0
-                ? "Add up to 4 tags"
-                : "Add another"
-            }
+          <Button
+            type="button"
             role="combobox"
             aria-expanded={open}
-            className="bg-secondary p-0 text-base"
-            defaultValue={
-              value ? selectedTags.find((tag) => tag === value)?.slug : ""
-            }
-          />
+            variant="outline"
+          >
+            {selectedTags.length === 0 ? "Add up to 4 tags" : "Add another"}
+          </Button>
         )}
       </PopoverTrigger>
       <PopoverContent className="mt-1 w-full p-0">

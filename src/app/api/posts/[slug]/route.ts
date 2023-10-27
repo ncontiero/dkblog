@@ -44,6 +44,7 @@ const updatePostSchema = z.object({
       ).join(", ")}`,
     })
     .optional(),
+  tags: z.string().array().optional(),
 });
 
 export async function PATCH(
@@ -59,7 +60,9 @@ export async function PATCH(
     const { searchParams } = new URL(request.url);
     const updateSlug = updateSlugParam.parse(searchParams.get("updateSlug"));
 
-    const updatePost = updatePostSchema.parse(await request.json());
+    const { tags, ...updatePost } = updatePostSchema.parse(
+      await request.json(),
+    );
     const newSlug =
       updatePost.title && updateSlug ? slugify(updatePost.title) : undefined;
 
@@ -73,14 +76,16 @@ export async function PATCH(
     if (post.user.externalId !== clerkUserId) {
       throw new Error("Unauthorized");
     }
-    console.log(post);
 
     post = await prisma.post.update({
       where: { slug: params.slug },
-      include: { user: { select: { externalId: true } } },
-      data: { ...updatePost, slug: newSlug },
+      include: { user: { select: { externalId: true, username: true } } },
+      data: {
+        ...updatePost,
+        slug: newSlug,
+        tags: { set: tags?.map((tag) => ({ slug: tag })) },
+      },
     });
-    console.log(post);
     return new Response(JSON.stringify(post), {
       headers: { "content-type": "application/json" },
     });
