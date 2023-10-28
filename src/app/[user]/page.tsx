@@ -9,6 +9,7 @@ import { PostCard } from "@/components/PostCard";
 import Link from "next/link";
 
 import { CalendarDays, Hash, ScrollText } from "lucide-react";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 
 export const revalidate = 60;
 
@@ -64,8 +65,10 @@ export default async function UserPage({ params }: Props) {
     notFound();
   }
 
+  const isOwner = clerkCurrentUser?.username === user.username;
   const joinedOn = format(new Date(user.createdAt), "dd MMM. yyyy");
-  const posts = user.posts.filter((p) => p.status === "PUBLISHED");
+  const postsP = user.posts.filter((p) => p.status === "PUBLISHED");
+  const postsD = user.posts.filter((p) => p.status === "DRAFTED");
   const postsPublished = user.posts
     .map((p) => (p.status === "PUBLISHED" ? 1 : (0 as number)))
     .reduce((a, b) => a + b, 0);
@@ -93,7 +96,7 @@ export default async function UserPage({ params }: Props) {
             />
           </span>
           <div className="absolute inset-x-0 right-0 top-0 flex justify-end pr-6 pt-6">
-            {clerkCurrentUser?.username === user.username ? (
+            {isOwner ? (
               <Button asChild>
                 <Link href="/settings">Edit profile</Link>
               </Button>
@@ -131,9 +134,46 @@ export default async function UserPage({ params }: Props) {
           </div>
         </div>
         <div className="col-span-2 flex flex-col gap-2">
-          {posts.map((post) => (
-            <PostCard key={post.id} {...post} className="w-full p-5" />
-          ))}
+          {isOwner ? (
+            <Tabs defaultValue="published">
+              <TabsList className="grid w-full grid-cols-2 rounded-none sm:rounded-md">
+                <TabsTrigger value="published">Published</TabsTrigger>
+                <TabsTrigger value="drafted">Drafted</TabsTrigger>
+              </TabsList>
+              <TabsContent value="published">
+                {postsP.length > 0 ? (
+                  postsP.map((post) => (
+                    <PostCard
+                      key={post.id}
+                      {...post}
+                      className="mt-2 w-full p-5"
+                    />
+                  ))
+                ) : (
+                  <p className="text-center">No posts published</p>
+                )}
+              </TabsContent>
+              <TabsContent value="drafted">
+                {postsD.length > 0 ? (
+                  postsD.map((post) => (
+                    <PostCard
+                      key={post.id}
+                      {...post}
+                      className="mt-2 w-full p-5"
+                    />
+                  ))
+                ) : (
+                  <p className="text-center">No posts drafted</p>
+                )}
+              </TabsContent>
+            </Tabs>
+          ) : postsP.length > 0 ? (
+            postsP.map((post) => (
+              <PostCard key={post.id} {...post} className="w-full p-5" />
+            ))
+          ) : (
+            <p className="text-center">No posts published</p>
+          )}
         </div>
       </div>
     </div>
