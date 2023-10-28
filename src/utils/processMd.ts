@@ -6,7 +6,7 @@ import rehypeStringify from "rehype-stringify";
 import rehypeSanitize from "rehype-sanitize";
 import rehypeSlug from "rehype-slug";
 import rehypePrettyCode, {
-  Options as PrettyCodeOptions,
+  type Options as PrettyCodeOptions,
 } from "rehype-pretty-code";
 import rehypeReact from "rehype-react";
 import * as prod from "react/jsx-runtime";
@@ -39,7 +39,12 @@ const prettyCodeOptions: PrettyCodeOptions = {
   },
 };
 
-export async function processMd({ content }: { content: string }) {
+interface ProcessMd {
+  content: string;
+  getHighlighter?: PrettyCodeOptions["getHighlighter"];
+}
+
+export async function processMd({ content, getHighlighter }: ProcessMd) {
   return await unified()
     .use(remarkParse)
     .use(remarkGfm)
@@ -48,7 +53,7 @@ export async function processMd({ content }: { content: string }) {
     .use(rehypeSlug)
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    .use(rehypePrettyCode, prettyCodeOptions)
+    .use(rehypePrettyCode, { ...prettyCodeOptions, getHighlighter })
     .use(rehypeStringify)
     .use(rehypeReact, production)
     .process(content);

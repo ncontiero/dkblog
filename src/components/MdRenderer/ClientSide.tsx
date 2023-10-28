@@ -10,7 +10,7 @@ export function MdRendererClient({ content }: { content: string }) {
   const [loading, setLoading] = useState(true);
   const [Content, setContent] = useState(createElement(Fragment));
 
-  setCDN("/");
+  setCDN("/shiki");
 
   useEffect(() => {
     const processContent = async () => {
