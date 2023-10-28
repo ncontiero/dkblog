@@ -301,9 +301,7 @@ export function CreatePost({
                       ))}
                     </div>
                   )}
-                  <div className="prose prose-quoteless pl-1 pt-7 dark:prose-invert">
-                    <MdRenderer.Client content={editValues.content} />
-                  </div>
+                  <MdRenderer.Client content={editValues.content} />
                 </div>
               </div>
             ) : (

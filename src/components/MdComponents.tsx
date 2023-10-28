@@ -203,7 +203,7 @@ export const MdComponents: Components = {
   pre: ({ className, ...props }) => (
     <pre
       className={cn(
-        "my-4 overflow-x-auto rounded-lg bg-black px-0 py-4",
+        "my-4 overflow-x-auto rounded-lg bg-background px-0 py-4",
         className,
       )}
       {...props}

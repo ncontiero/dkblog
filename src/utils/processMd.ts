@@ -24,7 +24,7 @@ const production = {
 };
 
 const prettyCodeOptions: PrettyCodeOptions = {
-  theme: "dracula",
+  theme: { light: "rose-pine-dawn", dark: "dracula" },
   keepBackground: false,
   onVisitLine(node) {
     if (node.children.length === 0) {
