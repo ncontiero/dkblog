@@ -98,7 +98,9 @@ export function CreatePost({
 
   const submitData = useCallback(
     async (status: PostStatus = "DRAFTED") => {
-      const toastLoading = toast.loading("Creating post...");
+      const toastLoading = toast.loading(
+        `${isEdit ? "Updating" : "Creating"} post...`,
+      );
       try {
         const img = await uploadImage(editValues.image);
         const data = {
@@ -127,14 +129,16 @@ export function CreatePost({
           }, 1000);
           toast.dismiss(toastLoading);
           toast.success(
-            "Post created successfully! Wait while we redirect you",
+            `Post ${
+              isEdit ? "updated" : "created"
+            } successfully! Wait while we redirect you`,
           );
         } else {
-          throw new Error("Failed to create post");
+          throw new Error(`Failed to ${isEdit ? "update" : "create"} post`);
         }
       } catch (err) {
         toast.dismiss(toastLoading);
-        toast.error("Failed to create post");
+        toast.error(`Failed to ${isEdit ? "update" : "create"} post`);
       }
     },
     [editValues, isEdit, router, slug, uploadImage, userId],
@@ -272,7 +276,7 @@ export function CreatePost({
               </div>
             </>
           </TabsContent>
-          <TabsContent value="preview" className="w-screen">
+          <TabsContent value="preview" className="max-w-screen">
             {editValues.content !== "" && editValues.title !== "" ? (
               <div className="w-full">
                 {imgPreview && (

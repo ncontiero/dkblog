@@ -26,7 +26,7 @@ export async function saveFile(file: Blob, options: saveFileProps) {
   const absoluteURL = returnFileURLWithAbsoluteURL ? env.SITE_BASEURL : "";
 
   const name = options.fileName || randomBytes(12).toString("hex");
-  const fileExt = file.name.split(".").pop();
+  const fileExt = file.type.split("/").pop();
   const fileName = `${name}.${fileExt}`;
 
   let filePath = "";

@@ -46,6 +46,8 @@ export async function processMd({ content }: { content: string }) {
     .use(remarkRehype)
     .use(rehypeSanitize)
     .use(rehypeSlug)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     .use(rehypePrettyCode, prettyCodeOptions)
     .use(rehypeStringify)
     .use(rehypeReact, production)
