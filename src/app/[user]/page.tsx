@@ -2,9 +2,11 @@ import type { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
 import { format } from "date-fns";
 import { getUsers } from "@/utils/data";
+import { currentUser } from "@clerk/nextjs";
 
 import { Button } from "@/components/ui/Button";
 import { PostCard } from "@/components/PostCard";
+import Link from "next/link";
 
 import { CalendarDays, Hash, ScrollText } from "lucide-react";
 
@@ -55,6 +57,7 @@ export async function generateMetadata(
 }
 
 export default async function UserPage({ params }: Props) {
+  const clerkCurrentUser = await currentUser();
   const user = (await getUsers()).find((u) => u.username === params.user);
 
   if (!user) {
@@ -69,10 +72,19 @@ export default async function UserPage({ params }: Props) {
 
   return (
     <div className="mx-auto mb-10 max-w-5xl">
-      <div className="absolute inset-x-0 top-0 -z-[1] mt-16 h-40 w-full bg-primary" />
-      <div className="mt-28 flex flex-col items-center justify-center border-2 border-primary bg-secondary sm:mx-2 sm:rounded-md">
+      <div
+        className="absolute inset-x-0 top-0 -z-[1] mt-16 h-40 w-full"
+        style={{ backgroundColor: user.brandColor }}
+      />
+      <div
+        className="mt-28 flex flex-col items-center justify-center border-2 bg-secondary sm:mx-2 sm:rounded-md"
+        style={{ borderColor: user.brandColor }}
+      >
         <div className="relative mb-3 flex w-full items-center px-6 sm:justify-center sm:px-0">
-          <span className="-mt-14 rounded-full bg-primary p-2 sm:-mt-20">
+          <span
+            className="-mt-14 rounded-full p-2 sm:-mt-20"
+            style={{ backgroundColor: user.brandColor }}
+          >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src={user.image}
@@ -81,7 +93,13 @@ export default async function UserPage({ params }: Props) {
             />
           </span>
           <div className="absolute inset-x-0 right-0 top-0 flex justify-end pr-6 pt-6">
-            <Button>Edit profile</Button>
+            {clerkCurrentUser?.username === user.username ? (
+              <Button asChild>
+                <Link href="/settings">Edit profile</Link>
+              </Button>
+            ) : (
+              <Button>Follow</Button>
+            )}
           </div>
         </div>
         <div className="flex flex-col p-6 sm:items-center sm:justify-center sm:text-center">
@@ -103,7 +121,7 @@ export default async function UserPage({ params }: Props) {
           </div>
         </div>
       </div>
-      <div className="mt-4 grid grid-cols-3 gap-4 sm:mx-2">
+      <div className="mt-4 flex grid-cols-3 flex-col gap-4 sm:mx-2 sm:grid">
         <div className="flex h-fit flex-col gap-4 bg-secondary p-4 sm:rounded-md">
           <div className="flex items-center gap-3 font-normal">
             <ScrollText size={24} /> {postsPublished} posts published

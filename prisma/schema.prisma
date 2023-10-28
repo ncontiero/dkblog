@@ -22,6 +22,7 @@ model User {
   email      String   @unique
   image      String   @default("https://img.clerk.com/preview.png")
   createdAt  DateTime @default(now()) @map("created_at")
+  brandColor String   @default("#000") @map("brand_color")
 
   posts Post[]
 

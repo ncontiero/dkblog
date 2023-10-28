@@ -43,7 +43,7 @@ export function SelectTag({
               // @ts-ignore
               "--tag-color": `${value.color}`,
             }}
-            className="flex items-center gap-2 rounded-md bg-[hsl(var(--tag-color)/0.1)] p-2"
+            className="flex items-center justify-between gap-2 rounded-md bg-[hsl(var(--tag-color)/0.1)] p-2"
           >
             <span>
               <span className="text-[hsl(var(--tag-color))]">#</span>{" "}
@@ -74,7 +74,7 @@ export function SelectTag({
           </Button>
         )}
       </PopoverTrigger>
-      <PopoverContent className="mt-1 w-full p-0">
+      <PopoverContent className="mt-1 w-screen p-0 sm:w-full" align="start">
         <Command>
           <CommandInput placeholder="Search tag..." />
           <CommandEmpty>No tags found</CommandEmpty>

@@ -22,6 +22,7 @@ export const clerkTheme = unstableCreateTheme({
     identityPreviewEditButton: "text-primary/90 hover:text-primary",
     headerTitle: "text-foreground",
     headerSubtitle: "text-foreground/60",
+    form: "[&_.cl-internal-3vf5mz]:text-foreground",
     formHeaderTitle: "text-foreground",
     formHeaderSubtitle: "text-foreground/60",
     formFieldLabel: "text-foreground",
@@ -37,24 +38,13 @@ export const clerkTheme = unstableCreateTheme({
       "hover:bg-primary/20 text-primary duration-300 focus:ring focus:ring-ring",
     formResendCodeLink: "text-primary hover:text-primary",
     formFieldAction__password: "text-primary hover:text-primary",
-    headerBackRow: {
-      a: { color: "hsl(var(--primary))" },
-      "a:hover": { color: "hsl(var(--primary))" },
-      "a:active": { color: "hsl(var(--primary))" },
-      "a:focus": { boxShadow: "hsl(var(--primary)) 0px 0px 0px 3px" },
-    },
+    headerBackRow:
+      "[&_a]:text-primary [&_a]:hover:text-primary [&_a]:active:text-primary [&_a]:focus:ring [&_a]:focus:ring-ring",
     otpCodeFieldInput:
       "border-b-2 border-border text-foreground focus:border-primary",
     alternativeMethodsBlockButton:
       "text-foreground border border-input hover:bg-secondary active:bg-secondary focus:ring focus:ring-ring",
-    main: {
-      ".cl-internal-rsjg4y": {
-        color: "hsl(var(--foreground)/0.6)",
-      },
-      ".cl-internal-1b63r8w": {
-        color: "hsl(var(--foreground))",
-      },
-    },
+    main: "[&>.cl-internal-1b63r8w]:text-foreground [&>.cl-internal-rsjg4y]:text-foreground/60",
     footerActionLink:
       "text-primary hover:text-primary focus:ring focus:ring-ring",
     footerActionText: "text-foreground/60",
@@ -67,10 +57,8 @@ export const clerkTheme = unstableCreateTheme({
     userButtonPopoverFooter: "hidden",
     profileSectionTitle: "border-b border-border",
     profileSectionTitleText: "text-foreground",
-    profileSectionContent: {
-      "p:not(.cl-internal-fqx4fd)": { color: "hsl(var(--foreground))" },
-      ".cl-internal-fqx4fd": { color: "hsl(var(--foreground)/0.6)" },
-    },
+    profileSectionContent:
+      "[&_p:not(.cl-internal-fqx4fd)]:text-foreground [&_.cl-internal-fqx4fd]:text-foreground/60",
     profileSectionPrimaryButton:
       "text-primary hover:bg-primary/20 active:bg-primary/30 focus:ring focus:ring-ring",
     accordionTriggerButton:

@@ -111,7 +111,7 @@ export function CreatePost({
           userId,
         };
         const baseUrl = `${env.NEXT_PUBLIC_API_URL}/posts`;
-        const url = editValues ? `${baseUrl}/${slug}` : baseUrl;
+        const url = isEdit ? `${baseUrl}/${slug}` : baseUrl;
         const res = await fetch(url, {
           method: isEdit ? "PATCH" : "POST",
           body: JSON.stringify(data),
@@ -189,7 +189,7 @@ export function CreatePost({
           <TabsContent value="edit">
             <>
               <div className="px-4 py-4 sm:px-16">
-                <div className="mb-6 flex">
+                <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:gap-0">
                   {imgPreview && (
                     <div className="relative mr-3 h-[105px] w-[250px]">
                       <Image
@@ -227,7 +227,7 @@ export function CreatePost({
                   }
                   value={editValues?.title}
                 />
-                <ul className="mt-2 flex">
+                <ul className="mt-2 flex w-fit flex-col gap-1 sm:flex-row sm:gap-0">
                   <li className="order-1">
                     <SelectTag
                       tags={tags}
@@ -240,7 +240,7 @@ export function CreatePost({
                     />
                   </li>
                   {editValues.tags?.slice(0, 3).map((tag, i) => (
-                    <li key={i} className="ml-2" style={{ order: i + 2 }}>
+                    <li key={i} className="sm:ml-2" style={{ order: i + 2 }}>
                       <SelectTag
                         tags={tags}
                         initialValue={editValues.tags?.[i + 1]}
@@ -272,7 +272,7 @@ export function CreatePost({
               </div>
             </>
           </TabsContent>
-          <TabsContent value="preview">
+          <TabsContent value="preview" className="w-screen">
             {editValues.content !== "" && editValues.title !== "" ? (
               <div className="w-full">
                 {imgPreview && (
@@ -286,7 +286,7 @@ export function CreatePost({
                     />
                   </div>
                 )}
-                <div className="w-full px-4 py-4 sm:px-16">
+                <div className="w-full px-4 py-4 sm:px-16 ">
                   <h1 className="relative mb-2 mt-4 w-full scroll-m-20 text-4xl font-bold tracking-tight">
                     {editValues.title}
                   </h1>
@@ -297,7 +297,9 @@ export function CreatePost({
                       ))}
                     </div>
                   )}
-                  <MdRenderer.Client content={editValues.content} />
+                  <div className="prose prose-quoteless pl-1 pt-7 dark:prose-invert">
+                    <MdRenderer.Client content={editValues.content} />
+                  </div>
                 </div>
               </div>
             ) : (

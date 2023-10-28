@@ -9,6 +9,7 @@ CREATE TABLE "users" (
     "email" TEXT NOT NULL,
     "image" TEXT NOT NULL DEFAULT 'https://img.clerk.com/preview.png',
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "brand_color" TEXT NOT NULL DEFAULT '#000',
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
