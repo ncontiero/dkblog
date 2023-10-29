@@ -23,7 +23,8 @@ export function Tag({ tag, className, ...props }: TagProps) {
       }}
       {...props}
     >
-      #{tag.slug}
+      <span className="text-[hsl(var(--tag-color))]">#</span>
+      {tag.slug}
     </Link>
   );
 }
