@@ -77,46 +77,48 @@ export default async function PostPage({ params }: Props) {
   const postedOn = new Date(post.postedOn);
 
   return (
-    <div className="bg-secondary sm:rounded-md">
-      {post.image && (
-        <div className="relative mr-3 h-full w-full">
-          <Image
-            src={post.image}
-            alt="Post image preview"
-            width={1000}
-            height={420}
-            className="flex items-center justify-center object-contain sm:rounded-t-md"
-          />
-        </div>
-      )}
-      <div className="p-4 sm:p-10 sm:pt-6">
-        <div className="flex items-center justify-between sm:-ml-2">
-          <UserHoverCard
-            user={post.user}
-            postDate={postedOn}
-            postPage
-            postDateFormatted={`Posted on ${format(postedOn, "MMM d, yyyy")}`}
-          />
-          {user && user.username === post.user.username && (
-            <Button asChild>
-              <Link href={`/${user.username}/${post.slug}/edit`}>Edit</Link>
-            </Button>
-          )}
-        </div>
-        <div className="sm:px-1">
-          <h1 className="relative mb-2 mt-4 w-full scroll-m-20 text-3xl tracking-tight sm:text-4xl sm:font-bold">
-            {post.title}
-          </h1>
-          {post.tags && post.tags.length > 0 && (
-            <div className="mt-1.5 flex flex-wrap gap-0.5">
-              {post.tags.map((tag) => (
-                <Tag key={tag.id} tag={tag} />
-              ))}
-            </div>
-          )}
-        </div>
-        <div className="prose prose-quoteless pl-1 pt-7 dark:prose-invert">
-          <MdRenderer.Server content={post.content} />
+    <div className="mx-auto my-0 min-h-screen max-w-3xl sm:my-8">
+      <div className="bg-secondary sm:rounded-md">
+        {post.image && (
+          <div className="relative mr-3 h-full w-full">
+            <Image
+              src={post.image}
+              alt="Post image preview"
+              width={1000}
+              height={420}
+              className="flex items-center justify-center object-contain sm:rounded-t-md"
+            />
+          </div>
+        )}
+        <div className="p-4 sm:p-10 sm:pt-6">
+          <div className="flex items-center justify-between sm:-ml-2">
+            <UserHoverCard
+              user={post.user}
+              postDate={postedOn}
+              postPage
+              postDateFormatted={`Posted on ${format(postedOn, "MMM d, yyyy")}`}
+            />
+            {user && user.username === post.user.username && (
+              <Button asChild>
+                <Link href={`/${user.username}/${post.slug}/edit`}>Edit</Link>
+              </Button>
+            )}
+          </div>
+          <div className="sm:px-1">
+            <h1 className="relative mb-2 mt-4 w-full scroll-m-20 text-3xl tracking-tight sm:text-4xl sm:font-bold">
+              {post.title}
+            </h1>
+            {post.tags && post.tags.length > 0 && (
+              <div className="mt-1.5 flex flex-wrap gap-0.5">
+                {post.tags.map((tag) => (
+                  <Tag key={tag.id} tag={tag} />
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="prose prose-quoteless pl-1 pt-7 dark:prose-invert">
+            <MdRenderer.Server content={post.content} />
+          </div>
         </div>
       </div>
     </div>
