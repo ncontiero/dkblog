@@ -11,6 +11,7 @@ import {
 } from "../ui/Command";
 import { Button } from "../ui/Button";
 import { X } from "lucide-react";
+import { ScrollArea } from "../ui/ScrollArea";
 
 interface SelectTagProps {
   tags: Tag[];
@@ -54,9 +55,11 @@ export function SelectTag({
               className="p-1 text-sm duration-200 hover:text-destructive"
               aria-label="Remove tag"
               onClick={() => {
-                setValue(undefined);
                 setTags([...tags, value]);
-                setSelectedTags(selectedTags.filter((t) => t !== value));
+                setSelectedTags(
+                  selectedTags.filter((t) => t.slug !== value.slug),
+                );
+                setValue(undefined);
                 setOpen(false);
               }}
             >
@@ -74,42 +77,46 @@ export function SelectTag({
           </Button>
         )}
       </PopoverTrigger>
-      <PopoverContent className="mt-1 w-screen p-0 sm:w-full" align="start">
-        <Command>
-          <CommandInput placeholder="Search tag..." />
-          <CommandEmpty>No tags found</CommandEmpty>
-          <CommandGroup>
-            {tags.map((tag) => (
-              <CommandItem
-                key={tag.id}
-                value={tag.slug}
-                onSelect={(currentValue) => {
-                  const tag = tags.find((t) => t.slug === currentValue) as Tag;
-                  setValue(currentValue === value?.slug ? undefined : tag);
-                  setSelectedTags([...selectedTags, tag]);
-                  setTags(tags.filter((t) => t.slug !== currentValue));
-                  setOpen(false);
-                }}
-                className="flex flex-col items-start gap-2 py-3"
-              >
-                <span>
-                  <span
-                    style={{
-                      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                      // @ts-ignore
-                      "--tag-color": `${tag.color}`,
-                    }}
-                    className="text-[hsl(var(--tag-color))]"
-                  >
-                    #
+      <PopoverContent
+        className="z-[999999] mt-1 w-screen p-0 sm:w-full"
+        align="start"
+      >
+        <ScrollArea className="h-96">
+          <Command>
+            <CommandInput placeholder="Search tag..." />
+            <CommandEmpty>No tags found</CommandEmpty>
+            <CommandGroup>
+              {tags.map((tag, i) => (
+                <CommandItem
+                  key={i}
+                  value={tag.slug}
+                  onSelect={(currentValue) => {
+                    setValue(tag);
+                    setSelectedTags([...selectedTags, tag]);
+                    setTags(tags.filter((t) => t.slug !== currentValue));
+                    setOpen(false);
+                  }}
+                  className="flex flex-col items-start gap-2 py-3"
+                >
+                  <span>
+                    <span
+                      style={{
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-ignore
+                        "--tag-color": `${tag.color}`,
+                      }}
+                      className="text-[hsl(var(--tag-color))]"
+                    >
+                      #
+                    </span>
+                    {tag.slug}
                   </span>
-                  {tag.slug}
-                </span>
-                <p>{tag.description?.slice(0, 100)}...</p>
-              </CommandItem>
-            ))}
-          </CommandGroup>
-        </Command>
+                  <p>{tag.description?.slice(0, 100)}...</p>
+                </CommandItem>
+              ))}
+            </CommandGroup>
+          </Command>
+        </ScrollArea>
       </PopoverContent>
     </Popover>
   );

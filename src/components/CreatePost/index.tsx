@@ -29,7 +29,7 @@ interface EditValuesProps {
   title: string;
   image?: File;
   content: string;
-  tags?: TagType[];
+  tags: TagType[];
 }
 
 interface CreatePostProps {
@@ -63,14 +63,14 @@ export function CreatePost({
   const getTags = useCallback(async () => {
     const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/tags`);
     const data = (await res.json()) as TagType[];
-    const newTags: TagType[] = [];
-    data.map((tag) =>
-      editValues.tags?.map((t) => t.slug).includes(tag.slug)
-        ? null
-        : newTags.push(tag),
-    );
-    setTags(newTags);
-  }, [editValues.tags]);
+    const tagsWithoutInitialTags = data
+      .map((tag) =>
+        initialTags.map((t) => t.id === tag.id).includes(true) ? null : tag,
+      )
+      .filter((tag) => tag !== null) as TagType[];
+    setTags(tagsWithoutInitialTags);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     getTags();
@@ -106,7 +106,7 @@ export function CreatePost({
         const data = {
           title: editValues.title,
           content: editValues.content,
-          tags: editValues.tags?.map((tag) => tag.slug),
+          tags: editValues.tags.map((tag) => tag.slug).slice(0, 4),
           image: img,
           status,
           description: "A simple description",
@@ -235,20 +235,20 @@ export function CreatePost({
                   <li className="order-1">
                     <SelectTag
                       tags={tags}
-                      initialValue={editValues.tags?.[0]}
-                      selectedTags={editValues.tags || []}
+                      initialValue={editValues.tags[0]}
+                      selectedTags={editValues.tags}
                       setSelectedTags={(tags) =>
                         setEditValues({ ...editValues, tags })
                       }
                       setTags={setTags}
                     />
                   </li>
-                  {editValues.tags?.slice(0, 3).map((tag, i) => (
+                  {editValues.tags.slice(0, 3).map((_, i) => (
                     <li key={i} className="sm:ml-2" style={{ order: i + 2 }}>
                       <SelectTag
                         tags={tags}
-                        initialValue={editValues.tags?.[i + 1]}
-                        selectedTags={editValues.tags || []}
+                        initialValue={editValues.tags[i + 1]}
+                        selectedTags={editValues.tags}
                         setSelectedTags={(tags) =>
                           setEditValues({ ...editValues, tags })
                         }
