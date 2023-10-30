@@ -39,8 +39,11 @@ export function InputColor({ userId, userColor }: InputColor) {
 
   return (
     <div className="mt-2 flex items-center">
-      <div
-        className="absolute ml-2 rounded-md border p-4"
+      <input
+        type="color"
+        value={color}
+        onChange={(e) => setColor(e.target.value)}
+        className="absolute ml-2 w-4 rounded-md border p-4"
         style={{ backgroundColor: color }}
       />
       <Input
