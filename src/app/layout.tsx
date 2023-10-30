@@ -35,9 +35,15 @@ export const clerkTheme = unstableCreateTheme({
     formButtonPrimary:
       "bg-primary/80 duration-300 hover:bg-primary focus:bg-primary focus:ring focus:ring-ring",
     formButtonReset:
-      "hover:bg-primary/20 text-primary duration-300 focus:ring focus:ring-ring",
+      "hover:bg-primary/20 active:bg-primary/30 text-primary duration-300 focus:ring focus:ring-ring",
     formResendCodeLink: "text-primary hover:text-primary",
     formFieldAction__password: "text-primary hover:text-primary",
+    fileDropAreaButtonPrimary:
+      "hover:bg-primary/20 active:bg-primary/30 text-primary duration-300 focus:ring focus:ring-ring",
+    fileDropAreaBox: "bg-secondary dark:bg-secondary/60",
+    fileDropAreaIconBox: "bg-background",
+    fileDropAreaIcon: "text-foreground/60",
+    fileDropAreaHint: "text-foreground/60 font-medium",
     headerBackRow:
       "[&_a]:text-primary [&_a]:hover:text-primary [&_a]:active:text-primary [&_a]:focus:ring [&_a]:focus:ring-ring",
     otpCodeFieldInput:
@@ -66,7 +72,7 @@ export const clerkTheme = unstableCreateTheme({
     navbarButton:
       "text-foreground/80 data-[active=true]:text-foreground hover:bg-secondary focus:ring focus:ring-ring",
     avatarImageActionsUpload:
-      "text-primary hover:text-primary focus:ring focus:ring-ring",
+      "text-primary hover:text-primary active:text-primary focus:ring focus:ring-ring",
     breadcrumbsItem__currentPage: "text-foreground",
     breadcrumbsItem: "text-foreground/60 focus:ring focus:ring-ring",
     breadcrumbsItemDivider: "text-foreground/60",
