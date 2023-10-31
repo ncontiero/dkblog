@@ -2,7 +2,7 @@
 
 [![license mit](https://img.shields.io/badge/licence-MIT-6C47FF)](LICENSE)
 
-A blog using Next.Js.
+A dynamic blog using markdown with Next.Js.
 
 ## Technologies used
 
