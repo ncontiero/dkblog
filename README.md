@@ -10,6 +10,7 @@ A dynamic blog using markdown with Next.Js.
 - [TailwindCSS](https://tailwindcss.com/)
 - [shadcn/ui](https://ui.shadcn.com/)
 - [Prisma](https://www.prisma.io/)
+- [Clerk](https://clerk.com/)
 
 ## Install and run the project
 
