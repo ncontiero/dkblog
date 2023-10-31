@@ -19,7 +19,7 @@ function AnchorLink({
     <Link
       href={href}
       asChild={!!isInside}
-      className={cn("no-underline", className)}
+      className={cn("no-underline [&>code]:py-0", className)}
       style={{ fontSize: "inherit", lineHeight: "inherit" }}
       {...props}
     >
