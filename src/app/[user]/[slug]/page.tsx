@@ -52,7 +52,7 @@ export async function generateMetadata(
     },
     openGraph: {
       title: post.title,
-      description: post.description,
+      description: post.description || undefined,
       url: postUrl,
       type: "article",
       images: post.image ? { url: post.image, alt: post.title } : undefined,
@@ -60,7 +60,7 @@ export async function generateMetadata(
     twitter: {
       card: post.image ? "summary_large_image" : "summary",
       title: post.title,
-      description: post.description,
+      description: post.description || undefined,
       images: post.image ? { url: post.image, alt: post.title } : undefined,
     },
   };
