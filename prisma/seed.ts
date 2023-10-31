@@ -5,13 +5,17 @@ const prisma = new PrismaClient();
 
 type createUserProps = {
   externalId: string;
+  firstName: string;
+  lastName: string;
   username: string;
   email: string;
   image?: string;
+  bio?: string;
+  brandColor?: string;
 };
 type createPostProps = {
   title: string;
-  description: string;
+  description?: string | null;
   content: string;
   userId: string;
   status?: PostStatus;
@@ -24,40 +28,25 @@ type createTagProps = {
   color?: string;
 };
 
-async function createUser(props: createUserProps) {
-  const { externalId, username, email, image } = props;
+async function createUser(data: createUserProps) {
   return await prisma.user.create({
-    data: {
-      externalId,
-      username,
-      email,
-      image,
-    },
+    data,
   });
 }
-async function createPost(props: createPostProps) {
-  const { title, description, content, userId, status, tags } = props;
+async function createPost({ tags, ...props }: createPostProps) {
   return await prisma.post.create({
     data: {
-      title,
-      description,
-      content,
-      userId,
-      status,
-      slug: slugify(title),
+      ...props,
+      slug: slugify(props.title),
       tags: { connect: tags },
     },
   });
 }
 async function createTag(props: createTagProps) {
-  const { title, description, image, color = "var(--primary)" } = props;
   return await prisma.tag.create({
     data: {
-      title,
-      description,
-      image,
-      color,
-      slug: slugify(title),
+      ...props,
+      slug: slugify(props.title),
     },
   });
 }
@@ -67,14 +56,18 @@ async function main() {
 
   const user1 = await createUser({
     externalId: "1",
-    username: "user 1",
+    username: "firstUser",
+    firstName: "First",
+    lastName: "User",
     email: "user1@email.com",
   });
   console.log(`Created user ${user1.id} successfully`);
 
   const user2 = await createUser({
     externalId: "2",
-    username: "user 2",
+    username: "secondUser",
+    firstName: "Second",
+    lastName: "User",
     email: "user2@email.com",
   });
   console.log(`Created user ${user2.id} successfully`);
@@ -112,7 +105,7 @@ async function main() {
   const post1 = await createPost({
     title: "React Basics",
     description: "A short description of the post",
-    content: "This is the content of the post",
+    content: "## Hello World\nThis is the content of the post",
     userId: user1.id,
     status: "PUBLISHED",
     tags: [tag1, tag2],
@@ -122,7 +115,7 @@ async function main() {
   const post2 = await createPost({
     title: "Next.js Basics",
     description: "A short description of the post",
-    content: "This is the content of the post",
+    content: "## Hello World\nThis is the content of the post",
     userId: user2.id,
     status: "PUBLISHED",
     tags: [tag3],
@@ -132,7 +125,7 @@ async function main() {
   const post3 = await createPost({
     title: "JavaScript Basics",
     description: "A short description of the post",
-    content: "This is the content of the post",
+    content: "## Hello World\nThis is the content of the post",
     userId: user2.id,
     status: "PUBLISHED",
     tags: [tag1],
