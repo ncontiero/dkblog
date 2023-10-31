@@ -33,8 +33,8 @@ export async function PATCH(
     user = await prisma.user.update({
       where: { externalId: params.id },
       data: {
-        brandColor: brandColor || user.brandColor,
-        bio: bio || user.bio,
+        brandColor: brandColor ?? user.brandColor,
+        bio: bio ?? user.bio,
       },
     });
     return new Response(JSON.stringify(user), {
