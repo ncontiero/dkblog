@@ -91,7 +91,7 @@ export const metadata: Metadata = {
     default: env.SITE_NAME,
     template: `%s • ${env.SITE_NAME}`,
   },
-  description: "A blog using Next.Js.",
+  description: "A dynamic blog using markdown with Next.Js.",
   alternates: {
     canonical: "/",
   },
@@ -109,7 +109,7 @@ export const metadata: Metadata = {
       default: env.SITE_NAME,
       template: `%s • ${env.SITE_NAME}`,
     },
-    description: "A blog using Next.Js.",
+    description: "A dynamic blog using markdown with Next.Js.",
     siteName: env.SITE_NAME,
     type: "website",
     url: "/",
@@ -120,7 +120,7 @@ export const metadata: Metadata = {
       default: env.SITE_NAME,
       template: `%s • ${env.SITE_NAME}`,
     },
-    description: "A blog using Next.Js.",
+    description: "A dynamic blog using markdown with Next.Js.",
     card: "summary",
   },
 };
