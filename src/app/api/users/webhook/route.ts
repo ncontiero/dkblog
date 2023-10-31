@@ -62,6 +62,8 @@ export async function POST(req: Request) {
             externalId: evt.data.id,
             email: emails[0].email_address,
             username,
+            firstName: evt.data.first_name,
+            lastName: evt.data.last_name,
             image: evt.data.image_url,
           },
         });
@@ -81,6 +83,8 @@ export async function POST(req: Request) {
           data: {
             email: emails[0].email_address,
             username,
+            firstName: evt.data.first_name,
+            lastName: evt.data.last_name,
             image: evt.data.image_url,
           },
         });

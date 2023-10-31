@@ -28,12 +28,20 @@ export function InputColor({ userId, userColor }: InputColor) {
       });
 
       if (res.ok) {
-        toast.dismiss(toastLoading);
-        toast.success("Color updated successfully!");
+        toast.update(toastLoading, {
+          render: "Color updated successfully!",
+          type: "success",
+          isLoading: false,
+          autoClose: 1000,
+        });
       }
     } catch (err) {
-      toast.dismiss(toastLoading);
-      toast.error("Failed to update color");
+      toast.update(toastLoading, {
+        render: "Failed to update color!",
+        type: "error",
+        isLoading: false,
+        autoClose: 1000,
+      });
     }
   }, [color, userColor, userId]);
 

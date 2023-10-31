@@ -12,7 +12,14 @@ export const tagsInclude = optional.transform((val) => {
         description: true,
         content: true,
         user: subColumns.includes("user") && {
-          select: { id: true, username: true, image: true, createdAt: true },
+          select: {
+            id: true,
+            username: true,
+            image: true,
+            createdAt: true,
+            brandColor: true,
+            bio: true,
+          },
         },
         slug: true,
         status: true,

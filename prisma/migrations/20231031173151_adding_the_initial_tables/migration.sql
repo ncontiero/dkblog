@@ -1,15 +1,18 @@
 -- CreateEnum
-CREATE TYPE "PostStatus" AS ENUM ('PUBLISHED', 'DRAFTED', 'PRIVATED');
+CREATE TYPE "PostStatus" AS ENUM ('PUBLISHED', 'DRAFTED');
 
 -- CreateTable
 CREATE TABLE "users" (
     "id" TEXT NOT NULL,
     "external_id" TEXT NOT NULL,
+    "first_name" TEXT NOT NULL,
+    "last_name" TEXT NOT NULL,
     "username" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "image" TEXT NOT NULL DEFAULT 'https://img.clerk.com/preview.png',
+    "bio" TEXT,
+    "brand_color" TEXT NOT NULL DEFAULT '#000000',
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "brand_color" TEXT NOT NULL DEFAULT '#000',
 
     CONSTRAINT "users_pkey" PRIMARY KEY ("id")
 );
@@ -19,7 +22,7 @@ CREATE TABLE "posts" (
     "id" TEXT NOT NULL,
     "user_id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
-    "description" TEXT NOT NULL,
+    "description" TEXT,
     "content" TEXT NOT NULL,
     "image" TEXT,
     "slug" TEXT NOT NULL,

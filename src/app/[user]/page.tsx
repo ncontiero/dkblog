@@ -107,12 +107,9 @@ export default async function UserPage({ params }: Props) {
         </div>
         <div className="flex flex-col p-6 sm:items-center sm:justify-center sm:text-center">
           <h1 className="mb-4 text-3xl font-bold">{user.username}</h1>
-          <p className="mb-8 max-w-[75%] sm:mx-auto">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. A fuga
-            ullam, nobis numquam reprehenderit porro nisi explicabo quidem
-            soluta amet? Aliquam obcaecati quidem expedita ullam voluptas illo
-            quisquam quos delectus.
-          </p>
+          {user.bio && (
+            <p className="mb-8 max-w-[75%] sm:mx-auto">{user.bio}</p>
+          )}
           <div className="flex">
             <CalendarDays className="mr-2 h-4 w-4 opacity-70" />{" "}
             <span className="text-xs text-muted-foreground">

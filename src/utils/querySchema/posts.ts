@@ -5,7 +5,14 @@ export const postsInclude = optional.transform((val) => {
   const valArray = val.split(",");
   return {
     user: valArray.includes("user") && {
-      select: { id: true, username: true, image: true, createdAt: true },
+      select: {
+        id: true,
+        username: true,
+        image: true,
+        createdAt: true,
+        brandColor: true,
+        bio: true,
+      },
     },
     tags: valArray.includes("tags"),
   };

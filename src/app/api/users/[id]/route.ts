@@ -4,7 +4,8 @@ import { errorResponse } from "@/utils/errorResponse";
 import { z } from "zod";
 
 const updateUserSchema = z.object({
-  brandColor: z.string(),
+  brandColor: z.string().optional(),
+  bio: z.string().optional(),
 });
 
 export async function PATCH(
@@ -17,7 +18,7 @@ export async function PATCH(
       throw new Error("Unauthorized");
     }
 
-    const { brandColor } = updateUserSchema.parse(await request.json());
+    const { brandColor, bio } = updateUserSchema.parse(await request.json());
 
     let user = await prisma.user.findUnique({
       where: { externalId: params.id },
@@ -32,7 +33,8 @@ export async function PATCH(
     user = await prisma.user.update({
       where: { externalId: params.id },
       data: {
-        brandColor,
+        brandColor: brandColor || user.brandColor,
+        bio: bio || user.bio,
       },
     });
     return new Response(JSON.stringify(user), {
