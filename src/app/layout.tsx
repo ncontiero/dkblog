@@ -22,7 +22,7 @@ export const clerkTheme = unstableCreateTheme({
     identityPreviewEditButton: "text-primary/90 hover:text-primary",
     headerTitle: "text-foreground",
     headerSubtitle: "text-foreground/60",
-    form: "[&_.cl-internal-3vf5mz]:text-foreground",
+    form: "[&_.cl-internal-3vf5mz]:text-foreground [&_p]:text-foreground",
     formHeaderTitle: "text-foreground",
     formHeaderSubtitle: "text-foreground/60",
     formFieldLabel: "text-foreground",
