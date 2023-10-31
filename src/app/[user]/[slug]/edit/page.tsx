@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 
 import { cache } from "react";
-import { redirect } from "next/navigation";
-import { getPosts } from "@/utils/data";
+import { notFound, redirect } from "next/navigation";
+import { getPost } from "@/utils/data/posts";
 import { currentUser } from "@clerk/nextjs";
 
 import { CreatePost } from "@/components/CreatePost";
@@ -20,14 +20,15 @@ const getUserPost = cache(async ({ user, slug }: Props["params"]) => {
   if (!clerkUser) {
     redirect("/sign-in");
   }
-  const posts = await getPosts(undefined, {
-    where: { user: { username: user }, slug },
-  });
-  return posts[0];
+  return await getPost({ where: { user: { username: user }, slug } });
 });
 
 export default async function EditPostPage({ params }: Props) {
   const post = await getUserPost({ ...params });
+
+  if (!post) {
+    notFound();
+  }
 
   return (
     <CreatePost

@@ -1,18 +1,18 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
 import { compareDesc } from "date-fns";
-import { getTags } from "@/utils/data";
+import { getTags, getTag } from "@/utils/data/tags";
 
 import { PostCard } from "@/components/PostCard";
 
-export const revalidate = 60;
+export const revalidate = 60 * 5; // 5 minutes
 
 type Props = {
   params: { slug: string };
 };
 
 export async function generateStaticParams() {
-  const tags = await getTags();
+  const tags = await getTags({});
 
   return tags.map((t) => ({
     slug: t.slug,
@@ -25,7 +25,7 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { slug } = params;
 
-  const tag = (await getTags()).find((t) => t.slug === slug);
+  const tag = await getTag({ where: { slug } });
 
   if (!tag) {
     notFound();
@@ -54,7 +54,7 @@ export async function generateMetadata(
 }
 
 export default async function TagPage({ params }: Props) {
-  const tag = (await getTags()).find((t) => t.slug === params.slug);
+  const tag = await getTag({ where: { slug: params.slug } });
 
   if (!tag) {
     notFound();

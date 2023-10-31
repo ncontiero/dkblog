@@ -3,7 +3,7 @@ import { cache } from "react";
 import { notFound } from "next/navigation";
 import { format } from "date-fns";
 import { currentUser } from "@clerk/nextjs";
-import { getPosts } from "@/utils/data";
+import { getPosts, getPost } from "@/utils/data/posts";
 
 import { Tag } from "@/components/Tag";
 import { UserHoverCard } from "@/components/UserHoverCard";
@@ -12,7 +12,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import Link from "next/link";
 
-export const revalidate = 60;
+export const revalidate = 60 * 5; // 5 minutes
 
 type Props = {
   params: { user: string; slug: string };
@@ -21,14 +21,13 @@ type Props = {
 const getUserPost = cache(async ({ user, slug }: Props["params"]) => {
   const clerkUser = await currentUser();
   const status = clerkUser?.username === user ? undefined : "PUBLISHED";
-  const posts = await getPosts(undefined, {
+  return await getPost({
     where: { status, user: { username: user }, slug },
   });
-  return posts[0];
 });
 
 export async function generateStaticParams(): Promise<Props["params"][]> {
-  const posts = await getPosts(undefined, { where: { status: "PUBLISHED" } });
+  const posts = await getPosts({ where: { status: "PUBLISHED" } });
 
   return posts.map((post) => ({ user: post.user.username, slug: post.slug }));
 }
@@ -56,13 +55,13 @@ export async function generateMetadata(
       description: post.description,
       url: postUrl,
       type: "article",
-      images: post.image ? [post.image] : undefined,
+      images: post.image ? { url: post.image, alt: post.title } : undefined,
     },
     twitter: {
       card: post.image ? "summary_large_image" : "summary",
       title: post.title,
       description: post.description,
-      images: post.image ? [post.image] : undefined,
+      images: post.image ? { url: post.image, alt: post.title } : undefined,
     },
   };
 }

@@ -2,27 +2,22 @@ import type { Metadata } from "next";
 
 import { currentUser, UserProfile } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
+import { getUser } from "@/utils/data/users";
 
 import { Link } from "@/components/ui/Link";
 import NextLink from "next/link";
 import { InputColor } from "./InputColor";
-import { cache } from "react";
-import { prisma } from "@/lib/prisma";
 
 export const metadata: Metadata = {
   title: "Settings",
 };
-
-const getUser = cache(async (id: string) => {
-  return await prisma.user.findUnique({ where: { externalId: id } });
-});
 
 export default async function UserSettingsPage() {
   const user = await currentUser();
   if (!user) {
     redirect("/sign-in?redirect_url=/settings");
   }
-  const dbUser = await getUser(user.id);
+  const dbUser = await getUser({ where: { externalId: user.id } });
 
   return (
     <div className="mx-auto my-10 flex justify-center sm:container">

@@ -1,7 +1,7 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
 import { format } from "date-fns";
-import { getUsers } from "@/utils/data";
+import { getUsers, getUser } from "@/utils/data/users";
 import { currentUser } from "@clerk/nextjs";
 
 import { Button } from "@/components/ui/Button";
@@ -11,14 +11,14 @@ import Link from "next/link";
 import { CalendarDays, Hash, ScrollText } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 
-export const revalidate = 60;
+export const revalidate = 60 * 5; // 5 minutes
 
 type Props = {
   params: { user: string };
 };
 
 export async function generateStaticParams(): Promise<Props["params"][]> {
-  const users = await getUsers();
+  const users = await getUsers({});
 
   return users.map((u) => ({
     user: u.username,
@@ -31,7 +31,7 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { user: username } = params;
 
-  const user = (await getUsers()).find((u) => u.username === username);
+  const user = await getUser({ where: { username } });
   if (!user) {
     return notFound();
   }
@@ -47,19 +47,19 @@ export async function generateMetadata(
       title: user.username,
       url: userUrl,
       type: "profile",
-      images: user.image ? [user.image] : undefined,
+      images: user.image ? { url: user.image, alt: user.username } : undefined,
     },
     twitter: {
       card: user.image ? "summary_large_image" : "summary",
       title: user.username,
-      images: user.image ? [user.image] : undefined,
+      images: user.image ? { url: user.image, alt: user.username } : undefined,
     },
   };
 }
 
 export default async function UserPage({ params }: Props) {
   const clerkCurrentUser = await currentUser();
-  const user = (await getUsers()).find((u) => u.username === params.user);
+  const user = await getUser({ where: { username: params.user } });
 
   if (!user) {
     notFound();

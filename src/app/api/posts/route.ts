@@ -6,7 +6,7 @@ import { postsQuerySchema } from "@/utils/querySchema";
 import { z } from "zod";
 import { slugify } from "@/utils/slugify";
 import crypto from "node:crypto";
-import { exclude } from "@/utils/data";
+import { excludeFunc } from "@/utils/data/utils";
 
 export async function GET(request: Request) {
   try {
@@ -87,7 +87,7 @@ export async function POST(request: Request) {
       include: { user: { select: { username: true } } },
     });
 
-    return new Response(JSON.stringify(exclude(post, ["userId"])), {
+    return new Response(JSON.stringify(excludeFunc(post, ["userId"])), {
       headers: { "content-type": "application/json" },
     });
   } catch (error) {
