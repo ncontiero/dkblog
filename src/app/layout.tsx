@@ -59,7 +59,7 @@ export const clerkTheme = unstableCreateTheme({
     userButtonPopoverActionButton:
       "hover:bg-secondary/60 focus-visible:bg-secondary/60 active:bg-secondary",
     userButtonPopoverActionButtonText: "text-foreground/60",
-    userButtonPopoverActionButtonIcon: "text-foreground/40",
+    userButtonPopoverActionButtonIconBox: "[&_*]:text-foreground/40",
     userButtonPopoverFooter: "hidden",
     profileSectionTitle: "border-b border-border",
     profileSectionTitleText: "text-foreground",

@@ -105,7 +105,7 @@ export default async function UserPage({ params }: Props) {
             )}
           </div>
         </div>
-        <div className="flex flex-col p-6 sm:items-center sm:justify-center sm:text-center">
+        <div className="flex w-full flex-col p-6 sm:items-center sm:justify-center sm:text-center">
           <h1 className="mb-4 text-3xl font-bold">{user.username}</h1>
           {user.bio && (
             <p className="mb-8 max-w-[75%] sm:mx-auto">{user.bio}</p>
