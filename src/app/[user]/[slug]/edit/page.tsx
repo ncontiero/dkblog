@@ -33,6 +33,7 @@ export default async function EditPostPage({ params }: Props) {
   return (
     <CreatePost
       title={post.title}
+      description={post.description || undefined}
       content={post.content}
       image={post.image || undefined}
       tags={post.tags}

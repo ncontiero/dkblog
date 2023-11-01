@@ -22,11 +22,11 @@ import { MdRenderer } from "../MdRenderer";
 import { InputFile as InputFilePrimitive } from "../ui/InputFile";
 import { Tag } from "../Tag";
 import Image from "next/image";
-import { LoadingPreview } from "./LoadingPreview";
 import { SelectTag } from "./SelectTag";
 
 interface EditValuesProps {
   title: string;
+  description?: string;
   image?: File;
   content: string;
   tags: TagType[];
@@ -34,6 +34,7 @@ interface EditValuesProps {
 
 interface CreatePostProps {
   title: string;
+  description?: string;
   image?: string;
   content: string;
   tags?: TagType[];
@@ -43,6 +44,7 @@ interface CreatePostProps {
 
 export function CreatePost({
   title,
+  description,
   content,
   image,
   slug,
@@ -58,6 +60,7 @@ export function CreatePost({
     title,
     content,
     tags: initialTags,
+    description,
   });
 
   const getTags = useCallback(async () => {
@@ -109,7 +112,7 @@ export function CreatePost({
           tags: editValues.tags.map((tag) => tag.slug).slice(0, 4),
           image: img,
           status,
-          description: "A simple description",
+          description: editValues.description,
           userId,
         };
         const baseUrl = `${env.NEXT_PUBLIC_API_URL}/posts`;
@@ -127,18 +130,24 @@ export function CreatePost({
           setTimeout(async () => {
             router.push(`/${post.user.username}/${post.slug}`);
           }, 1000);
-          toast.dismiss(toastLoading);
-          toast.success(
-            `Post ${
+          toast.update(toastLoading, {
+            render: `Post ${
               isEdit ? "updated" : "created"
             } successfully! Wait while we redirect you`,
-          );
+            type: "success",
+            isLoading: false,
+            autoClose: 1000,
+          });
         } else {
           throw new Error(`Failed to ${isEdit ? "update" : "create"} post`);
         }
       } catch (err) {
-        toast.dismiss(toastLoading);
-        toast.error(`Failed to ${isEdit ? "update" : "create"} post`);
+        toast.update(toastLoading, {
+          render: `Failed to ${isEdit ? "update" : "create"} post`,
+          type: "error",
+          isLoading: false,
+          autoClose: 1000,
+        });
       }
     },
     [editValues, isEdit, router, slug, uploadImage, userId],
@@ -229,7 +238,19 @@ export function CreatePost({
                   onChange={(e) =>
                     setEditValues({ ...editValues, title: e.target.value })
                   }
-                  value={editValues?.title}
+                  value={editValues.title}
+                />
+                <Textarea
+                  className="mt-2 resize-none bg-secondary py-0 pl-0 text-xl font-bold sm:font-extrabold"
+                  placeholder="Post description here..."
+                  aria-label="Post Description"
+                  onChange={(e) =>
+                    setEditValues({
+                      ...editValues,
+                      description: e.target.value,
+                    })
+                  }
+                  value={editValues.description}
                 />
                 <ul className="mt-2 flex w-fit flex-col gap-1 sm:flex-row sm:gap-0">
                   <li className="order-1">
@@ -271,42 +292,38 @@ export function CreatePost({
                   onChange={(e) =>
                     setEditValues({ ...editValues, content: e.target.value })
                   }
-                  value={editValues?.content}
+                  value={editValues.content}
                 />
               </div>
             </>
           </TabsContent>
           <TabsContent value="preview" className="max-w-screen">
-            {editValues.content !== "" && editValues.title !== "" ? (
-              <div className="w-full">
-                {imgPreview && (
-                  <div className="relative mr-3 h-full w-full">
-                    <Image
-                      src={imgPreview}
-                      alt="Post image preview"
-                      width={1000}
-                      height={420}
-                      className="-mt-2.5 flex items-center justify-center object-contain sm:rounded-t-md"
-                    />
+            <div className="w-full">
+              {imgPreview && (
+                <div className="relative mr-3 h-full w-full">
+                  <Image
+                    src={imgPreview}
+                    alt="Post image preview"
+                    width={1000}
+                    height={420}
+                    className="-mt-2.5 flex items-center justify-center object-contain sm:rounded-t-md"
+                  />
+                </div>
+              )}
+              <div className="w-full px-4 py-4 sm:px-16 ">
+                <h1 className="relative mb-2 mt-4 w-full scroll-m-20 text-4xl font-bold tracking-tight">
+                  {editValues.title}
+                </h1>
+                {editValues.tags && editValues.tags.length > 0 && (
+                  <div className="mt-1.5 flex flex-wrap gap-0.5">
+                    {editValues.tags.map((tag) => (
+                      <Tag key={tag.id} tag={tag} />
+                    ))}
                   </div>
                 )}
-                <div className="w-full px-4 py-4 sm:px-16 ">
-                  <h1 className="relative mb-2 mt-4 w-full scroll-m-20 text-4xl font-bold tracking-tight">
-                    {editValues.title}
-                  </h1>
-                  {editValues.tags && editValues.tags.length > 0 && (
-                    <div className="mt-1.5 flex flex-wrap gap-0.5">
-                      {editValues.tags.map((tag) => (
-                        <Tag key={tag.id} tag={tag} />
-                      ))}
-                    </div>
-                  )}
-                  <MdRenderer.Client content={editValues.content} />
-                </div>
+                <MdRenderer.Client content={editValues.content} />
               </div>
-            ) : (
-              <LoadingPreview />
-            )}
+            </div>
           </TabsContent>
         </ScrollArea>
       </Tabs>
