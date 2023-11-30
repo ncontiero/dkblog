@@ -12,8 +12,8 @@ dependencies:
     specifier: ^1.7.9
     version: 1.7.9(react@18.2.0)
   '@google-cloud/storage':
-    specifier: ^7.6.0
-    version: 7.6.0
+    specifier: ^7.7.0
+    version: 7.7.0
   '@prisma/client':
     specifier: 5.6.0
     version: 5.6.0(prisma@5.6.0)
@@ -591,8 +591,8 @@ packages:
     engines: {node: '>=14'}
     dev: false
 
-  /@google-cloud/storage@7.6.0:
-    resolution: {integrity: sha512-/pQl5pXePhVRvgaR+huKIlSrjEjmxv5pdMieW09Sbo7pa1I9ofQ54y7QN/z9xZ1Yj2j9znfMPAmae1F+Tt4q4g==}
+  /@google-cloud/storage@7.7.0:
+    resolution: {integrity: sha512-EMCEY+6JiIkx7Dt8NXVGGjy1vRdSGdHkoqZoqjJw7cEBkT7ZkX0c7puedfn1MamnzW5SX4xoa2jVq5u7OWBmkQ==}
     engines: {node: '>=14'}
     dependencies:
       '@google-cloud/paginator': 5.0.0
