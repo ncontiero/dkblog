@@ -1,7 +1,6 @@
 "use client";
 
 import { Fragment, createElement, useEffect, useState } from "react";
-import { setCDN } from "shiki";
 import { processMd } from "@/utils/processMd";
 
 import { Skeleton } from "../ui/Skeleton";
@@ -9,8 +8,6 @@ import { Skeleton } from "../ui/Skeleton";
 export function MdRendererClient({ content }: { content: string }) {
   const [loading, setLoading] = useState(true);
   const [Content, setContent] = useState(createElement(Fragment));
-
-  setCDN("/shiki");
 
   useEffect(() => {
     const processContent = async () => {
