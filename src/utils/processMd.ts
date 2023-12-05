@@ -51,8 +51,6 @@ export async function processMd({ content, getHighlighter }: ProcessMd) {
     .use(remarkRehype)
     .use(rehypeSanitize)
     .use(rehypeSlug)
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
     .use(rehypePrettyCode, { ...prettyCodeOptions, getHighlighter })
     .use(rehypeStringify)
     .use(rehypeReact, production)
