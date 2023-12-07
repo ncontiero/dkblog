@@ -24,6 +24,8 @@ import { Tag } from "../Tag";
 import Image from "next/image";
 import { SelectTag } from "./SelectTag";
 
+import { Loader } from "lucide-react";
+
 interface EditValuesProps {
   title: string;
   description?: string;
@@ -54,6 +56,7 @@ export function CreatePost({
   const { isLoaded, userId } = useAuth();
   const router = useRouter();
   const contentRef = useRef<HTMLTextAreaElement>(null);
+  const [submitting, setSubmitting] = useState(false);
   const [tags, setTags] = useState<TagType[]>([]);
   const [imgPreview, setImgPreview] = useState<string | undefined>(image);
   const [editValues, setEditValues] = useState<EditValuesProps>({
@@ -101,6 +104,7 @@ export function CreatePost({
 
   const submitData = useCallback(
     async (status: PostStatus = "DRAFTED") => {
+      setSubmitting(true);
       const toastLoading = toast.loading(
         `${isEdit ? "Updating" : "Creating"} post...`,
       );
@@ -148,6 +152,8 @@ export function CreatePost({
           isLoading: false,
           autoClose: 1000,
         });
+      } finally {
+        setSubmitting(false);
       }
     },
     [editValues, isEdit, router, slug, uploadImage, userId],
@@ -330,19 +336,31 @@ export function CreatePost({
       <div className="fixed bottom-0 z-20 flex w-full max-w-4xl gap-2 bg-background px-2 py-4 sm:px-0">
         <Button
           onClick={() => submitData("PUBLISHED")}
-          disabled={!(editValues.title !== "" || editValues.content !== "")}
+          disabled={
+            editValues.title === "" || editValues.content === "" || submitting
+          }
           className="disabled:cursor-not-allowed"
           type="button"
         >
-          Publish
+          {submitting ? (
+            <Loader className="mr-2 h-5 w-5 animate-spin" />
+          ) : (
+            "Publish"
+          )}
         </Button>
         <Button
           variant="ghost"
           onClick={() => submitData()}
-          disabled={!(editValues.title !== "" || editValues.content !== "")}
+          disabled={
+            editValues.title === "" || editValues.content === "" || submitting
+          }
           className="disabled:cursor-not-allowed"
         >
-          Save draft
+          {submitting ? (
+            <Loader className="mr-2 h-5 w-5 animate-spin" />
+          ) : (
+            "Save draft"
+          )}
         </Button>
       </div>
     </div>
