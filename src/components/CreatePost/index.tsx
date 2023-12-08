@@ -342,11 +342,7 @@ export function CreatePost({
           className="disabled:cursor-not-allowed"
           type="button"
         >
-          {submitting ? (
-            <Loader className="mr-2 h-5 w-5 animate-spin" />
-          ) : (
-            "Publish"
-          )}
+          {submitting ? <Loader className="h-5 w-5 animate-spin" /> : "Publish"}
         </Button>
         <Button
           variant="ghost"
@@ -357,7 +353,7 @@ export function CreatePost({
           className="disabled:cursor-not-allowed"
         >
           {submitting ? (
-            <Loader className="mr-2 h-5 w-5 animate-spin" />
+            <Loader className="h-5 w-5 animate-spin" />
           ) : (
             "Save draft"
           )}
