@@ -93,3 +93,31 @@ export async function PATCH(
     return errorResponse(error, ["Post not found"]);
   }
 }
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: { slug: string } },
+) {
+  try {
+    const { userId: clerkUserId } = auth();
+    if (!clerkUserId) {
+      throw new Error("Unauthorized");
+    }
+
+    const post = await prisma.post.findUnique({
+      where: { slug: params.slug, user: { externalId: clerkUserId } },
+      include: { user: { select: { externalId: true } } },
+    });
+    if (!post) {
+      throw new Error("Post not found");
+    }
+
+    await prisma.post.delete({ where: { slug: params.slug } });
+
+    return new Response(JSON.stringify(post), {
+      headers: { "content-type": "application/json" },
+    });
+  } catch (error) {
+    return errorResponse(error, ["Post not found"]);
+  }
+}

@@ -5,12 +5,13 @@ import { format } from "date-fns";
 import { currentUser } from "@clerk/nextjs";
 import { getPosts, getPost } from "@/utils/data/posts";
 
+import Image from "next/image";
+import Link from "next/link";
 import { Tag } from "@/components/Tag";
 import { UserHoverCard } from "@/components/UserHoverCard";
 import { MdRenderer } from "@/components/MdRenderer";
-import Image from "next/image";
 import { Button } from "@/components/ui/Button";
-import Link from "next/link";
+import { DeletePostBtn } from "./DeletePostBtn";
 
 export const revalidate = 60 * 5; // 5 minutes
 
@@ -98,9 +99,12 @@ export default async function PostPage({ params }: Props) {
               postDateFormatted={`Posted on ${format(postedOn, "MMM d, yyyy")}`}
             />
             {user && user.username === post.user.username && (
-              <Button asChild>
-                <Link href={`/${user.username}/${post.slug}/edit`}>Edit</Link>
-              </Button>
+              <div className="flex gap-1">
+                <DeletePostBtn postSlug={post.slug} username={user.username} />
+                <Button asChild>
+                  <Link href={`/${user.username}/${post.slug}/edit`}>Edit</Link>
+                </Button>
+              </div>
             )}
           </div>
           <div className="sm:px-1">
