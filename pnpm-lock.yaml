@@ -76,7 +76,7 @@ dependencies:
     version: 9.1.3(react-dom@18.2.0)(react@18.2.0)
   rehype-pretty-code:
     specifier: ^0.12.1
-    version: 0.12.1(shikiji@0.7.6)
+    version: 0.12.1(shikiji@0.8.1)
   rehype-react:
     specifier: ^8.0.0
     version: 8.0.0
@@ -99,8 +99,8 @@ dependencies:
     specifier: ^11.0.0
     version: 11.0.0
   shikiji:
-    specifier: 0.7.x
-    version: 0.7.6
+    specifier: 0.8.x
+    version: 0.8.1
   svix:
     specifier: ^1.15.0
     version: 1.15.0
@@ -5601,7 +5601,7 @@ packages:
       unified: 11.0.4
     dev: false
 
-  /rehype-pretty-code@0.12.1(shikiji@0.7.6):
+  /rehype-pretty-code@0.12.1(shikiji@0.8.1):
     resolution: {integrity: sha512-QeGvAPTc31KwP52wBjXqdXXfBAhEs6wETNlOcZRkaPKZZo6Alsz0U6yY05cCKQK53xYNeDCClVYDCyVMl3SP1Q==}
     engines: {node: '>=18'}
     peerDependencies:
@@ -5611,7 +5611,7 @@ packages:
       hast-util-to-string: 3.0.0
       parse-numeric-range: 1.3.0
       rehype-parse: 9.0.0
-      shikiji: 0.7.6
+      shikiji: 0.8.1
       unified: 11.0.4
       unist-util-visit: 5.0.0
     dev: false
@@ -5848,8 +5848,8 @@ packages:
     engines: {node: '>=8'}
     dev: true
 
-  /shikiji@0.7.6:
-    resolution: {integrity: sha512-KzEtvSGQtBvfwVIB70kOmIfl/5rz1LC8j+tvlHXsJKAIdONNQvG1at7ivUUq3xUctqgO6fsO3AGomUSh0F+wsQ==}
+  /shikiji@0.8.1:
+    resolution: {integrity: sha512-qM98X++qidh/jlz+UZsC6wFuJ7Z2MnQr4wuY4DN7Q/F4we8Hy22CCs+WvnOdP5lG3ytzRbu2F7dUPspjYTkkCg==}
     dependencies:
       hast-util-to-html: 9.0.0
     dev: false
