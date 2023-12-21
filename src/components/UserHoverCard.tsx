@@ -38,7 +38,7 @@ export function UserHoverCard({
             alt={user.username}
             width={postPage ? 40 : 32}
             height={postPage ? 40 : 32}
-            className="rounded-full"
+            className={`rounded-full ${postPage ? "size-10" : "size-8"}`}
           />
           <div className="flex flex-col items-start gap-1">
             <span className={`${postPage && "text-lg"}`}>{user.username}</span>
@@ -64,7 +64,7 @@ export function UserHoverCard({
             alt={user.username}
             width={40}
             height={40}
-            className="rounded-full"
+            className="size-10 rounded-full"
           />
           <h4 className="self-end text-lg font-bold duration-200 group-hover:text-primary">
             {user.username}
