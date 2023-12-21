@@ -1,6 +1,6 @@
 import type { User } from "@prisma/client";
 
-import DateFNS from "date-fns";
+import { format } from "date-fns";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -47,7 +47,7 @@ export function UserHoverCard({
                 dateTime={postDate.toISOString()}
                 className="text-xs font-light"
               >
-                {postDateFormatted || DateFNS.format(postDate, "MMM d")}
+                {postDateFormatted || format(postDate, "MMM d")}
               </time>
             )}
           </div>
@@ -78,7 +78,7 @@ export function UserHoverCard({
           <span className="text-xs text-muted-foreground">
             Joined{" "}
             <time dateTime={new Date(user.createdAt).toISOString()}>
-              {DateFNS.format(new Date(user.createdAt), "MMMM yyyy")}
+              {format(new Date(user.createdAt), "MMMM yyyy")}
             </time>
           </span>
         </div>

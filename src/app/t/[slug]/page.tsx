@@ -1,6 +1,6 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
-import DateFNS from "date-fns";
+import { compareDesc } from "date-fns";
 import { getTags, getTag } from "@/utils/data/tags";
 
 import { PostCard } from "@/components/PostCard";
@@ -61,7 +61,7 @@ export default async function TagPage({ params }: Props) {
   }
 
   const posts = tag.posts.sort((a, b) =>
-    DateFNS.compareDesc(new Date(a.postedOn), new Date(b.postedOn)),
+    compareDesc(new Date(a.postedOn), new Date(b.postedOn)),
   );
 
   return (

@@ -1,6 +1,6 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
-import DateFNS from "date-fns";
+import { format } from "date-fns";
 import { getUsers, getUser } from "@/utils/data/users";
 import { currentUser } from "@clerk/nextjs";
 
@@ -66,7 +66,7 @@ export default async function UserPage({ params }: Props) {
   }
 
   const isOwner = clerkCurrentUser?.username === user.username;
-  const joinedOn = DateFNS.format(new Date(user.createdAt), "dd MMM. yyyy");
+  const joinedOn = format(new Date(user.createdAt), "dd MMM. yyyy");
   const postsP = user.posts.filter((p) => p.status === "PUBLISHED");
   const postsD = user.posts.filter((p) => p.status === "DRAFTED");
   const postsPublished = user.posts

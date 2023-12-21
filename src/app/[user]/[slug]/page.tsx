@@ -1,7 +1,7 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { cache } from "react";
 import { notFound } from "next/navigation";
-import DateFNS from "date-fns";
+import { format } from "date-fns";
 import { currentUser } from "@clerk/nextjs";
 import { getPosts, getPost } from "@/utils/data/posts";
 
@@ -96,10 +96,7 @@ export default async function PostPage({ params }: Props) {
               user={post.user}
               postDate={postedOn}
               postPage
-              postDateFormatted={`Posted on ${DateFNS.format(
-                postedOn,
-                "MMM d, yyyy",
-              )}`}
+              postDateFormatted={`Posted on ${format(postedOn, "MMM d, yyyy")}`}
             />
             {user && user.username === post.user.username && (
               <div className="flex gap-1">
