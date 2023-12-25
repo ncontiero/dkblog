@@ -48,7 +48,8 @@ export async function POST(req: Request) {
   const eventType = evt.type;
   try {
     switch (eventType) {
-      case "user.created" || "user.updated": {
+      case "user.created":
+      case "user.updated": {
         const username =
           evt.data.username || `user_${randomBytes(15).toString("hex")}`;
         const emails = evt.data.email_addresses;
