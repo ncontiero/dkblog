@@ -5,8 +5,8 @@ CREATE TYPE "PostStatus" AS ENUM ('PUBLISHED', 'DRAFTED');
 CREATE TABLE "users" (
     "id" TEXT NOT NULL,
     "external_id" TEXT NOT NULL,
-    "first_name" TEXT NOT NULL,
-    "last_name" TEXT NOT NULL,
+    "first_name" TEXT,
+    "last_name" TEXT,
     "username" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "image" TEXT NOT NULL DEFAULT 'https://img.clerk.com/preview.png',
