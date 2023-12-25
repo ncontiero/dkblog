@@ -48,7 +48,7 @@ export async function POST(req: Request) {
   const eventType = evt.type;
   try {
     switch (eventType) {
-      case "user.created": {
+      case "user.created" || "user.updated": {
         const username =
           evt.data.username || `user_${randomBytes(15).toString("hex")}`;
         const emails = evt.data.email_addresses;
@@ -57,36 +57,18 @@ export async function POST(req: Request) {
           throw new Error("No email address provided");
         }
 
-        await prisma.user.create({
-          data: {
-            externalId: evt.data.id,
-            email: emails[0].email_address,
-            username,
-            firstName: evt.data.first_name,
-            lastName: evt.data.last_name,
-            image: evt.data.image_url,
-          },
-        });
-        break;
-      }
-      case "user.updated": {
-        const username =
-          evt.data.username || `user_${randomBytes(15).toString("hex")}`;
-        const emails = evt.data.email_addresses;
-
-        if (emails.length === 0) {
-          throw new Error("No email address provided");
-        }
-
-        await prisma.user.update({
+        const data = {
+          externalId: evt.data.id,
+          email: emails[0].email_address,
+          username,
+          firstName: evt.data.first_name,
+          lastName: evt.data.last_name,
+          image: evt.data.image_url,
+        };
+        await prisma.user.upsert({
           where: { externalId: evt.data.id },
-          data: {
-            email: emails[0].email_address,
-            username,
-            firstName: evt.data.first_name,
-            lastName: evt.data.last_name,
-            image: evt.data.image_url,
-          },
+          create: data,
+          update: data,
         });
         break;
       }
