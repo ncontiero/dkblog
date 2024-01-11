@@ -46,7 +46,7 @@
     "rehype-stringify": "^10.0.0",
     "remark-gfm": "^4.0.0",
     "remark-parse": "^11.0.0",
-    "remark-rehype": "^11.0.0",
+    "remark-rehype": "^11.1.0",
     "shikiji": "^0.9.18",
     "svix": "^1.15.0",
     "tailwind-merge": "^2.2.0",
