@@ -12,7 +12,7 @@
     "lint:fix": "eslint --fix . && prettier . -w",
     "prisma:seed": "tsx prisma/seed.ts",
     "postinstall": "prisma generate",
-    "prepare": "husky install",
+    "prepare": "husky",
     "pre-commit": "lint-staged"
   },
   "dependencies": {
