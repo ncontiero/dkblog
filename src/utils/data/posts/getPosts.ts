@@ -1,5 +1,5 @@
-import type { Post, Prisma, User } from "@prisma/client";
-import type { PostWithUserAndTags } from "@/utils/types";
+import type { Prisma } from "@prisma/client";
+import type { PostWithUserAndTags, Post, User } from "@/utils/types";
 
 import { cache } from "react";
 import { prisma } from "@/lib/prisma";
@@ -18,10 +18,10 @@ export const getPosts = cache(
     ...options
   }: GetPostsOptionsWithExclude): Promise<PostWithUserAndTags[]> => {
     const opts = excludeFunc(options || {}, ["include"]);
-    const posts = await prisma.post.findMany({
+    const posts = (await prisma.post.findMany({
       include: { tags: true, user: true },
       ...opts,
-    });
+    })) as PostWithUserAndTags[];
     return posts.map((post) => postWithUserAndTags(post, exclude, userKeys));
   },
 );

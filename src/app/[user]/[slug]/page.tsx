@@ -100,7 +100,7 @@ export default async function PostPage({ params }: Props) {
             />
             {user && user.username === post.user.username && (
               <div className="flex gap-1">
-                <DeletePostBtn postSlug={post.slug} username={user.username} />
+                <DeletePostBtn postSlug={post.slug} username={user.username!} />
                 <Button asChild>
                   <Link href={`/${user.username}/${post.slug}/edit`}>Edit</Link>
                 </Button>

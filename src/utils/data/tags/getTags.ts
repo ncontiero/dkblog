@@ -1,5 +1,5 @@
-import type { Post, Prisma, User, Tag } from "@prisma/client";
-import type { TagWithPosts } from "@/utils/types";
+import type { Prisma } from "@prisma/client";
+import type { TagWithPosts, Post, User, Tag } from "@/utils/types";
 
 import { cache } from "react";
 import { prisma } from "@/lib/prisma";
@@ -20,10 +20,10 @@ export const getTags = cache(
     ...options
   }: GetTagsOptionsWithExclude): Promise<TagWithPosts[]> => {
     const opts = excludeFunc(options || {}, ["include"]);
-    const tags = await prisma.tag.findMany({
+    const tags = (await prisma.tag.findMany({
       include: { posts: { include: { user: true, tags: true } } },
       ...opts,
-    });
+    })) as TagWithPosts[];
     return tags
       .map((tag) => excludeFunc(tag, exclude || []))
       .map((tag) => {

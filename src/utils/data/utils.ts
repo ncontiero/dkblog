@@ -1,5 +1,4 @@
-import type { Post, User } from "@prisma/client";
-import type { PostWithUserAndTags } from "../types";
+import type { PostWithUserAndTags, Post, User } from "../types";
 
 export function excludeFunc<T, Key extends keyof T>(
   data: T,
