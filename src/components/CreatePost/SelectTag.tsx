@@ -8,6 +8,7 @@ import {
   CommandGroup,
   CommandInput,
   CommandItem,
+  CommandList,
 } from "../ui/Command";
 import { Button } from "../ui/Button";
 import { X } from "lucide-react";
@@ -84,37 +85,39 @@ export function SelectTag({
         <ScrollArea className="h-96">
           <Command>
             <CommandInput placeholder="Search tag..." />
-            <CommandEmpty>No tags found</CommandEmpty>
-            <CommandGroup>
-              {tags.map((tag, i) => (
-                <CommandItem
-                  key={i}
-                  value={tag.slug}
-                  onSelect={(currentValue) => {
-                    setValue(tag);
-                    setSelectedTags([...selectedTags, tag]);
-                    setTags(tags.filter((t) => t.slug !== currentValue));
-                    setOpen(false);
-                  }}
-                  className="flex flex-col items-start gap-2 py-3"
-                >
-                  <span>
-                    <span
-                      style={{
-                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                        // @ts-ignore
-                        "--tag-color": `${tag.color}`,
-                      }}
-                      className="text-[hsl(var(--tag-color))]"
-                    >
-                      #
+            <CommandList>
+              <CommandEmpty>No tags found</CommandEmpty>
+              <CommandGroup>
+                {tags.map((tag, i) => (
+                  <CommandItem
+                    key={i}
+                    value={tag.slug}
+                    onSelect={(currentValue) => {
+                      setValue(tag);
+                      setSelectedTags([...selectedTags, tag]);
+                      setTags(tags.filter((t) => t.slug !== currentValue));
+                      setOpen(false);
+                    }}
+                    className="flex flex-col items-start gap-2 py-3"
+                  >
+                    <span>
+                      <span
+                        style={{
+                          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                          // @ts-ignore
+                          "--tag-color": `${tag.color}`,
+                        }}
+                        className="text-[hsl(var(--tag-color))]"
+                      >
+                        #
+                      </span>
+                      {tag.slug}
                     </span>
-                    {tag.slug}
-                  </span>
-                  <p>{tag.description?.slice(0, 100)}...</p>
-                </CommandItem>
-              ))}
-            </CommandGroup>
+                    <p>{tag.description?.slice(0, 100)}...</p>
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
           </Command>
         </ScrollArea>
       </PopoverContent>
