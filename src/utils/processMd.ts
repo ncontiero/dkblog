@@ -14,11 +14,8 @@ import * as prod from "react/jsx-runtime";
 import { MdComponents } from "@/components/MdComponents";
 
 const production = {
-  // @ts-expect-error: the react types are missing.
   Fragment: prod.Fragment,
-  // @ts-expect-error: the react types are missing.
   jsx: prod.jsx,
-  // @ts-expect-error: the react types are missing.
   jsxs: prod.jsxs,
   components: MdComponents,
 };
@@ -53,6 +50,7 @@ export async function processMd({ content, getHighlighter }: ProcessMd) {
     .use(rehypeSlug)
     .use(rehypePrettyCode, { ...prettyCodeOptions, getHighlighter })
     .use(rehypeStringify)
+    // @ts-expect-error: the react types are missing.
     .use(rehypeReact, production)
     .process(content);
 }
