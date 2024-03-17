@@ -47,7 +47,7 @@
     "remark-gfm": "^4.0.0",
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.0",
-    "shiki": "^1.1.7",
+    "shiki": "^1.2.0",
     "svix": "^1.21.0",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
