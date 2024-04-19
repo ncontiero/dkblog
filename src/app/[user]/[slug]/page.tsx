@@ -2,7 +2,7 @@ import type { Metadata, ResolvingMetadata } from "next";
 import { cache } from "react";
 import { notFound } from "next/navigation";
 import { format } from "date-fns";
-import { currentUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
 import { getPosts, getPost } from "@/utils/data/posts";
 
 import Image from "next/image";

@@ -1,4 +1,4 @@
-import { auth } from "@clerk/nextjs";
+import { auth } from "@clerk/nextjs/server";
 import { PostStatus } from "@prisma/client";
 import { prisma } from "@/lib/prisma";
 import { errorResponse } from "@/utils/errorResponse";

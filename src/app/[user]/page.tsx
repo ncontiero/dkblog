@@ -2,7 +2,7 @@ import type { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
 import { format } from "date-fns";
 import { getUsers, getUser } from "@/utils/data/users";
-import { currentUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
 
 import { Button } from "@/components/ui/Button";
 import { PostCard } from "@/components/PostCard";

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import { cache } from "react";
 import { notFound, redirect } from "next/navigation";
 import { getPost } from "@/utils/data/posts";
-import { currentUser } from "@clerk/nextjs";
+import { currentUser } from "@clerk/nextjs/server";
 
 import { CreatePost } from "@/components/CreatePost";
 
