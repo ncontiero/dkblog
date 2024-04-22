@@ -1,4 +1,6 @@
-import { PrismaClient, type PostStatus, type Tag } from "@prisma/client";
+/* eslint-disable unicorn/prefer-top-level-await */
+/* eslint-disable no-console */
+import { type PostStatus, PrismaClient, type Tag } from "@prisma/client";
 import { slugify } from "@/utils/slugify";
 
 const prisma = new PrismaClient();
@@ -137,8 +139,8 @@ main()
   .then(async () => {
     await prisma.$disconnect();
   })
-  .catch(async (e) => {
-    console.error(e);
+  .catch(async (error) => {
+    console.error(error);
     await prisma.$disconnect();
     process.exit(1);
   });

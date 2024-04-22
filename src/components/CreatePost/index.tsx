@@ -1,48 +1,36 @@
 "use client";
 
-import {
-  type ChangeEvent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import type { PostStatus, Tag as TagType } from "@prisma/client";
+import type { EditValuesProps } from "./types";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { redirect, useRouter } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
 
-import type { PostStatus, Tag as TagType } from "@prisma/client";
-import { env } from "@/env.mjs";
 import { toast } from "react-toastify";
+import Image from "next/image";
+import { Loader } from "lucide-react";
+import { env } from "@/env.mjs";
 
 import { Button } from "../ui/Button";
 import { ScrollArea } from "../ui/ScrollArea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/Tabs";
 import { Textarea } from "../ui/Textarea";
 import { MdRenderer } from "../MdRenderer";
-import { InputFile as InputFilePrimitive } from "../ui/InputFile";
 import { Tag } from "../Tag";
-import Image from "next/image";
 import { SelectTag } from "./SelectTag";
-
-import { Loader } from "lucide-react";
-
-interface EditValuesProps {
-  title: string;
-  description?: string;
-  image?: File;
-  content: string;
-  tags: TagType[];
-}
+import { InputFile } from "./InputFile";
 
 interface CreatePostProps {
-  title: string;
-  description?: string;
-  image?: string;
-  content: string;
-  tags?: TagType[];
-  slug?: string;
-  isEdit?: boolean;
+  readonly title: string;
+  readonly description?: string;
+  readonly image?: string;
+  readonly content: string;
+  readonly tags?: TagType[];
+  readonly slug?: string;
+  readonly isEdit?: boolean;
 }
+
+const emptyArray: TagType[] = [];
 
 export function CreatePost({
   title,
@@ -50,7 +38,7 @@ export function CreatePost({
   content,
   image,
   slug,
-  tags: initialTags = [],
+  tags: initialTags = emptyArray,
   isEdit = false,
 }: CreatePostProps) {
   const { isLoaded, userId } = useAuth();
@@ -81,7 +69,7 @@ export function CreatePost({
   useEffect(() => {
     getTags();
     if (contentRef.current) {
-      contentRef.current.style.minHeight = 560 + "px";
+      contentRef.current.style.minHeight = `${560}px`;
     }
   }, [getTags]);
 
@@ -131,7 +119,7 @@ export function CreatePost({
 
         if (res.ok) {
           const post = await res.json();
-          setTimeout(async () => {
+          setTimeout(() => {
             router.push(`/${post.user.username}/${post.slug}`);
           }, 1000);
           toast.update(toastLoading, {
@@ -145,7 +133,7 @@ export function CreatePost({
         } else {
           throw new Error(`Failed to ${isEdit ? "update" : "create"} post`);
         }
-      } catch (err) {
+      } catch {
         toast.update(toastLoading, {
           render: `Failed to ${isEdit ? "update" : "create"} post`,
           type: "error",
@@ -158,40 +146,6 @@ export function CreatePost({
     },
     [editValues, isEdit, router, slug, uploadImage, userId],
   );
-
-  const handleImage = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      if (e.target.files && e.target.files[0].type.startsWith("image/")) {
-        setImgPreview(URL.createObjectURL(e.target.files[0]));
-        setEditValues({
-          ...editValues,
-          image: e.target.files[0],
-        });
-      }
-    },
-    [editValues],
-  );
-
-  const InputFile = () => {
-    return (
-      <InputFilePrimitive
-        variant="outlinePrimary"
-        className="bg-secondary py-4 text-foreground focus-within:bg-primary focus-within:text-primary-foreground sm:py-6 sm:text-base"
-        id="cover-image"
-        accept="image/*"
-        onChange={handleImage}
-        tooltipContent={
-          <>
-            <p className="text-sm">Only images are allowed.</p>
-            <p className="text-sm">Maximum file size is 5MB.</p>
-            <p className="text-sm">
-              Use a ration of 1000:420 for best results.
-            </p>
-          </>
-        }
-      />
-    );
-  };
 
   if (!isLoaded || !userId) {
     redirect("/sign-in?redirect_url=/new");
@@ -207,9 +161,9 @@ export function CreatePost({
         <ScrollArea className="z-10 mt-2 h-screen w-full bg-secondary sm:h-[calc(100vh-64px-88px)] sm:rounded-md">
           <TabsContent value="edit">
             <>
-              <div className="px-4 py-4 sm:px-16">
+              <div className="p-4 sm:px-16">
                 <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:gap-0">
-                  {imgPreview && (
+                  {imgPreview ? (
                     <div className="relative mr-3 h-[105px] w-[250px]">
                       <Image
                         src={imgPreview}
@@ -218,10 +172,14 @@ export function CreatePost({
                         className="aspect-video rounded-md object-cover"
                       />
                     </div>
-                  )}
+                  ) : null}
                   {imgPreview ? (
                     <div className="flex gap-1">
-                      <InputFile />
+                      <InputFile
+                        editValues={editValues}
+                        setEditValues={setEditValues}
+                        setImgPreview={setImgPreview}
+                      />
                       <Button
                         variant="destructive"
                         className="border border-transparent py-4 sm:py-6 sm:text-base"
@@ -234,7 +192,11 @@ export function CreatePost({
                       </Button>
                     </div>
                   ) : (
-                    <InputFile />
+                    <InputFile
+                      editValues={editValues}
+                      setEditValues={setEditValues}
+                      setImgPreview={setImgPreview}
+                    />
                   )}
                 </div>
                 <Textarea
@@ -270,8 +232,8 @@ export function CreatePost({
                       setTags={setTags}
                     />
                   </li>
-                  {editValues.tags.slice(0, 3).map((_, i) => (
-                    <li key={i} className="sm:ml-2" style={{ order: i + 2 }}>
+                  {editValues.tags.slice(0, 3).map(({ id }, i) => (
+                    <li key={id} className="sm:ml-2" style={{ order: i + 2 }}>
                       <SelectTag
                         tags={tags}
                         initialValue={editValues.tags[i + 1]}
@@ -287,13 +249,13 @@ export function CreatePost({
               </div>
               <div
                 className="mb-10 h-full p-4 sm:px-16"
-                style={{ minHeight: contentRef.current?.scrollHeight + "px" }}
+                style={{ minHeight: `${contentRef.current?.scrollHeight}px` }}
               >
                 <Textarea
                   placeholder="Write your post content here..."
                   aria-label="Post Content"
                   className="h-full resize-none overflow-hidden whitespace-pre-wrap bg-background/20 text-lg transition-all duration-500"
-                  style={{ minHeight: contentRef.current?.scrollHeight + "px" }}
+                  style={{ minHeight: `${contentRef.current?.scrollHeight}px` }}
                   ref={contentRef}
                   onChange={(e) =>
                     setEditValues({ ...editValues, content: e.target.value })
@@ -303,10 +265,10 @@ export function CreatePost({
               </div>
             </>
           </TabsContent>
-          <TabsContent value="preview" className="max-w-screen">
+          <TabsContent value="preview" className="max-w-screen-sm">
             <div className="w-full">
-              {imgPreview && (
-                <div className="relative mr-3 h-full w-full">
+              {imgPreview ? (
+                <div className="relative mr-3 size-full">
                   <Image
                     src={imgPreview}
                     alt="Post image preview"
@@ -315,18 +277,18 @@ export function CreatePost({
                     className="-mt-2.5 flex items-center justify-center object-contain sm:rounded-t-md"
                   />
                 </div>
-              )}
-              <div className="w-full px-4 py-4 sm:px-16 ">
+              ) : null}
+              <div className="w-full p-4 sm:px-16 ">
                 <h1 className="relative mb-2 mt-4 w-full scroll-m-20 text-4xl font-bold tracking-tight">
                   {editValues.title}
                 </h1>
-                {editValues.tags && editValues.tags.length > 0 && (
+                {editValues.tags && editValues.tags.length > 0 ? (
                   <div className="mt-1.5 flex flex-wrap gap-0.5">
                     {editValues.tags.map((tag) => (
                       <Tag key={tag.id} tag={tag} />
                     ))}
                   </div>
-                )}
+                ) : null}
                 <MdRenderer.Client content={editValues.content} />
               </div>
             </div>
@@ -342,7 +304,7 @@ export function CreatePost({
           className="disabled:cursor-not-allowed"
           type="button"
         >
-          {submitting ? <Loader className="h-5 w-5 animate-spin" /> : "Publish"}
+          {submitting ? <Loader className="size-5 animate-spin" /> : "Publish"}
         </Button>
         <Button
           variant="ghost"
@@ -353,7 +315,7 @@ export function CreatePost({
           className="disabled:cursor-not-allowed"
         >
           {submitting ? (
-            <Loader className="h-5 w-5 animate-spin" />
+            <Loader className="size-5 animate-spin" />
           ) : (
             "Save draft"
           )}

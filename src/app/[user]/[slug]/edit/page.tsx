@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 
 import { cache } from "react";
 import { notFound, redirect } from "next/navigation";
-import { getPost } from "@/utils/data/posts";
 import { currentUser } from "@clerk/nextjs/server";
+import { getPost } from "@/utils/data/posts";
 
 import { CreatePost } from "@/components/CreatePost";
 
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 };
 
 type Props = {
-  params: { user: string; slug: string };
+  readonly params: { user: string; slug: string };
 };
 
 const getUserPost = cache(async ({ user, slug }: Props["params"]) => {

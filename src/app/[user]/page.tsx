@@ -1,20 +1,20 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
 import { format } from "date-fns";
-import { getUsers, getUser } from "@/utils/data/users";
 import { currentUser } from "@clerk/nextjs/server";
+import Link from "next/link";
+import { CalendarDays, Hash, ScrollText } from "lucide-react";
+import { getUser, getUsers } from "@/utils/data/users";
 
 import { Button } from "@/components/ui/Button";
 import { PostCard } from "@/components/PostCard";
-import Link from "next/link";
 
-import { CalendarDays, Hash, ScrollText } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 
 export const revalidate = 60 * 5; // 5 minutes
 
 type Props = {
-  params: { user: string };
+  readonly params: { user: string };
 };
 
 export async function generateStaticParams(): Promise<Props["params"][]> {
@@ -76,7 +76,7 @@ export default async function UserPage({ params }: Props) {
   return (
     <div className="mx-auto mb-10 max-w-5xl">
       <div
-        className="absolute inset-x-0 top-0 -z-[1] mt-16 h-40 w-full"
+        className="absolute inset-x-0 top-0 z-[-1] mt-16 h-40 w-full"
         style={{ backgroundColor: user.brandColor }}
       />
       <div
@@ -88,14 +88,14 @@ export default async function UserPage({ params }: Props) {
             className="-mt-14 rounded-full p-2 sm:-mt-20"
             style={{ backgroundColor: user.brandColor }}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
+            {/* eslint-disable-next-line nextjs/no-img-element */}
             <img
               src={user.image}
               alt={user.username}
-              className="h-24 w-24 rounded-full bg-black sm:h-32 sm:w-32"
+              className="size-24 rounded-full bg-black sm:size-32"
             />
           </span>
-          <div className="absolute inset-x-0 right-0 top-0 flex justify-end pr-6 pt-6">
+          <div className="absolute inset-x-0 top-0 flex justify-end pr-6 pt-6">
             {isOwner ? (
               <Button asChild>
                 <Link href="/settings">Edit profile</Link>
@@ -107,11 +107,11 @@ export default async function UserPage({ params }: Props) {
         </div>
         <div className="flex w-full flex-col p-6 sm:items-center sm:justify-center sm:text-center">
           <h1 className="mb-4 text-3xl font-bold">{user.username}</h1>
-          {user.bio && (
+          {user.bio ? (
             <p className="mb-8 max-w-[75%] sm:mx-auto">{user.bio}</p>
-          )}
+          ) : null}
           <div className="flex">
-            <CalendarDays className="mr-2 h-4 w-4 opacity-70" />{" "}
+            <CalendarDays className="mr-2 size-4 opacity-70" />{" "}
             <span className="text-xs text-muted-foreground">
               Joined on{" "}
               <time dateTime={new Date(user.createdAt).toISOString()}>

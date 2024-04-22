@@ -1,3 +1,4 @@
+/* eslint-disable import/no-default-export */
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
 const isProtectedRoute = createRouteMatcher(["/settings(.*)", "/new(.*)"]);

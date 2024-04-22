@@ -1,14 +1,14 @@
 import type { Metadata, ResolvingMetadata } from "next";
 import { notFound } from "next/navigation";
 import { compareDesc } from "date-fns";
-import { getTags, getTag } from "@/utils/data/tags";
+import { getTag, getTags } from "@/utils/data/tags";
 
 import { PostCard } from "@/components/PostCard";
 
 export const revalidate = 60 * 5; // 5 minutes
 
 type Props = {
-  params: { slug: string };
+  readonly params: { slug: string };
 };
 
 export async function generateStaticParams() {

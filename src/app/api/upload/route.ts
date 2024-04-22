@@ -30,8 +30,8 @@ export async function POST(request: Request) {
     return new Response(JSON.stringify({ image: fileURL }), {
       headers: { "content-type": "application/json" },
     });
-  } catch (e) {
-    return errorResponse(e, [
+  } catch (error) {
+    return errorResponse(error, [
       "No file provided",
       "Invalid file type",
       "Invalid field",

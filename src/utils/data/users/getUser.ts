@@ -1,8 +1,8 @@
 import type { Prisma } from "@prisma/client";
 import type { UserWithPosts } from "@/utils/types";
 
-import { getUsers, type GetUsersOptionsWithExclude } from "./getUsers";
 import { cache } from "react";
+import { type GetUsersOptionsWithExclude, getUsers } from "./getUsers";
 
 interface GetUserOptions extends GetUsersOptionsWithExclude {
   where: Prisma.UserWhereUniqueInput;

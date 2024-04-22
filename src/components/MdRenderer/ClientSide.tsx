@@ -5,8 +5,9 @@ import { processMd } from "@/utils/processMd";
 
 import { Skeleton } from "../ui/Skeleton";
 
-export function MdRendererClient({ content }: { content: string }) {
+export function MdRendererClient({ content }: { readonly content: string }) {
   const [loading, setLoading] = useState(true);
+  // eslint-disable-next-line react/hook-use-state
   const [Content, setContent] = useState(createElement(Fragment));
 
   useEffect(() => {
@@ -14,8 +15,11 @@ export function MdRendererClient({ content }: { content: string }) {
       setContent((await processMd({ content })).result);
     };
     processContent()
-      .catch(console.error)
-      .finally(() => setLoading(false));
+      .then(() => setLoading(false))
+      .catch(console.error);
+    return () => {
+      setContent(createElement(Fragment));
+    };
   }, [content]);
 
   return loading ? (

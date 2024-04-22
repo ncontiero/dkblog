@@ -8,8 +8,8 @@ import {
 import { useTheme } from "next-themes";
 
 import {
-  DropdownMenuSubContent,
   DropdownMenuItem,
+  DropdownMenuSubContent,
 } from "@/components/ui/DropdownMenu";
 
 export const SubModeToggle = forwardRef<
@@ -20,7 +20,7 @@ export const SubModeToggle = forwardRef<
 
   return (
     <DropdownMenuSubContent
-      className={"z-[9999]" + className}
+      className={`z-[9999]${className}`}
       ref={ref}
       {...props}
     >

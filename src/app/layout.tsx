@@ -1,14 +1,14 @@
+import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import "react-toastify/dist/ReactToastify.min.css";
 import "./globals.css";
 import "./mdx.css";
-import type { Metadata } from "next";
-import type { ReactNode } from "react";
 import { Merriweather_Sans as MerriweatherSans } from "next/font/google";
 
-import { env } from "@/env.mjs";
 import { ToastContainer } from "react-toastify";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "next-themes";
+import { env } from "@/env.mjs";
 import { Header } from "@/components/Header";
 import { clerkTheme } from "./clerkTheme";
 
@@ -56,7 +56,11 @@ export const metadata: Metadata = {
     card: "summary",
   },
 };
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  readonly children: ReactNode;
+}) {
   return (
     <ClerkProvider appearance={{ baseTheme: clerkTheme }}>
       <html lang="en" className={merriweatherSans.variable}>
@@ -67,7 +71,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
               autoClose={3000}
               position="top-right"
               theme="dark"
-              newestOnTop={true}
+              newestOnTop
               pauseOnFocusLoss={false}
               limit={3}
               toastClassName="bg-background"

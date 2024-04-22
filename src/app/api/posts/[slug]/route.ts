@@ -1,9 +1,9 @@
 import { auth } from "@clerk/nextjs/server";
 import { PostStatus } from "@prisma/client";
+import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { errorResponse } from "@/utils/errorResponse";
 import { postsQueryParams, updateSlugParam } from "@/utils/querySchema";
-import { z } from "zod";
 import { slugify } from "@/utils/slugify";
 
 export async function GET(

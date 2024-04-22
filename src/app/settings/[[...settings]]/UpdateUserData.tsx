@@ -4,19 +4,19 @@ import {
   type FormEvent,
   useCallback,
   useEffect,
-  useState,
   useMemo,
+  useState,
 } from "react";
-import { env } from "@/env.mjs";
 import { toast } from "react-toastify";
+import { env } from "@/env.mjs";
 import { Button } from "@/components/ui/Button";
 import { Textarea } from "@/components/ui/Textarea";
 import { Input } from "@/components/ui/Input";
 
 interface UpdateUserDataProps {
-  userId: string;
-  initialBrandColor?: string;
-  initialBio?: string;
+  readonly userId: string;
+  readonly initialBrandColor?: string;
+  readonly initialBio?: string;
 }
 
 export function UpdateUserData({
@@ -33,7 +33,7 @@ export function UpdateUserData({
 
   const brandColorIsValidAndChanged = useMemo(() => {
     const brandColorIsValid =
-      brandColor.new?.match(/^#(?:[0-9a-fA-F]{3}){1,2}$/) != null;
+      brandColor.new?.match(/^#(?:[\dA-Fa-f]{3}){1,2}$/) != null;
     return brandColorIsValid && brandColor.old !== brandColor.new;
   }, [brandColor.new, brandColor.old]);
 
@@ -66,7 +66,7 @@ export function UpdateUserData({
             autoClose: 1000,
           });
         }
-      } catch (err) {
+      } catch {
         toast.update(toastLoading, {
           render: "Failed to update profile!",
           type: "error",
@@ -120,6 +120,7 @@ export function UpdateUserData({
                 setBrandColor({ old: brandColor.old, new: e.target.value })
               }
               className="w-full pl-12 sm:w-1/2"
+              id="brand-color"
             />
           </div>
         </div>

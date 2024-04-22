@@ -1,15 +1,15 @@
 import type { PostWithUserAndTags } from "@/utils/types";
 
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-import Link from "next/link";
 import { Tag } from "./Tag";
 import { UserHoverCard } from "./UserHoverCard";
 
 export function PostCard({
   className,
   ...post
-}: PostWithUserAndTags & { className?: string }) {
+}: PostWithUserAndTags & { readonly className?: string }) {
   return (
     <div
       className={cn(
@@ -27,13 +27,13 @@ export function PostCard({
             {post.title}
           </Link>
         </h2>
-        {post.tags && post.tags.length > 0 && (
+        {post.tags && post.tags.length > 0 ? (
           <div className="mt-2 flex flex-wrap gap-0.5">
             {post.tags.map((tag) => (
               <Tag key={tag.id} tag={tag} />
             ))}
           </div>
-        )}
+        ) : null}
       </div>
     </div>
   );

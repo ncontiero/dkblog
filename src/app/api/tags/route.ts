@@ -13,7 +13,7 @@ export async function GET(request: Request) {
       orderBy: params.get("orderBy"),
       filter: params.get("filter"),
     });
-    const skipLimit = parseInt(limit?.toString() || "10");
+    const skipLimit = Number.parseInt(limit?.toString() || "10");
     if (typeof limit === "number" && limit <= 0) {
       throw new Error("Limit must be greater than 0");
     }

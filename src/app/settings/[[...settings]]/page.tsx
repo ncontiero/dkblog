@@ -3,10 +3,10 @@ import type { Metadata } from "next";
 import { currentUser } from "@clerk/nextjs/server";
 import { UserProfile } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
+import NextLink from "next/link";
 import { getUser } from "@/utils/data/users";
 
 import { Link } from "@/components/ui/Link";
-import NextLink from "next/link";
 import { UpdateUserData } from "./UpdateUserData";
 
 export const fetchCache = "force-no-store";
@@ -26,18 +26,18 @@ export default async function UserSettingsPage() {
     <div className="mx-auto my-10 flex justify-center sm:container">
       <div className="flex flex-col items-start space-y-6">
         <h1 className="px-2">
-          <Link asChild className="text-3xl">
+          <Link asChild className="text-3xl" href={`/${user.username}`}>
             <NextLink href={`/${user.username}`}>@{user.username}</NextLink>
           </Link>
         </h1>
         <UserProfile path="/settings" />
-        {dbUser && (
+        {dbUser ? (
           <UpdateUserData
             userId={user.id}
             initialBio={dbUser.bio || undefined}
             initialBrandColor={dbUser.brandColor}
           />
-        )}
+        ) : null}
       </div>
     </div>
   );

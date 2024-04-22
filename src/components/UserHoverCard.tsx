@@ -4,16 +4,15 @@ import { format } from "date-fns";
 
 import Link from "next/link";
 import Image from "next/image";
+import { CalendarDays } from "lucide-react";
 import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/HoverCard";
 import { Button } from "./ui/Button";
 
-import { CalendarDays } from "lucide-react";
-
 interface UserHoverCardProps {
-  user: User;
-  postDate?: Date;
-  postDateFormatted?: string;
-  postPage?: boolean;
+  readonly user: User;
+  readonly postDate?: Date;
+  readonly postDateFormatted?: string;
+  readonly postPage?: boolean;
 }
 
 export function UserHoverCard({
@@ -42,19 +41,19 @@ export function UserHoverCard({
           />
           <div className="flex flex-col items-start gap-1">
             <span className={`${postPage && "text-lg"}`}>{user.username}</span>
-            {postDate && (
+            {postDate ? (
               <time
                 dateTime={postDate.toISOString()}
                 className="text-xs font-light"
               >
                 {postDateFormatted || format(postDate, "MMM d")}
               </time>
-            )}
+            ) : null}
           </div>
         </Link>
       </HoverCardTrigger>
       <HoverCardContent className="relative">
-        <div className="absolute inset-x-0 top-0 -z-[1] h-8 w-full rounded-t-md bg-primary" />
+        <div className="absolute inset-x-0 top-0 z-[-1] h-8 w-full rounded-t-md bg-primary" />
         <Link
           href={`/${user.username}`}
           className="group mt-1 flex items-center space-x-2.5"
@@ -74,7 +73,7 @@ export function UserHoverCard({
           Follow
         </Button>
         <div className="flex items-center pt-4">
-          <CalendarDays className="mr-2 h-4 w-4 opacity-70" />{" "}
+          <CalendarDays className="mr-2 size-4 opacity-70" />{" "}
           <span className="text-xs text-muted-foreground">
             Joined{" "}
             <time dateTime={new Date(user.createdAt).toISOString()}>

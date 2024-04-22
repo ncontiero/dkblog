@@ -1,7 +1,7 @@
 import type { WebhookEvent } from "@clerk/nextjs/server";
 
-import { Webhook } from "svix";
 import { randomBytes } from "node:crypto";
+import { Webhook } from "svix";
 import { headers } from "next/headers";
 import { env } from "@/env.mjs";
 import { errorResponse } from "@/utils/errorResponse";
@@ -38,8 +38,8 @@ export async function POST(req: Request) {
       "svix-timestamp": svixTimestamp,
       "svix-signature": svixSignature,
     }) as WebhookEvent;
-  } catch (err) {
-    console.error("Error verifying webhook:", err);
+  } catch (error) {
+    console.error("Error verifying webhook:", error);
     const errMessages = "Error occurred -- could not verify webhook";
     return errorResponse(errMessages, [errMessages]);
   }
@@ -80,9 +80,9 @@ export async function POST(req: Request) {
       default:
         throw new Error("Unknown or unaccepted event");
     }
-  } catch (err) {
-    console.error("Error processing webhook:", err);
-    return errorResponse(err, [
+  } catch (error) {
+    console.error("Error processing webhook:", error);
+    return errorResponse(error, [
       "Unknown or unaccepted event",
       "No email address provided",
     ]);

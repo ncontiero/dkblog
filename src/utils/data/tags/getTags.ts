@@ -1,5 +1,5 @@
 import type { Prisma } from "@prisma/client";
-import type { TagWithPosts, Post, User, Tag } from "@/utils/types";
+import type { Post, Tag, TagWithPosts, User } from "@/utils/types";
 
 import { cache } from "react";
 import { prisma } from "@/lib/prisma";

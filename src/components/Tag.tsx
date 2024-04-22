@@ -1,11 +1,11 @@
 import type { HTMLAttributes } from "react";
-import type { Tag } from "@prisma/client";
+import type { Tag as TagType } from "@prisma/client";
 
-import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 
 interface TagProps extends HTMLAttributes<HTMLAnchorElement> {
-  tag: Tag;
+  readonly tag: TagType;
 }
 
 export function Tag({ tag, className, ...props }: TagProps) {

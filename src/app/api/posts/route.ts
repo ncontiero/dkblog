@@ -1,11 +1,11 @@
+import crypto from "node:crypto";
 import { auth } from "@clerk/nextjs/server";
 import { PostStatus } from "@prisma/client";
+import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { errorResponse } from "@/utils/errorResponse";
 import { postsQuerySchema } from "@/utils/querySchema";
-import { z } from "zod";
 import { slugify } from "@/utils/slugify";
-import crypto from "node:crypto";
 import { excludeFunc } from "@/utils/data/utils";
 
 export async function GET(request: Request) {
@@ -19,7 +19,7 @@ export async function GET(request: Request) {
       orderBy: params.get("orderBy"),
       filter: params.get("filter"),
     });
-    const skipLimit = parseInt(limit?.toString() || "10");
+    const skipLimit = Number.parseInt(limit?.toString() || "10");
     if (typeof limit === "number" && limit <= 0) {
       throw new Error("Limit must be greater than 0");
     }

@@ -3,13 +3,12 @@
 import { useCallback, useState } from "react";
 import { useRouter } from "next/navigation";
 
+import { Loader } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
-import { Loader } from "lucide-react";
-
 interface DeletePostBtnProps {
-  postSlug: string;
-  username: string;
+  readonly postSlug: string;
+  readonly username: string;
 }
 
 export function DeletePostBtn({ postSlug, username }: DeletePostBtnProps) {
@@ -29,7 +28,7 @@ export function DeletePostBtn({ postSlug, username }: DeletePostBtnProps) {
       onClick={() => deletePost()}
       disabled={deleting}
     >
-      {deleting ? <Loader className="h-4 w-4 animate-spin" /> : "Delete"}
+      {deleting ? <Loader className="size-4 animate-spin" /> : "Delete"}
     </Button>
   );
 }

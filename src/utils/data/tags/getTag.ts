@@ -1,8 +1,8 @@
 import type { Prisma } from "@prisma/client";
 import type { TagWithPosts } from "@/utils/types";
 
-import { getTags, type GetTagsOptionsWithExclude } from "./getTags";
 import { cache } from "react";
+import { type GetTagsOptionsWithExclude, getTags } from "./getTags";
 
 interface GetTagProps extends GetTagsOptionsWithExclude {
   where: Prisma.TagWhereUniqueInput;

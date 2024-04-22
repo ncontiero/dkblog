@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
+import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { errorResponse } from "@/utils/errorResponse";
-import { z } from "zod";
 
 const updateUserSchema = z.object({
   brandColor: z.string().optional(),

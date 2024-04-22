@@ -1,6 +1,7 @@
 import type { Tag } from "@prisma/client";
 import { useState } from "react";
 
+import { X } from "lucide-react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/Popover";
 import {
   Command,
@@ -11,15 +12,14 @@ import {
   CommandList,
 } from "../ui/Command";
 import { Button } from "../ui/Button";
-import { X } from "lucide-react";
 import { ScrollArea } from "../ui/ScrollArea";
 
 interface SelectTagProps {
-  tags: Tag[];
-  setTags: (tags: Tag[]) => void;
-  selectedTags: Tag[];
-  setSelectedTags: (tags: Tag[]) => void;
-  initialValue?: Tag;
+  readonly tags: Tag[];
+  readonly setTags: (tags: Tag[]) => void;
+  readonly selectedTags: Tag[];
+  readonly setSelectedTags: (tags: Tag[]) => void;
+  readonly initialValue?: Tag;
 }
 
 export function SelectTag({
@@ -88,9 +88,9 @@ export function SelectTag({
             <CommandList>
               <CommandEmpty>No tags found</CommandEmpty>
               <CommandGroup>
-                {tags.map((tag, i) => (
+                {tags.map((tag) => (
                   <CommandItem
-                    key={i}
+                    key={tag.id}
                     value={tag.slug}
                     onSelect={(currentValue) => {
                       setValue(tag);

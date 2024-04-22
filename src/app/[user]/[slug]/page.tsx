@@ -3,10 +3,10 @@ import { cache } from "react";
 import { notFound } from "next/navigation";
 import { format } from "date-fns";
 import { currentUser } from "@clerk/nextjs/server";
-import { getPosts, getPost } from "@/utils/data/posts";
 
 import Image from "next/image";
 import Link from "next/link";
+import { getPost, getPosts } from "@/utils/data/posts";
 import { Tag } from "@/components/Tag";
 import { UserHoverCard } from "@/components/UserHoverCard";
 import { MdRenderer } from "@/components/MdRenderer";
@@ -16,7 +16,7 @@ import { DeletePostBtn } from "./DeletePostBtn";
 export const revalidate = 60 * 5; // 5 minutes
 
 type Props = {
-  params: { user: string; slug: string };
+  readonly params: { user: string; slug: string };
 };
 
 const getUserPost = cache(async ({ user, slug }: Props["params"]) => {
@@ -79,8 +79,8 @@ export default async function PostPage({ params }: Props) {
   return (
     <div className="mx-auto my-0 min-h-screen max-w-3xl sm:my-8">
       <div className="bg-secondary sm:rounded-md">
-        {post.image && (
-          <div className="relative mr-3 h-full w-full">
+        {post.image ? (
+          <div className="relative mr-3 size-full">
             <Image
               src={post.image}
               alt="Post image preview"
@@ -89,7 +89,7 @@ export default async function PostPage({ params }: Props) {
               className="flex items-center justify-center object-contain sm:rounded-t-md"
             />
           </div>
-        )}
+        ) : null}
         <div className="p-4 sm:p-10 sm:pt-6">
           <div className="flex items-center justify-between sm:-ml-2">
             <UserHoverCard
@@ -98,26 +98,26 @@ export default async function PostPage({ params }: Props) {
               postPage
               postDateFormatted={`Posted on ${format(postedOn, "MMM d, yyyy")}`}
             />
-            {user && user.username === post.user.username && (
+            {user && user.username === post.user.username ? (
               <div className="flex gap-1">
                 <DeletePostBtn postSlug={post.slug} username={user.username!} />
                 <Button asChild>
                   <Link href={`/${user.username}/${post.slug}/edit`}>Edit</Link>
                 </Button>
               </div>
-            )}
+            ) : null}
           </div>
           <div className="sm:px-1">
             <h1 className="relative mb-2 mt-4 w-full scroll-m-20 text-3xl tracking-tight sm:text-4xl sm:font-bold">
               {post.title}
             </h1>
-            {post.tags && post.tags.length > 0 && (
+            {post.tags && post.tags.length > 0 ? (
               <div className="mt-1.5 flex flex-wrap gap-0.5">
                 {post.tags.map((tag) => (
                   <Tag key={tag.id} tag={tag} />
                 ))}
               </div>
-            )}
+            ) : null}
           </div>
           <div className="prose prose-quoteless pl-1 pt-7 dark:prose-invert">
             <MdRenderer.Server content={post.content} />

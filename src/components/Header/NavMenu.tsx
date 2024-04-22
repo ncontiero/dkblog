@@ -1,22 +1,21 @@
 import Link from "next/link";
 
 import { currentUser } from "@clerk/nextjs/server";
-import { SignedIn, SignedOut, UserButton, SignOutButton } from "@clerk/nextjs";
+import { SignOutButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import Image from "next/image";
+import { LogOut, Moon, Pencil, Sun, User } from "lucide-react";
 import { ModeToggle } from "../ThemeToggle";
 import { Button } from "../ui/Button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuTrigger,
   DropdownMenuItem,
   DropdownMenuPortal,
   DropdownMenuSub,
   DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
 } from "../ui/DropdownMenu";
-import Image from "next/image";
 import { SubModeToggle } from "./SubThemeToggle";
-
-import { Pencil, Moon, Sun, User, LogOut } from "lucide-react";
 
 export async function NavMenu() {
   const user = await currentUser();
@@ -32,7 +31,7 @@ export async function NavMenu() {
                 alt={`${user?.firstName} ${user?.lastName}`}
                 width={32}
                 height={32}
-                className="aspect-square h-full w-full rounded-full"
+                className="aspect-square size-full rounded-full"
               />
             </Button>
           </DropdownMenuTrigger>
@@ -60,8 +59,8 @@ export async function NavMenu() {
             <DropdownMenuSub>
               <DropdownMenuSubTrigger className="py-3">
                 <>
-                  <Sun className="mr-2 h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                  <Moon className="absolute mr-2 h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                  <Sun className="mr-2 size-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+                  <Moon className="absolute mr-2 size-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
                   <span>Toggle theme</span>
                 </>
               </DropdownMenuSubTrigger>

@@ -1,4 +1,4 @@
-import { PostStatus } from "@prisma/client";
+import type { PostStatus } from "@prisma/client";
 
 export interface Post {
   id: string;

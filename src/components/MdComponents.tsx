@@ -1,11 +1,11 @@
 import type { AnchorHTMLAttributes, HTMLAttributes } from "react";
 import type { Components } from "rehype-react";
 
-import { Link } from "./ui/Link";
 import NextLink from "next/link";
+import { Link as LinkIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-import { Link as LinkIcon } from "lucide-react";
+import { Link } from "./ui/Link";
 
 function AnchorLink({
   href,
@@ -29,7 +29,7 @@ function AnchorLink({
 }
 
 interface HeadingLinkedProps extends HTMLAttributes<HTMLHeadingElement> {
-  as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  readonly as?: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
 }
 
 function HeadingLinked({
@@ -155,7 +155,7 @@ export const MdComponents: Components = {
     />
   ),
   img: ({ className, alt, ...props }) => (
-    // eslint-disable-next-line @next/next/no-img-element
+    // eslint-disable-next-line nextjs/no-img-element
     <img
       className={cn(
         "mx-auto my-0 w-full rounded-md border border-border shadow-xl shadow-border",
