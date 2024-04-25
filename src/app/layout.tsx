@@ -1,8 +1,8 @@
-import type { Metadata } from "next";
-import type { ReactNode } from "react";
 import "react-toastify/dist/ReactToastify.min.css";
 import "./globals.css";
 import "./mdx.css";
+import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { Merriweather_Sans as MerriweatherSans } from "next/font/google";
 
 import { ToastContainer } from "react-toastify";
