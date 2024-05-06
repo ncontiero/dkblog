@@ -49,7 +49,7 @@
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.0",
     "shiki": "^1.4.0",
-    "svix": "^1.22.0",
+    "svix": "^1.23.0",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "unified": "^11.0.4",
