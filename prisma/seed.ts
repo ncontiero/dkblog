@@ -1,4 +1,3 @@
-/* eslint-disable unicorn/prefer-top-level-await */
 /* eslint-disable no-console */
 import { type PostStatus, PrismaClient, type Tag } from "@prisma/client";
 import { slugify } from "@/utils/slugify";
