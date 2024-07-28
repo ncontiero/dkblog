@@ -33,7 +33,7 @@ export function UpdateUserData({
 
   const brandColorIsValidAndChanged = useMemo(() => {
     const brandColorIsValid =
-      brandColor.new?.match(/^#(?:[\dA-Fa-f]{3}){1,2}$/) != null;
+      brandColor.new?.match(/^#(?:[\da-f]{3}){1,2}$/i) != null;
     return brandColorIsValid && brandColor.old !== brandColor.new;
   }, [brandColor.new, brandColor.old]);
 

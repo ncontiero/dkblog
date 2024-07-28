@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { type PostStatus, PrismaClient, type Tag } from "@prisma/client";
+import { type PostStatus, type Tag, PrismaClient } from "@prisma/client";
 import { slugify } from "@/utils/slugify";
 
 const prisma = new PrismaClient();
