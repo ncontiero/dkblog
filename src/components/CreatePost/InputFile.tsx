@@ -16,7 +16,6 @@ export function InputFile({
   const handleImage = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
       if (e.target.files && e.target.files[0].type.startsWith("image/")) {
-        // eslint-disable-next-line node/no-unsupported-features/node-builtins
         setImgPreview(URL.createObjectURL(e.target.files[0]));
         setEditValues({
           ...editValues,

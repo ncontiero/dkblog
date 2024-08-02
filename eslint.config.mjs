@@ -5,9 +5,7 @@ export default dkshs({
     overrides: {
       "node/no-unsupported-features/node-builtins": [
         "error",
-        {
-          ignores: ["fetch", "Blob", "File", "FormData", "Response", "Request"],
-        },
+        { allowExperimental: true },
       ],
     },
   },
