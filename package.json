@@ -72,9 +72,7 @@
     "typescript": "^5.5.4"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,css,md,yaml,yml,toml}": [
-      "pnpm lint:fix"
-    ]
+    "*": "pnpm lint:fix"
   },
   "prisma": {
     "seed": "pnpm prisma:seed"
