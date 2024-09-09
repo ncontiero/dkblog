@@ -8,10 +8,10 @@ import {
   useState,
 } from "react";
 import { toast } from "react-toastify";
-import { env } from "@/env.mjs";
 import { Button } from "@/components/ui/Button";
-import { Textarea } from "@/components/ui/Textarea";
 import { Input } from "@/components/ui/Input";
+import { Textarea } from "@/components/ui/Textarea";
+import { env } from "@/env.mjs";
 
 interface UpdateUserDataProps {
   readonly userId: string;

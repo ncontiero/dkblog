@@ -1,16 +1,16 @@
 import type { Metadata, ResolvingMetadata } from "next";
-import { cache } from "react";
-import { notFound } from "next/navigation";
-import { format } from "date-fns";
-import { currentUser } from "@clerk/nextjs/server";
 
+import { cache } from "react";
+import { currentUser } from "@clerk/nextjs/server";
+import { format } from "date-fns";
 import Image from "next/image";
 import Link from "next/link";
-import { getPost, getPosts } from "@/utils/data/posts";
-import { Tag } from "@/components/Tag";
-import { UserHoverCard } from "@/components/UserHoverCard";
+import { notFound } from "next/navigation";
 import { MdRenderer } from "@/components/MdRenderer";
+import { Tag } from "@/components/Tag";
 import { Button } from "@/components/ui/Button";
+import { UserHoverCard } from "@/components/UserHoverCard";
+import { getPost, getPosts } from "@/utils/data/posts";
 import { DeletePostBtn } from "./DeletePostBtn";
 
 export const revalidate = 60 * 5; // 5 minutes

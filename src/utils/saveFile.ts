@@ -1,7 +1,7 @@
-import fs from "node:fs";
 import { randomBytes } from "node:crypto";
-import { uploadFile } from "@/lib/storage";
+import fs from "node:fs";
 import { env } from "@/env.mjs";
+import { uploadFile } from "@/lib/storage";
 
 // DEV
 const PUBLIC_FOLDER = "./public";
@@ -12,12 +12,12 @@ const UPLOAD_FOLDER = `${PUBLIC_FOLDER}${FILES_FOLDER}`;
 const GS_FOLDER = `${env.GS_BUCKET_NAME}/`;
 const GS_URL = `https://storage.googleapis.com/${GS_FOLDER}`;
 
-/**
- * returnFileURLWithAbsoluteURL only in DEV
- */
 interface saveFileProps {
   folder: string;
   fileName?: string;
+  /**
+   * Only in DEV
+   */
   returnFileURLWithAbsoluteURL?: boolean;
 }
 

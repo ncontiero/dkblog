@@ -1,10 +1,9 @@
-import type { AnchorHTMLAttributes, HTMLAttributes } from "react";
 import type { Components } from "rehype-react";
+import type { AnchorHTMLAttributes, HTMLAttributes } from "react";
 
-import NextLink from "next/link";
 import { Link as LinkIcon } from "lucide-react";
+import NextLink from "next/link";
 import { cn } from "@/lib/utils";
-
 import { Link } from "./ui/Link";
 
 function AnchorLink({

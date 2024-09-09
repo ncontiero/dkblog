@@ -1,11 +1,11 @@
 import type { WebhookEvent } from "@clerk/nextjs/server";
 
 import { randomBytes } from "node:crypto";
-import { Webhook } from "svix";
 import { headers } from "next/headers";
+import { Webhook } from "svix";
 import { env } from "@/env.mjs";
-import { errorResponse } from "@/utils/errorResponse";
 import { prisma } from "@/lib/prisma";
+import { errorResponse } from "@/utils/errorResponse";
 
 export async function POST(req: Request) {
   const WEBHOOK_SECRET = env.CLERK_WEBHOOK_SIGNING_SECRET;

@@ -1,11 +1,10 @@
 import type { Metadata } from "next";
 
 import { cache } from "react";
-import { notFound, redirect } from "next/navigation";
 import { currentUser } from "@clerk/nextjs/server";
-import { getPost } from "@/utils/data/posts";
-
+import { notFound, redirect } from "next/navigation";
 import { CreatePost } from "@/components/CreatePost";
+import { getPost } from "@/utils/data/posts";
 
 export const metadata: Metadata = {
   title: "Edit Post",

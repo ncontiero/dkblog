@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 
-import { currentUser } from "@clerk/nextjs/server";
 import { UserProfile } from "@clerk/nextjs";
-import { redirect } from "next/navigation";
+import { currentUser } from "@clerk/nextjs/server";
 import NextLink from "next/link";
-import { getUser } from "@/utils/data/users";
-
+import { redirect } from "next/navigation";
 import { Link } from "@/components/ui/Link";
+import { getUser } from "@/utils/data/users";
 import { UpdateUserData } from "./UpdateUserData";
 
 export const fetchCache = "force-no-store";
