@@ -2,7 +2,7 @@ import type { Tag } from "@prisma/client";
 import { useState } from "react";
 
 import { X } from "lucide-react";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/Popover";
+import { Button } from "../ui/Button";
 import {
   Command,
   CommandEmpty,
@@ -11,7 +11,7 @@ import {
   CommandItem,
   CommandList,
 } from "../ui/Command";
-import { Button } from "../ui/Button";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/Popover";
 import { ScrollArea } from "../ui/ScrollArea";
 
 interface SelectTagProps {

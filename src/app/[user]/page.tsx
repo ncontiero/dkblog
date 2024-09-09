@@ -1,15 +1,14 @@
 import type { Metadata, ResolvingMetadata } from "next";
-import { notFound } from "next/navigation";
-import { format } from "date-fns";
+
 import { currentUser } from "@clerk/nextjs/server";
-import Link from "next/link";
+import { format } from "date-fns";
 import { CalendarDays, Hash, ScrollText } from "lucide-react";
-import { getUser, getUsers } from "@/utils/data/users";
-
-import { Button } from "@/components/ui/Button";
+import Link from "next/link";
+import { notFound } from "next/navigation";
 import { PostCard } from "@/components/PostCard";
-
+import { Button } from "@/components/ui/Button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
+import { getUser, getUsers } from "@/utils/data/users";
 
 export const revalidate = 60 * 5; // 5 minutes
 

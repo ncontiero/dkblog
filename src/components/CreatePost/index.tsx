@@ -2,23 +2,22 @@
 
 import type { PostStatus, Tag as TagType } from "@prisma/client";
 import type { EditValuesProps } from "./types";
+
 import { useCallback, useEffect, useRef, useState } from "react";
-import { redirect, useRouter } from "next/navigation";
-import { useAuth } from "@clerk/nextjs";
-
 import { toast } from "react-toastify";
-import Image from "next/image";
+import { useAuth } from "@clerk/nextjs";
 import { Loader } from "lucide-react";
+import Image from "next/image";
+import { redirect, useRouter } from "next/navigation";
 import { env } from "@/env.mjs";
-
+import { MdRenderer } from "../MdRenderer";
+import { Tag } from "../Tag";
 import { Button } from "../ui/Button";
 import { ScrollArea } from "../ui/ScrollArea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "../ui/Tabs";
 import { Textarea } from "../ui/Textarea";
-import { MdRenderer } from "../MdRenderer";
-import { Tag } from "../Tag";
-import { SelectTag } from "./SelectTag";
 import { InputFile } from "./InputFile";
+import { SelectTag } from "./SelectTag";
 
 interface CreatePostProps {
   readonly title: string;

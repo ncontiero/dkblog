@@ -3,10 +3,10 @@ import { auth } from "@clerk/nextjs/server";
 import { PostStatus } from "@prisma/client";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
+import { excludeFunc } from "@/utils/data/utils";
 import { errorResponse } from "@/utils/errorResponse";
 import { postsQuerySchema } from "@/utils/querySchema";
 import { slugify } from "@/utils/slugify";
-import { excludeFunc } from "@/utils/data/utils";
 
 export async function GET(request: Request) {
   try {

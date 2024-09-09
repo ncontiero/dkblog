@@ -1,6 +1,5 @@
-import { getPosts } from "@/utils/data/posts";
-
 import { PostCard } from "@/components/PostCard";
+import { getPosts } from "@/utils/data/posts";
 
 export const revalidate = 60 * 5; // 5 minutes
 

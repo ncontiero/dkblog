@@ -1,12 +1,11 @@
 import type { User } from "@prisma/client";
 
 import { format } from "date-fns";
-
-import Link from "next/link";
-import Image from "next/image";
 import { CalendarDays } from "lucide-react";
-import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/HoverCard";
+import Image from "next/image";
+import Link from "next/link";
 import { Button } from "./ui/Button";
+import { HoverCard, HoverCardContent, HoverCardTrigger } from "./ui/HoverCard";
 
 interface UserHoverCardProps {
   readonly user: User;

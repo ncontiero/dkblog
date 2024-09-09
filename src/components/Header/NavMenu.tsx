@@ -1,9 +1,9 @@
-import Link from "next/link";
+import { SignedIn, SignedOut, SignOutButton, UserButton } from "@clerk/nextjs";
 
 import { currentUser } from "@clerk/nextjs/server";
-import { SignedIn, SignedOut, SignOutButton, UserButton } from "@clerk/nextjs";
-import Image from "next/image";
 import { LogOut, Moon, Pencil, Sun, User } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import { ModeToggle } from "../ThemeToggle";
 import { Button } from "../ui/Button";
 import {

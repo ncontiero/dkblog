@@ -10,8 +10,8 @@ import {
 import { Command as CommandPrimitive } from "cmdk";
 import { Search } from "lucide-react";
 
-import { cn } from "@/lib/utils";
 import { Dialog, DialogContent } from "@/components/ui/Dialog";
+import { cn } from "@/lib/utils";
 
 const Command = forwardRef<
   ElementRef<typeof CommandPrimitive>,

@@ -1,9 +1,9 @@
 import type { Metadata, ResolvingMetadata } from "next";
-import { notFound } from "next/navigation";
-import { compareDesc } from "date-fns";
-import { getTag, getTags } from "@/utils/data/tags";
 
+import { compareDesc } from "date-fns";
+import { notFound } from "next/navigation";
 import { PostCard } from "@/components/PostCard";
+import { getTag, getTags } from "@/utils/data/tags";
 
 export const revalidate = 60 * 5; // 5 minutes
 
