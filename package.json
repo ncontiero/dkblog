@@ -17,7 +17,7 @@
     "pre-commit": "lint-staged"
   },
   "dependencies": {
-    "@clerk/nextjs": "^5.5.4",
+    "@clerk/nextjs": "^5.5.5",
     "@clerk/themes": "^2.1.30",
     "@google-cloud/storage": "^7.12.1",
     "@prisma/client": "^5.19.1",
