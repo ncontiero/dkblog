@@ -10,6 +10,7 @@ import { MdRenderer } from "@/components/MdRenderer";
 import { Tag } from "@/components/Tag";
 import { Button } from "@/components/ui/Button";
 import { UserHoverCard } from "@/components/UserHoverCard";
+import { prismaSkip } from "@/lib/prisma";
 import { getPost, getPosts } from "@/utils/data/posts";
 import { DeletePostBtn } from "./DeletePostBtn";
 
@@ -23,7 +24,7 @@ const getUserPost = cache(async ({ user, slug }: Props["params"]) => {
   const clerkUser = await currentUser();
   const status = clerkUser?.username === user ? undefined : "PUBLISHED";
   return await getPost({
-    where: { status, user: { username: user }, slug },
+    where: { status: status || prismaSkip, user: { username: user }, slug },
   });
 });
 

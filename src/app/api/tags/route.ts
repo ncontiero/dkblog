@@ -1,4 +1,4 @@
-import { prisma } from "@/lib/prisma";
+import { prisma, prismaSkip } from "@/lib/prisma";
 import { errorResponse } from "@/utils/errorResponse";
 import { tagsQuerySchema } from "@/utils/querySchema";
 
@@ -21,15 +21,16 @@ export async function GET(request: Request) {
     const tags = await prisma.tag.findMany({
       include,
       skip: page === 1 ? 0 : (page - 1) * skipLimit,
-      take: limit,
-      orderBy,
-      where: filter,
+      take: limit || prismaSkip,
+      orderBy: orderBy || prismaSkip,
+      where: filter || prismaSkip,
     });
 
     return new Response(JSON.stringify(tags), {
       headers: { "content-type": "application/json" },
     });
   } catch (error) {
+    console.log(error);
     return errorResponse(error, ["Limit must be greater than 0"]);
   }
 }

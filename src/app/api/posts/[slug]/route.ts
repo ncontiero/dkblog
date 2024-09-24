@@ -63,8 +63,6 @@ export async function PATCH(
     const { tags, ...updatePost } = updatePostSchema.parse(
       await request.json(),
     );
-    const newSlug =
-      updatePost.title && updateSlug ? slugify(updatePost.title) : undefined;
 
     let post = await prisma.post.findUnique({
       where: { slug: params.slug },
@@ -76,6 +74,9 @@ export async function PATCH(
     if (post.user.externalId !== clerkUserId) {
       throw new Error("Unauthorized");
     }
+
+    const newSlug =
+      updatePost.title && updateSlug ? slugify(updatePost.title) : post.slug;
 
     post = await prisma.post.update({
       where: { slug: params.slug },
