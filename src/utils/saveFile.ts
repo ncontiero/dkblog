@@ -1,6 +1,6 @@
 import { randomBytes } from "node:crypto";
 import fs from "node:fs";
-import { env } from "@/env.mjs";
+import { env } from "@/env";
 import { uploadFile } from "@/lib/storage";
 
 // DEV

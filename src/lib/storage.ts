@@ -1,5 +1,5 @@
 import { type UploadOptions, Storage } from "@google-cloud/storage";
-import { env } from "@/env.mjs";
+import { env } from "@/env";
 
 const storage = new Storage({
   projectId: env.GS_PROJECT_ID,

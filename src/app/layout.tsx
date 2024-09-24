@@ -9,7 +9,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Merriweather_Sans as MerriweatherSans } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { Header } from "@/components/Header";
-import { env } from "@/env.mjs";
+import { env } from "@/env";
 import { clerkTheme } from "./clerkTheme";
 
 const merriweatherSans = MerriweatherSans({

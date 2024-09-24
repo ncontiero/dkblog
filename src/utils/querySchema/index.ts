@@ -16,14 +16,14 @@ const page = optional
 
 const orderBy = optional
   .transform((val) => val && val.split("."))
-  .transform((val) => (val ? { [val[0]]: val[1] || "asc" } : undefined));
+  .transform((val) => (val ? { [val[0]!]: val[1] || "asc" } : undefined));
 
 const filter = optional
   .transform((val) => val && val.split("."))
   .transform((val) => {
     if (!val) return undefined;
     return {
-      [val[0]]: {
+      [val[0]!]: {
         contains: val[1],
         mode: "insensitive",
       },

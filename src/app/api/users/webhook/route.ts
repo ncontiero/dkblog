@@ -3,7 +3,7 @@ import type { WebhookEvent } from "@clerk/nextjs/server";
 import { randomBytes } from "node:crypto";
 import { headers } from "next/headers";
 import { Webhook } from "svix";
-import { env } from "@/env.mjs";
+import { env } from "@/env";
 import { prisma } from "@/lib/prisma";
 import { errorResponse } from "@/utils/errorResponse";
 
@@ -54,7 +54,7 @@ export async function POST(req: Request) {
           evt.data.username || `user_${randomBytes(15).toString("hex")}`;
         const emails = evt.data.email_addresses;
 
-        if (emails.length === 0) {
+        if (emails.length === 0 || !emails[0]?.email_address) {
           throw new Error("No email address provided");
         }
 

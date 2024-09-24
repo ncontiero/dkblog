@@ -15,7 +15,7 @@ export function InputFile({
 }: InputFileProps) {
   const handleImage = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      if (e.target.files && e.target.files[0].type.startsWith("image/")) {
+      if (e.target.files && e.target.files[0]?.type.startsWith("image/")) {
         setImgPreview(URL.createObjectURL(e.target.files[0]));
         setEditValues({
           ...editValues,

@@ -9,7 +9,7 @@ import { useAuth } from "@clerk/nextjs";
 import { Loader } from "lucide-react";
 import Image from "next/image";
 import { redirect, useRouter } from "next/navigation";
-import { env } from "@/env.mjs";
+import { env } from "@/env";
 import { MdRenderer } from "../MdRenderer";
 import { Tag } from "../Tag";
 import { Button } from "../ui/Button";
