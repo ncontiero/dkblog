@@ -10,10 +10,11 @@ const updateUserSchema = z.object({
 
 export async function PATCH(
   request: Request,
-  { params }: { params: { id: string } },
+  segmentData: { params: Promise<{ id: string }> },
 ) {
   try {
-    const { userId: clerkUserId } = auth();
+    const params = await segmentData.params;
+    const { userId: clerkUserId } = await auth();
     if (!clerkUserId) {
       throw new Error("Unauthorized");
     }

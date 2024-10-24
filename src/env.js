@@ -38,7 +38,6 @@ export const env = createEnv({
    * `NEXT_PUBLIC_`.
    */
   client: {
-    NEXT_PUBLIC_IMG_DOMAINS: z.string().transform((val) => val.split(",")),
     // API
     NEXT_PUBLIC_API_URL: z.string().url().default("http://localhost:3000/api"),
     // Clerk
@@ -70,7 +69,6 @@ export const env = createEnv({
 
     // Client
     // ----------------------------
-    NEXT_PUBLIC_IMG_DOMAINS: process.env.NEXT_PUBLIC_IMG_DOMAINS,
     // API
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
     // Clerk

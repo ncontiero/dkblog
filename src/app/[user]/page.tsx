@@ -10,13 +10,13 @@ import { Button } from "@/components/ui/Button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 import { getUser, getUsers } from "@/utils/data/users";
 
-export const revalidate = 60 * 5; // 5 minutes
+export const revalidate = 300; // 5 minutes
 
 type Props = {
-  readonly params: { user: string };
+  readonly params: Promise<{ user: string }>;
 };
 
-export async function generateStaticParams(): Promise<Props["params"][]> {
+export async function generateStaticParams() {
   const users = await getUsers({});
 
   return users.map((u) => ({
@@ -28,7 +28,7 @@ export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const { user: username } = params;
+  const { user: username } = await params;
 
   const user = await getUser({ where: { username } });
   if (!user) {
@@ -58,7 +58,7 @@ export async function generateMetadata(
 
 export default async function UserPage({ params }: Props) {
   const clerkCurrentUser = await currentUser();
-  const user = await getUser({ where: { username: params.user } });
+  const user = await getUser({ where: { username: (await params).user } });
 
   if (!user) {
     notFound();

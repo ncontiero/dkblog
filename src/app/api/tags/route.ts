@@ -30,7 +30,7 @@ export async function GET(request: Request) {
       headers: { "content-type": "application/json" },
     });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return errorResponse(error, ["Limit must be greater than 0"]);
   }
 }

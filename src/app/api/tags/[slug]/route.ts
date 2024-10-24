@@ -4,9 +4,10 @@ import { tagsQueryParams } from "@/utils/querySchema";
 
 export async function GET(
   request: Request,
-  { params }: { params: { slug: string } },
+  segmentData: { params: Promise<{ slug: string }> },
 ) {
   try {
+    const params = await segmentData.params;
     const { searchParams } = new URL(request.url);
     const include = tagsQueryParams.include.parse(searchParams.get("include"));
 

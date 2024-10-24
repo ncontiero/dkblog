@@ -4,7 +4,7 @@ import { saveFile } from "@/utils/saveFile";
 
 export async function POST(request: Request) {
   try {
-    const { userId } = auth();
+    const { userId } = await auth();
     if (!userId) {
       throw new Error("Unauthorized");
     }

@@ -5,10 +5,10 @@ import { notFound } from "next/navigation";
 import { PostCard } from "@/components/PostCard";
 import { getTag, getTags } from "@/utils/data/tags";
 
-export const revalidate = 60 * 5; // 5 minutes
+export const revalidate = 300; // 5 minutes
 
 type Props = {
-  readonly params: { slug: string };
+  readonly params: Promise<{ slug: string }>;
 };
 
 export async function generateStaticParams() {
@@ -23,7 +23,7 @@ export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const { slug } = params;
+  const { slug } = await params;
 
   const tag = await getTag({ where: { slug } });
 
@@ -54,7 +54,7 @@ export async function generateMetadata(
 }
 
 export default async function TagPage({ params }: Props) {
-  const tag = await getTag({ where: { slug: params.slug } });
+  const tag = await getTag({ where: { slug: (await params).slug } });
 
   if (!tag) {
     notFound();

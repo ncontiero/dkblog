@@ -50,7 +50,6 @@ export async function processMd({ content, getHighlighter }: ProcessMd) {
     .use(rehypeSlug)
     .use(rehypePrettyCode, { ...prettyCodeOptions, getHighlighter })
     .use(rehypeStringify)
-    // @ts-expect-error: the react types are missing.
     .use(rehypeReact, production)
     .process(content);
 }

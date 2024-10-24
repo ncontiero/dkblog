@@ -6,11 +6,11 @@ import { errorResponse } from "@/utils/errorResponse";
 import { postsQueryParams, updateSlugParam } from "@/utils/querySchema";
 import { slugify } from "@/utils/slugify";
 
-export async function GET(
-  request: Request,
-  { params }: { params: { slug: string } },
-) {
+type Params = Promise<{ slug: string }>;
+
+export async function GET(request: Request, segmentData: { params: Params }) {
   try {
+    const params = await segmentData.params;
     const { searchParams } = new URL(request.url);
     const include = postsQueryParams.include.parse(searchParams.get("include"));
 
@@ -47,12 +47,10 @@ const updatePostSchema = z.object({
   tags: z.string().array().optional(),
 });
 
-export async function PATCH(
-  request: Request,
-  { params }: { params: { slug: string } },
-) {
+export async function PATCH(request: Request, segmentData: { params: Params }) {
   try {
-    const { userId: clerkUserId } = auth();
+    const params = await segmentData.params;
+    const { userId: clerkUserId } = await auth();
     if (!clerkUserId) {
       throw new Error("Unauthorized");
     }
@@ -97,10 +95,11 @@ export async function PATCH(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { slug: string } },
+  segmentData: { params: Params },
 ) {
   try {
-    const { userId: clerkUserId } = auth();
+    const params = await segmentData.params;
+    const { userId: clerkUserId } = await auth();
     if (!clerkUserId) {
       throw new Error("Unauthorized");
     }

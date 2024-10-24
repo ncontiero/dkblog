@@ -14,13 +14,14 @@ import { prismaSkip } from "@/lib/prisma";
 import { getPost, getPosts } from "@/utils/data/posts";
 import { DeletePostBtn } from "./DeletePostBtn";
 
-export const revalidate = 60 * 5; // 5 minutes
+export const revalidate = 300; // 5 minutes
 
 type Props = {
-  readonly params: { user: string; slug: string };
+  readonly params: Promise<{ user: string; slug: string }>;
 };
 
-const getUserPost = cache(async ({ user, slug }: Props["params"]) => {
+const getUserPost = cache(async (params: Props["params"]) => {
+  const { user, slug } = await params;
   const clerkUser = await currentUser();
   const status = clerkUser?.username === user ? undefined : "PUBLISHED";
   return await getPost({
@@ -28,7 +29,7 @@ const getUserPost = cache(async ({ user, slug }: Props["params"]) => {
   });
 });
 
-export async function generateStaticParams(): Promise<Props["params"][]> {
+export async function generateStaticParams() {
   const posts = await getPosts({ where: { status: "PUBLISHED" } });
 
   return posts.map((post) => ({ user: post.user.username, slug: post.slug }));

@@ -60,7 +60,7 @@ const createPostSchema = z.object({
 
 export async function POST(request: Request) {
   try {
-    const { userId: clerkUserId } = auth();
+    const { userId: clerkUserId } = await auth();
     if (!clerkUserId) {
       throw new Error("Unauthorized");
     }

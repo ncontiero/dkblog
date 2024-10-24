@@ -11,10 +11,11 @@ export const metadata: Metadata = {
 };
 
 type Props = {
-  readonly params: { user: string; slug: string };
+  readonly params: Promise<{ user: string; slug: string }>;
 };
 
-const getUserPost = cache(async ({ user, slug }: Props["params"]) => {
+const getUserPost = cache(async (params: Props["params"]) => {
+  const { user, slug } = await params;
   const clerkUser = await currentUser();
   if (!clerkUser) {
     redirect("/sign-in");
