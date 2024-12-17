@@ -1,4 +1,3 @@
-import "react-toastify/dist/ReactToastify.min.css";
 import "./globals.css";
 import "./mdx.css";
 import type { Metadata } from "next";
@@ -74,8 +73,7 @@ export default function RootLayout({
               newestOnTop
               pauseOnFocusLoss={false}
               limit={3}
-              toastClassName="bg-background"
-              bodyClassName="text-foreground"
+              toastClassName="bg-background text-foreground"
               progressClassName="bg-primary"
             />
             <div className="pt-16">{children}</div>
