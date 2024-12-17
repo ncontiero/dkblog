@@ -74,9 +74,10 @@ export function CreatePost({
 
   const uploadImage = useCallback(
     async (img?: File) => {
-      if (!img || image === imgPreview) {
-        return "";
+      if (image === imgPreview) {
+        return image;
       }
+      if (!img) return "";
 
       const formData = new FormData();
       formData.append("file", img);
