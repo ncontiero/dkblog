@@ -127,8 +127,8 @@ importers:
         specifier: ^0.5.16
         version: 0.5.16(tailwindcss@3.4.17)
       '@types/node':
-        specifier: ^22.13.4
-        version: 22.13.4
+        specifier: ^22.13.5
+        version: 22.13.5
       '@types/react':
         specifier: ^19.0.10
         version: 19.0.10
@@ -1196,8 +1196,8 @@ packages:
   '@types/ms@0.7.34':
     resolution: {integrity: sha512-nG96G3Wp6acyAgJqGasjODb+acrI7KltPiRxzHPXnP3NgI28bpQDRv53olbqGXbfcgF5aiiHmO3xpwEpS5Ld9g==}
 
-  '@types/node@22.13.4':
-    resolution: {integrity: sha512-ywP2X0DYtX3y08eFVx5fNIw7/uIv8hYUKgXoK8oayJlLnKcRfEYCxWMVE1XagUdVtCJlZT1AU4LXEABW+L1Peg==}
+  '@types/node@22.13.5':
+    resolution: {integrity: sha512-+lTU0PxZXn0Dr1NBtC7Y8cR21AJr87dLLU953CWA6pMxxv/UDc7jYAY90upcrie1nRcD6XNG5HOYEDtgW5TxAg==}
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
@@ -4768,7 +4768,7 @@ snapshots:
 
   '@types/ms@0.7.34': {}
 
-  '@types/node@22.13.4':
+  '@types/node@22.13.5':
     dependencies:
       undici-types: 6.20.0
 
@@ -4785,7 +4785,7 @@ snapshots:
   '@types/request@2.48.12':
     dependencies:
       '@types/caseless': 0.12.5
-      '@types/node': 22.13.4
+      '@types/node': 22.13.5
       '@types/tough-cookie': 4.0.5
       form-data: 2.5.2
 
@@ -7716,7 +7716,7 @@ snapshots:
   svix@1.59.1:
     dependencies:
       '@stablelib/base64': 1.0.1
-      '@types/node': 22.13.4
+      '@types/node': 22.13.5
       es6-promise: 4.2.8
       fast-sha256: 1.3.0
       svix-fetch: 3.0.0
