@@ -49,7 +49,7 @@
     "remark-gfm": "^4.0.1",
     "remark-parse": "^11.0.0",
     "remark-rehype": "^11.1.1",
-    "shiki": "^2.5.0",
+    "shiki": "^3.1.0",
     "svix": "^1.61.2",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
@@ -74,6 +74,11 @@
   },
   "engines": {
     "node": ">=20"
+  },
+  "pnpm": {
+    "patchedDependencies": {
+      "rehype-pretty-code": "patches/rehype-pretty-code.patch"
+    }
   },
   "lint-staged": {
     "*": "pnpm lint:fix"
