@@ -75,6 +75,11 @@
   "engines": {
     "node": ">=20"
   },
+  "pnpm": {
+    "patchedDependencies": {
+      "rehype-pretty-code": "patches/rehype-pretty-code.patch"
+    }
+  },
   "lint-staged": {
     "*": "pnpm lint:fix"
   },
