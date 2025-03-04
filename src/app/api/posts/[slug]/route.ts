@@ -1,7 +1,9 @@
 import { auth } from "@clerk/nextjs/server";
 import { PostStatus } from "@prisma/client";
 import { z } from "zod";
+import { env } from "@/env";
 import { prisma } from "@/lib/prisma";
+import { deleteFile } from "@/lib/storage";
 import { errorResponse } from "@/utils/errorResponse";
 import { postsQueryParams, updateSlugParam } from "@/utils/querySchema";
 import { slugify } from "@/utils/slugify";
@@ -112,7 +114,13 @@ export async function DELETE(
       throw new Error("Post not found");
     }
 
-    await prisma.post.delete({ where: { slug: params.slug } });
+    await prisma.$transaction(async (tx) => {
+      if (env.NODE_ENV === "production" && post.image) {
+        const filename = post.image.split("/").pop();
+        filename && (await deleteFile(`posts/${filename}`));
+      }
+      await tx.post.delete({ where: { slug: params.slug } });
+    });
 
     return new Response(JSON.stringify(post), {
       headers: { "content-type": "application/json" },

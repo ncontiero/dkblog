@@ -65,8 +65,9 @@ export async function POST(request: Request) {
       throw new Error("Unauthorized");
     }
 
-    const { title, description, content, status, userId, image, tags } =
-      createPostSchema.parse(await request.json());
+    const { title, userId, tags, ...data } = createPostSchema.parse(
+      await request.json(),
+    );
     const slug = `${slugify(title)}-${crypto.randomBytes(4).toString("hex")}`;
 
     if (userId !== clerkUserId) {
@@ -75,11 +76,8 @@ export async function POST(request: Request) {
 
     const post = await prisma.post.create({
       data: {
+        ...data,
         title,
-        description,
-        content,
-        image,
-        status,
         slug,
         tags: { connect: tags?.map((tag) => ({ slug: tag })) },
         user: { connect: { externalId: userId } },
@@ -91,6 +89,7 @@ export async function POST(request: Request) {
       headers: { "content-type": "application/json" },
     });
   } catch (error) {
+    console.error(error);
     return errorResponse(error);
   }
 }

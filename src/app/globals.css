@@ -57,7 +57,8 @@
     @apply scroll-smooth;
   }
   body {
-    @apply bg-background font-merriweatherSans text-foreground;
+    font-family: var(--font-merriweather-sans), system-ui, sans-serif;
+    @apply bg-background text-foreground;
   }
 }
 

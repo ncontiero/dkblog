@@ -1,6 +1,6 @@
-await import("./src/env.js");
+import "./src/env.js";
 
-/** @type {import('next').NextConfig} */
+/** @type {import("next").NextConfig} */
 const nextConfig = {
   images: {
     remotePatterns: [

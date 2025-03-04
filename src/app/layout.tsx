@@ -62,8 +62,8 @@ export default function RootLayout({
 }) {
   return (
     <ClerkProvider appearance={{ baseTheme: clerkTheme }}>
-      <html lang="en" className={merriweatherSans.variable}>
-        <body>
+      <html lang="en" suppressHydrationWarning>
+        <body className={merriweatherSans.variable}>
           <ThemeProvider attribute="class" defaultTheme="system">
             <Header />
             <ToastContainer

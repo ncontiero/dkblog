@@ -16,12 +16,12 @@ import { DeletePostBtn } from "./DeletePostBtn";
 
 export const revalidate = 300; // 5 minutes
 
+type Params = { user: string; slug: string };
 type Props = {
-  readonly params: Promise<{ user: string; slug: string }>;
+  readonly params: Promise<Params>;
 };
 
-const getUserPost = cache(async (params: Props["params"]) => {
-  const { user, slug } = await params;
+const getUserPost = cache(async ({ slug, user }: Params) => {
   const clerkUser = await currentUser();
   const status = clerkUser?.username === user ? undefined : "PUBLISHED";
   return await getPost({
@@ -39,7 +39,7 @@ export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const post = await getUserPost({ ...params });
+  const post = await getUserPost(await params);
   if (!post) {
     return notFound();
   }
@@ -71,7 +71,7 @@ export async function generateMetadata(
 
 export default async function PostPage({ params }: Props) {
   const user = await currentUser();
-  const post = await getUserPost({ ...params });
+  const post = await getUserPost(await params);
 
   if (!post) {
     notFound();
