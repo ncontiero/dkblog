@@ -84,6 +84,9 @@ export function CreatePost({
       const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/upload`, {
         method: "POST",
         body: formData,
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
       return (await res.json()).image || "";
     },
