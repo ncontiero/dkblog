@@ -110,8 +110,8 @@ importers:
         specifier: ^3.2.0
         version: 3.2.0
       svix:
-        specifier: ^1.61.3
-        version: 1.61.3
+        specifier: ^1.61.4
+        version: 1.61.4
       tailwind-merge:
         specifier: ^2.6.0
         version: 2.6.0
@@ -3505,8 +3505,8 @@ packages:
   svix-fetch@3.0.0:
     resolution: {integrity: sha512-rcADxEFhSqHbraZIsjyZNh4TF6V+koloX1OzZ+AQuObX9mZ2LIMhm1buZeuc5BIZPftZpJCMBsSiBaeszo9tRw==}
 
-  svix@1.61.3:
-    resolution: {integrity: sha512-epPQhzBxAgKpPbLJbS3ABmOAMtYNKnG8wFxt8r8y9OtVRJ9Z0iJtE93rbOjZxM1tvASdsp9PltDJl6swF7hDpA==}
+  svix@1.61.4:
+    resolution: {integrity: sha512-oeMK1ZWh2uGjWz46aTUFqih8sHOaj9UeUic+/Vqnvs9rYFRymUK08NRsGcVKtWKTqOETcesGf9xJ45k/foaZfg==}
 
   swr@2.3.2:
     resolution: {integrity: sha512-RosxFpiabojs75IwQ316DGoDRmOqtiAj0tg8wCcbEu4CiLZBs/a9QNtHV7TUfDXmmlgqij/NqzKq/eLelyv9xA==}
@@ -7714,7 +7714,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  svix@1.61.3:
+  svix@1.61.4:
     dependencies:
       '@stablelib/base64': 1.0.1
       '@types/node': 22.13.10
