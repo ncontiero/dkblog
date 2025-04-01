@@ -2,7 +2,7 @@
 
 import {
   type ComponentPropsWithoutRef,
-  type ElementRef,
+  type ComponentRef,
   forwardRef,
 } from "react";
 import { useTheme } from "next-themes";
@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/DropdownMenu";
 
 export const SubModeToggle = forwardRef<
-  ElementRef<typeof DropdownMenuSubContent>,
+  ComponentRef<typeof DropdownMenuSubContent>,
   ComponentPropsWithoutRef<typeof DropdownMenuSubContent>
 >(({ className, ...props }, ref) => {
   const { setTheme } = useTheme();

@@ -13,7 +13,6 @@ export const env = createEnv({
       .default("development"),
 
     // Database (Prisma)
-    DATABASE_URL_NON_POOLING: z.string().url(),
     DATABASE_URL: z.string().url(),
 
     // these variables are used for the site's SEO
@@ -52,7 +51,6 @@ export const env = createEnv({
     // Node
     NODE_ENV: process.env.NODE_ENV,
     // Database (Prisma)
-    DATABASE_URL_NON_POOLING: process.env.DATABASE_URL_NON_POOLING,
     DATABASE_URL: process.env.DATABASE_URL,
     // SEO
     SITE_NAME: process.env.SITE_NAME,

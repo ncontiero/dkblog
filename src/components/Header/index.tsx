@@ -3,7 +3,7 @@ import { NavMenu } from "./NavMenu";
 
 export function Header() {
   return (
-    <header className="fixed inset-x-0 top-0 z-[9999] h-16 w-full border-b-2 bg-secondary/80 backdrop-blur">
+    <header className="sticky inset-x-0 top-0 z-[9999] h-16 w-full border-b-2 bg-secondary/80 backdrop-blur">
       <div className="flex size-full items-center justify-between px-4 sm:container">
         <Link
           href="/"

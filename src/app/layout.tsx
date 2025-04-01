@@ -76,7 +76,7 @@ export default function RootLayout({
               toastClassName="bg-background text-foreground"
               progressClassName="bg-primary"
             />
-            <div className="pt-16">{children}</div>
+            {children}
           </ThemeProvider>
         </body>
       </html>
