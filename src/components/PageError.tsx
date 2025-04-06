@@ -1,4 +1,3 @@
-import NextLink from "next/link";
 import { Link } from "./ui/Link";
 
 interface PageErrorProps {
@@ -12,11 +11,7 @@ export function PageError({ title, description }: PageErrorProps) {
       <h1 className="text-4xl font-bold tracking-wide">{title}</h1>
       <p className="mt-4 text-lg">{description}</p>
       <p className="mt-2 text-base">
-        Go back to the{" "}
-        <Link asChild href="/">
-          <NextLink href="/">home</NextLink>
-        </Link>
-        .
+        Go back to the <Link href="/">home</Link>.
       </p>
     </main>
   );

@@ -1,7 +1,7 @@
 import { type AnchorHTMLAttributes, forwardRef } from "react";
 import { Slot } from "@radix-ui/react-slot";
 import { type VariantProps, cva } from "class-variance-authority";
-
+import NextLink from "next/link";
 import { cn } from "@/lib/utils";
 
 const linkVariants = cva(
@@ -37,15 +37,20 @@ export interface LinkProps
   extends AnchorHTMLAttributes<HTMLAnchorElement>,
     VariantProps<typeof linkVariants> {
   readonly asChild?: boolean;
+  readonly href: string;
 }
 
 const Link = forwardRef<HTMLAnchorElement, LinkProps>(
-  ({ className, variant, size, radius, asChild = false, ...props }, ref) => {
-    const Comp = asChild ? Slot : "a";
+  (
+    { href, className, variant, size, radius, asChild = false, ...props },
+    ref,
+  ) => {
+    const Comp = asChild ? Slot : href.startsWith("/") ? NextLink : "a";
     return (
       <Comp
         className={cn(linkVariants({ variant, size, radius, className }))}
         ref={ref}
+        href={href}
         {...props}
       />
     );

@@ -12,17 +12,14 @@ function AnchorLink({
   className,
   ...props
 }: AnchorHTMLAttributes<HTMLAnchorElement>) {
-  const isInside = href ? href.startsWith("#") || href.startsWith("/") : false;
-
   return (
     <Link
-      href={href}
-      asChild={!!isInside}
+      href={href!}
       className={cn("no-underline [&>code]:py-0", className)}
       style={{ fontSize: "inherit", lineHeight: "inherit" }}
       {...props}
     >
-      {isInside ? <NextLink href={href!}>{children}</NextLink> : children}
+      {children}
     </Link>
   );
 }
