@@ -1,9 +1,10 @@
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
 import { Pencil } from "lucide-react";
 import Link from "next/link";
 import { Button } from "../ui/Button";
 import { ThemeToggle } from "./ThemeToggle";
+import { UserButton } from "./UserButton";
 
 export async function Header() {
   const user = await currentUser();
@@ -25,10 +26,7 @@ export async function Header() {
                 <Pencil className="flex sm:hidden" size={16} />
               </Link>
             </Button>
-            <UserButton
-              userProfileMode="navigation"
-              userProfileUrl={`/${user?.username}`}
-            />
+            <UserButton username={user?.username} />
           </SignedIn>
           <SignedOut>
             <Link
