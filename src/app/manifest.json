@@ -1,0 +1,17 @@
+{
+  "name": "DkBlog",
+  "short_name": "DkBlog",
+  "description": "A blog using Next.Js.",
+  "lang": "en-US",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f9fafb",
+  "theme_color": "#7c3aed",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "type": "image/x-icon",
+      "sizes": "48x48 32x32 16x16"
+    }
+  ]
+}

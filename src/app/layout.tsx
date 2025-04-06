@@ -16,17 +16,17 @@ const merriweatherSans = MerriweatherSans({
   variable: "--font-merriweather-sans",
 });
 
+const description = "A dynamic blog using markdown with Next.Js.";
 export const metadata: Metadata = {
   metadataBase: new URL(env.SITE_BASEURL),
   title: {
     default: env.SITE_NAME,
     template: `%s • ${env.SITE_NAME}`,
   },
-  description: "A dynamic blog using markdown with Next.Js.",
+  description,
   alternates: {
     canonical: "/",
   },
-  manifest: `${env.SITE_BASEURL}/manifest.json`,
   robots: {
     index: true,
     follow: true,
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
       default: env.SITE_NAME,
       template: `%s • ${env.SITE_NAME}`,
     },
-    description: "A dynamic blog using markdown with Next.Js.",
+    description,
     siteName: env.SITE_NAME,
     type: "website",
     url: "/",
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
       default: env.SITE_NAME,
       template: `%s • ${env.SITE_NAME}`,
     },
-    description: "A dynamic blog using markdown with Next.Js.",
+    description,
     card: "summary",
   },
 };
@@ -64,7 +64,7 @@ export default function RootLayout({
     <ClerkProvider appearance={{ baseTheme: clerkTheme }}>
       <html lang="en" suppressHydrationWarning>
         <body className={merriweatherSans.variable}>
-          <ThemeProvider attribute="class" defaultTheme="system">
+          <ThemeProvider attribute="class">
             <Header />
             <ToastContainer
               autoClose={3000}
@@ -73,8 +73,9 @@ export default function RootLayout({
               newestOnTop
               pauseOnFocusLoss={false}
               limit={3}
+              stacked
+              className="z-[999999] bg-background font-merriweatherSans text-foreground"
               toastClassName="bg-background text-foreground"
-              progressClassName="bg-primary"
             />
             {children}
           </ThemeProvider>
