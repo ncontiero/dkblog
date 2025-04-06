@@ -51,7 +51,7 @@
 
 @layer base {
   * {
-    @apply border-border selection:bg-primary/30;
+    @apply border-border selection:bg-primary/80 selection:text-primary-foreground;
   }
   html {
     @apply scroll-smooth antialiased;
