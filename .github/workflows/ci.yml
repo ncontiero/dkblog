@@ -19,4 +19,4 @@ jobs:
           node-version-file: .nvmrc
       - name: Install dependencies
         run: pnpm install
-      - run: pnpm lint
+      - run: pnpm check

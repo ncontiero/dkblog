@@ -8,10 +8,12 @@
   "license": "MIT",
   "scripts": {
     "dev": "next dev --turbo",
-    "build": "prisma migrate deploy && next build",
+    "build": "next build",
     "start": "next start",
     "lint": "eslint .",
     "lint:fix": "pnpm lint --fix",
+    "typecheck": "tsc --noEmit",
+    "check": "pnpm lint && pnpm typecheck",
     "prisma:seed": "tsx prisma/seed.ts",
     "postinstall": "prisma generate",
     "prepare": "husky",
