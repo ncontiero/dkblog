@@ -51,15 +51,20 @@ export const clerkTheme = createTheme({
     userButtonPopoverMain: "bg-card",
     userPreviewTextContainer: "*:text-foreground",
     userButtonPopoverFooter: "hidden",
+    userButtonPopoverActions: "border-border",
     userButtonPopoverActionButton:
-      "text-foreground/70 hover:text-foreground hover:bg-secondary/80",
+      "!border-secondary text-foreground/80 hover:bg-secondary/80 hover:text-foreground",
+    userButtonPopoverCustomItemButton:
+      "!border-secondary text-foreground/80 hover:bg-secondary/80 hover:text-foreground",
+    userPreview: "text-foreground",
     menuButton:
-      "text-foreground hover:text-foreground hover:bg-secondary active:bg-secondary focus:ring-2 focus:ring-ring",
-    menuList: "bg-card border border-primary/50",
+      "text-foreground hover:bg-secondary active:bg-secondary focus:ring-2 focus:ring-ring",
     menuItem: "hover:bg-secondary active:bg-secondary",
     modalCloseButton:
-      "text-foreground hover:bg-secondary active:bg-secondary focus:ring-2 focus:ring-ring",
+      "text-foreground hover:text-foreground/80 hover:bg-secondary active:bg-secondary focus:ring-2 focus:ring-ring",
+    modalBackdrop: "z-[99999] backdrop-blur-md",
     // Profile
+    profilePage: "*:border-border",
     profileSectionPrimaryButton:
       "text-foreground bg-secondary/60 duration-200 !shadow-none ring-offset-card ring-ring hover:text-foreground hover:bg-secondary focus:bg-primary/40 focus:ring-2 focus:ring-offset-2",
     profileSectionTitleText: "text-foreground",
