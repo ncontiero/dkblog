@@ -1,6 +1,7 @@
 import crypto from "node:crypto";
 import { auth } from "@clerk/nextjs/server";
 import { PostStatus } from "@prisma/client";
+import { revalidateTag } from "next/cache";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { excludeFunc } from "@/utils/data/utils";
@@ -82,8 +83,16 @@ export async function POST(request: Request) {
         tags: { connect: tags?.map((tag) => ({ slug: tag })) },
         user: { connect: { externalId: userId } },
       },
-      include: { user: { select: { username: true } } },
+      include: {
+        user: { select: { username: true } },
+      },
     });
+
+    if (post.status === "PUBLISHED") {
+      revalidateTag("posts");
+      tags?.forEach((tag) => revalidateTag(`tag-${tag}`));
+    }
+    revalidateTag(`user-${post.user.username}`);
 
     return new Response(JSON.stringify(excludeFunc(post, ["userId"])), {
       headers: { "content-type": "application/json" },

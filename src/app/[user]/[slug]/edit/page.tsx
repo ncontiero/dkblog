@@ -1,10 +1,8 @@
 import type { Metadata } from "next";
-
-import { cache } from "react";
 import { currentUser } from "@clerk/nextjs/server";
-import { notFound, redirect } from "next/navigation";
+import { notFound } from "next/navigation";
 import { CreatePost } from "@/components/CreatePost";
-import { getPost } from "@/utils/data/posts";
+import { createCacheForGetPost } from "../page";
 
 export const metadata: Metadata = {
   title: "Edit Post",
@@ -14,21 +12,19 @@ type Props = {
   readonly params: Promise<{ user: string; slug: string }>;
 };
 
-const getUserPost = cache(async (params: Props["params"]) => {
-  const { user, slug } = await params;
-  const clerkUser = await currentUser();
-  if (!clerkUser) {
-    redirect("/sign-in");
-  }
-  return await getPost({ where: { user: { username: user }, slug } });
-});
-
 export default async function EditPostPage({ params }: Props) {
-  const post = await getUserPost({ ...params });
+  const { user: username, slug: postSlug } = await params;
 
-  if (!post) {
-    notFound();
-  }
+  const clerkUser = await currentUser();
+  if (!clerkUser) notFound();
+
+  const getCachedPost = createCacheForGetPost(
+    username,
+    postSlug,
+    clerkUser.username,
+  );
+  const post = await getCachedPost();
+  if (!post) return notFound();
 
   return (
     <CreatePost

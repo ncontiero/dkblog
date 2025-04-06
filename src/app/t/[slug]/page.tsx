@@ -1,14 +1,30 @@
 import type { Metadata, ResolvingMetadata } from "next";
 
 import { compareDesc } from "date-fns";
+import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
 import { PostCard } from "@/components/PostCard";
-import { getTag } from "@/utils/data/tags";
-
-export const revalidate = 300; // 5 minutes
+import { getTag } from "@/utils/db-queries/tags";
 
 type Props = {
   readonly params: Promise<{ slug: string }>;
+};
+
+const createCacheForGetTag = (slug: string) => {
+  return unstable_cache(
+    async () =>
+      await getTag({
+        where: { slug },
+        include: {
+          posts: {
+            include: { user: true, tags: true },
+            where: { status: "PUBLISHED" },
+          },
+        },
+      }),
+    [`tag-${slug}`],
+    { tags: [`tag-${slug}`], revalidate: 60 * 10 },
+  );
 };
 
 export async function generateMetadata(
@@ -17,11 +33,9 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { slug } = await params;
 
-  const tag = await getTag({ where: { slug } });
-
-  if (!tag) {
-    notFound();
-  }
+  const getCachedTag = createCacheForGetTag(slug);
+  const tag = await getCachedTag();
+  if (!tag) notFound();
 
   const tagUrl = `${(await parent).metadataBase}t/${tag.slug}`;
   const description = tag.description || undefined;
@@ -46,11 +60,12 @@ export async function generateMetadata(
 }
 
 export default async function TagPage({ params }: Props) {
-  const tag = await getTag({ where: { slug: (await params).slug } });
+  const { slug } = await params;
 
-  if (!tag) {
-    notFound();
-  }
+  const getCachedTag = createCacheForGetTag(slug);
+  const tag = await getCachedTag();
+
+  if (!tag) notFound();
 
   const posts = tag.posts.sort((a, b) =>
     compareDesc(new Date(a.postedOn), new Date(b.postedOn)),

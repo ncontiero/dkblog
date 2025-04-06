@@ -1,16 +1,18 @@
 import { randomBytes } from "node:crypto";
 import { verifyWebhook } from "@clerk/nextjs/webhooks";
+import { revalidateTag } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { errorResponse } from "@/utils/errorResponse";
 
 export async function POST(req: Request) {
+  let username = "";
   try {
     const evt = await verifyWebhook(req);
 
     switch (evt.type) {
       case "user.created":
       case "user.updated": {
-        const username =
+        username =
           evt.data.username || `user_${randomBytes(15).toString("hex")}`;
         const emails = evt.data.email_addresses;
 
@@ -47,6 +49,8 @@ export async function POST(req: Request) {
       "No email address provided",
     ]);
   }
+
+  revalidateTag(`user-${username}`);
 
   return new Response("", { status: 201 });
 }

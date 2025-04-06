@@ -1,13 +1,17 @@
+import { unstable_cache } from "next/cache";
 import { PostCard } from "@/components/PostCard";
-import { getPosts } from "@/utils/data/posts";
+import { getPosts } from "@/utils/db-queries/posts";
 
-export const revalidate = 300; // 5 minutes
+const cachedPosts = unstable_cache(getPosts, ["posts"], {
+  tags: ["posts"],
+  revalidate: 60 * 5,
+});
 
 export default async function HomePage() {
-  const posts = await getPosts({
-    exclude: ["userId", "content", "image"],
+  const posts = await cachedPosts({
     where: { status: "PUBLISHED" },
     orderBy: { postedOn: "desc" },
+    include: { tags: true, user: true },
   });
 
   return (

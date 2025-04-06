@@ -1,8 +1,8 @@
 import type { Metadata, ResolvingMetadata } from "next";
 
-import { cache } from "react";
 import { currentUser } from "@clerk/nextjs/server";
 import { format } from "date-fns";
+import { unstable_cache } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -11,32 +11,51 @@ import { Tag } from "@/components/Tag";
 import { Button } from "@/components/ui/Button";
 import { UserHoverCard } from "@/components/UserHoverCard";
 import { prismaSkip } from "@/lib/prisma";
-import { getPost } from "@/utils/data/posts";
+import { getPost } from "@/utils/db-queries/posts";
 import { DeletePostBtn } from "./DeletePostBtn";
-
-export const revalidate = 300; // 5 minutes
 
 type Params = { user: string; slug: string };
 type Props = {
   readonly params: Promise<Params>;
 };
 
-const getUserPost = cache(async ({ slug, user }: Params) => {
-  const clerkUser = await currentUser();
-  const status = clerkUser?.username === user ? undefined : "PUBLISHED";
-  return await getPost({
-    where: { status: status || prismaSkip, user: { username: user }, slug },
-  });
-});
+export const createCacheForGetPost = (
+  username: string,
+  postSlug: string,
+  clerkUser?: string | null,
+) => {
+  return unstable_cache(
+    async () => {
+      const status = clerkUser === username ? undefined : "PUBLISHED";
+      return await getPost({
+        where: {
+          user: { username },
+          slug: postSlug,
+          status: status || prismaSkip,
+        },
+        include: { user: true, tags: true },
+      });
+    },
+    [`post-${username}-${postSlug}`, clerkUser || ""],
+    { tags: [`post-${username}-${postSlug}`], revalidate: 60 * 10 },
+  );
+};
 
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata,
 ): Promise<Metadata> {
-  const post = await getUserPost(await params);
-  if (!post) {
-    return notFound();
-  }
+  const { user: username, slug: postSlug } = await params;
+
+  const clerkUser = await currentUser();
+
+  const getCachedPost = createCacheForGetPost(
+    username,
+    postSlug,
+    clerkUser?.username,
+  );
+  const post = await getCachedPost();
+  if (!post) return notFound();
 
   const postPath = `${post.user.username}/${post.slug}`;
   const postUrl = `${(await parent).metadataBase}${postPath}`;
@@ -64,12 +83,18 @@ export async function generateMetadata(
 }
 
 export default async function PostPage({ params }: Props) {
-  const user = await currentUser();
-  const post = await getUserPost(await params);
+  const { user: username, slug: postSlug } = await params;
 
-  if (!post) {
-    notFound();
-  }
+  const user = await currentUser();
+
+  const getCachedPost = createCacheForGetPost(
+    username,
+    postSlug,
+    user?.username,
+  );
+  const post = await getCachedPost();
+  if (!post) return notFound();
+
   const postedOn = new Date(post.postedOn);
 
   return (

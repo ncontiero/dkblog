@@ -1,5 +1,6 @@
 import { auth } from "@clerk/nextjs/server";
 import { PostStatus } from "@prisma/client";
+import { revalidateTag } from "next/cache";
 import { z } from "zod";
 import { env } from "@/env";
 import { prisma } from "@/lib/prisma";
@@ -64,9 +65,12 @@ export async function PATCH(request: Request, segmentData: { params: Params }) {
       await request.json(),
     );
 
-    let post = await prisma.post.findUnique({
+    const post = await prisma.post.findUnique({
       where: { slug: params.slug },
-      include: { user: { select: { externalId: true } } },
+      include: {
+        user: { select: { externalId: true } },
+        tags: { select: { slug: true } },
+      },
     });
     if (!post) {
       throw new Error("Post not found");
@@ -78,16 +82,28 @@ export async function PATCH(request: Request, segmentData: { params: Params }) {
     const newSlug =
       updatePost.title && updateSlug ? slugify(updatePost.title) : post.slug;
 
-    post = await prisma.post.update({
+    const updatedPost = await prisma.post.update({
       where: { slug: params.slug },
-      include: { user: { select: { externalId: true, username: true } } },
+      include: {
+        user: { select: { externalId: true, username: true } },
+        tags: { select: { slug: true } },
+      },
       data: {
         ...updatePost,
         slug: newSlug,
         tags: { set: tags?.map((tag) => ({ slug: tag })) },
       },
     });
-    return new Response(JSON.stringify(post), {
+
+    if (post.status === "PUBLISHED" || updatedPost.status === "PUBLISHED") {
+      revalidateTag("posts");
+      post.tags.forEach((tag) => revalidateTag(`tag-${tag.slug}`));
+      updatedPost.tags.forEach((tag) => revalidateTag(`tag-${tag.slug}`));
+    }
+    revalidateTag(`user-${updatedPost.user.username}`);
+    revalidateTag(`post-${updatedPost.user.username}-${updatedPost.slug}`);
+
+    return new Response(JSON.stringify(updatedPost), {
       headers: { "content-type": "application/json" },
     });
   } catch (error) {
@@ -108,7 +124,10 @@ export async function DELETE(
 
     const post = await prisma.post.findUnique({
       where: { slug: params.slug, user: { externalId: clerkUserId } },
-      include: { user: { select: { externalId: true } } },
+      include: {
+        user: { select: { externalId: true, username: true } },
+        tags: { select: { slug: true } },
+      },
     });
     if (!post) {
       throw new Error("Post not found");
@@ -121,6 +140,13 @@ export async function DELETE(
       }
       await tx.post.delete({ where: { slug: params.slug } });
     });
+
+    if (post.status === "PUBLISHED") {
+      revalidateTag("posts");
+      post.tags.forEach((tag) => revalidateTag(`tag-${tag.slug}`));
+    }
+    revalidateTag(`user-${post.user.username}`);
+    revalidateTag(`post-${post.user.username}-${post.slug}`);
 
     return new Response(JSON.stringify(post), {
       headers: { "content-type": "application/json" },

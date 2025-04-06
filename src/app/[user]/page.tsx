@@ -3,17 +3,28 @@ import type { Metadata, ResolvingMetadata } from "next";
 import { currentUser } from "@clerk/nextjs/server";
 import { format } from "date-fns";
 import { CalendarDays, Hash, ScrollText } from "lucide-react";
+import { unstable_cache } from "next/cache";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { PostCard } from "@/components/PostCard";
 import { Button } from "@/components/ui/Button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
-import { getUser } from "@/utils/data/users";
-
-export const revalidate = 300; // 5 minutes
+import { getUser } from "@/utils/db-queries/users";
 
 type Props = {
   readonly params: Promise<{ user: string }>;
+};
+
+const createCacheForGetUser = (username: string) => {
+  return unstable_cache(
+    async () =>
+      await getUser({
+        where: { username },
+        include: { posts: { include: { user: true, tags: true } } },
+      }),
+    [`user-${username}`],
+    { tags: [`user-${username}`], revalidate: 60 * 10 },
+  );
 };
 
 export async function generateMetadata(
@@ -22,10 +33,9 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { user: username } = await params;
 
-  const user = await getUser({ where: { username } });
-  if (!user) {
-    return notFound();
-  }
+  const getCachedUser = createCacheForGetUser(username);
+  const user = await getCachedUser();
+  if (!user) return notFound();
 
   const userUrl = `${(await parent).metadataBase}${user.username}`;
 
@@ -49,20 +59,18 @@ export async function generateMetadata(
 }
 
 export default async function UserPage({ params }: Props) {
-  const clerkCurrentUser = await currentUser();
-  const user = await getUser({ where: { username: (await params).user } });
+  const { user: username } = await params;
 
-  if (!user) {
-    notFound();
-  }
+  const clerkCurrentUser = await currentUser();
+
+  const getCachedUser = createCacheForGetUser(username);
+  const user = await getCachedUser();
+  if (!user) return notFound();
 
   const isOwner = clerkCurrentUser?.username === user.username;
   const joinedOn = format(new Date(user.createdAt), "dd MMM. yyyy");
-  const postsP = user.posts.filter((p) => p.status === "PUBLISHED");
-  const postsD = user.posts.filter((p) => p.status === "DRAFTED");
-  const postsPublished = user.posts
-    .map((p) => (p.status === "PUBLISHED" ? 1 : (0 as number)))
-    .reduce((a, b) => a + b, 0);
+  const publishedPosts = user.posts.filter((p) => p.status === "PUBLISHED");
+  const draftedPosts = user.posts.filter((p) => p.status === "DRAFTED");
 
   return (
     <div className="mx-auto mb-10 max-w-5xl">
@@ -115,7 +123,7 @@ export default async function UserPage({ params }: Props) {
       <div className="mt-4 flex grid-cols-3 flex-col gap-4 sm:mx-2 sm:grid">
         <div className="flex h-fit flex-col gap-4 bg-secondary p-4 sm:rounded-md">
           <div className="flex items-center gap-3 font-normal">
-            <ScrollText size={24} /> {postsPublished} posts published
+            <ScrollText size={24} /> {publishedPosts.length} posts published
           </div>
           <div className="flex items-center gap-3">
             <Hash size={24} /> 0 tags followed
@@ -129,8 +137,8 @@ export default async function UserPage({ params }: Props) {
                 <TabsTrigger value="drafted">Drafted</TabsTrigger>
               </TabsList>
               <TabsContent value="published">
-                {postsP.length > 0 ? (
-                  postsP.map((post) => (
+                {publishedPosts.length > 0 ? (
+                  publishedPosts.map((post) => (
                     <PostCard
                       key={post.id}
                       {...post}
@@ -142,8 +150,8 @@ export default async function UserPage({ params }: Props) {
                 )}
               </TabsContent>
               <TabsContent value="drafted">
-                {postsD.length > 0 ? (
-                  postsD.map((post) => (
+                {draftedPosts.length > 0 ? (
+                  draftedPosts.map((post) => (
                     <PostCard
                       key={post.id}
                       {...post}
@@ -155,8 +163,8 @@ export default async function UserPage({ params }: Props) {
                 )}
               </TabsContent>
             </Tabs>
-          ) : postsP.length > 0 ? (
-            postsP.map((post) => (
+          ) : publishedPosts.length > 0 ? (
+            publishedPosts.map((post) => (
               <PostCard key={post.id} {...post} className="w-full p-5" />
             ))
           ) : (
