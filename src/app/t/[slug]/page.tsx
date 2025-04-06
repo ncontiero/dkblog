@@ -3,21 +3,13 @@ import type { Metadata, ResolvingMetadata } from "next";
 import { compareDesc } from "date-fns";
 import { notFound } from "next/navigation";
 import { PostCard } from "@/components/PostCard";
-import { getTag, getTags } from "@/utils/data/tags";
+import { getTag } from "@/utils/data/tags";
 
 export const revalidate = 300; // 5 minutes
 
 type Props = {
   readonly params: Promise<{ slug: string }>;
 };
-
-export async function generateStaticParams() {
-  const tags = await getTags({});
-
-  return tags.map((t) => ({
-    slug: t.slug,
-  }));
-}
 
 export async function generateMetadata(
   { params }: Props,

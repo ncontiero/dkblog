@@ -8,21 +8,13 @@ import { notFound } from "next/navigation";
 import { PostCard } from "@/components/PostCard";
 import { Button } from "@/components/ui/Button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
-import { getUser, getUsers } from "@/utils/data/users";
+import { getUser } from "@/utils/data/users";
 
 export const revalidate = 300; // 5 minutes
 
 type Props = {
   readonly params: Promise<{ user: string }>;
 };
-
-export async function generateStaticParams() {
-  const users = await getUsers({});
-
-  return users.map((u) => ({
-    user: u.username,
-  }));
-}
 
 export async function generateMetadata(
   { params }: Props,

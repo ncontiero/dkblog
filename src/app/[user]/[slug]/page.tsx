@@ -11,7 +11,7 @@ import { Tag } from "@/components/Tag";
 import { Button } from "@/components/ui/Button";
 import { UserHoverCard } from "@/components/UserHoverCard";
 import { prismaSkip } from "@/lib/prisma";
-import { getPost, getPosts } from "@/utils/data/posts";
+import { getPost } from "@/utils/data/posts";
 import { DeletePostBtn } from "./DeletePostBtn";
 
 export const revalidate = 300; // 5 minutes
@@ -28,12 +28,6 @@ const getUserPost = cache(async ({ slug, user }: Params) => {
     where: { status: status || prismaSkip, user: { username: user }, slug },
   });
 });
-
-export async function generateStaticParams() {
-  const posts = await getPosts({ where: { status: "PUBLISHED" } });
-
-  return posts.map((post) => ({ user: post.user.username, slug: post.slug }));
-}
 
 export async function generateMetadata(
   { params }: Props,
