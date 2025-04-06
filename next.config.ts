@@ -1,7 +1,7 @@
-import "./src/env.js";
+import type { NextConfig } from "next";
+import "./src/env";
 
-/** @type {import("next").NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
       { hostname: "img.clerk.com", protocol: "https" },
