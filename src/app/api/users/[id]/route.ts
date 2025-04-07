@@ -41,6 +41,7 @@ export async function PATCH(
     });
 
     revalidateTag(`user:${user.username}`);
+    revalidateTag(`user:${user.username}:settings`);
 
     return new Response(JSON.stringify(user), {
       headers: { "content-type": "application/json" },
