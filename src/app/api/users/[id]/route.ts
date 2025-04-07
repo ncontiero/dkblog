@@ -1,4 +1,5 @@
 import { auth } from "@clerk/nextjs/server";
+import { revalidateTag } from "next/cache";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
 import { errorResponse } from "@/utils/errorResponse";
@@ -38,6 +39,9 @@ export async function PATCH(
         bio: bio ?? user.bio,
       },
     });
+
+    revalidateTag(`user:${user.username}`);
+
     return new Response(JSON.stringify(user), {
       headers: { "content-type": "application/json" },
     });

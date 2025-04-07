@@ -50,7 +50,7 @@ export async function POST(req: Request) {
     ]);
   }
 
-  revalidateTag(`user-${username}`);
+  revalidateTag(`user:${username}`);
 
   return new Response("", { status: 201 });
 }

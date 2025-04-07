@@ -90,9 +90,9 @@ export async function POST(request: Request) {
 
     if (post.status === "PUBLISHED") {
       revalidateTag("posts");
-      tags?.forEach((tag) => revalidateTag(`tag-${tag}`));
+      tags?.forEach((tag) => revalidateTag(`tag:${tag}`));
     }
-    revalidateTag(`user-${post.user.username}`);
+    revalidateTag(`user:${post.user.username}`);
 
     return new Response(JSON.stringify(excludeFunc(post, ["userId"])), {
       headers: { "content-type": "application/json" },

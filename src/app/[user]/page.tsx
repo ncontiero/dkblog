@@ -22,8 +22,8 @@ const createCacheForGetUser = (username: string) => {
         where: { username },
         include: { posts: { include: { user: true, tags: true } } },
       }),
-    [`user-${username}`],
-    { tags: [`user-${username}`], revalidate: 60 * 10 },
+    [`user:${username}`],
+    { tags: [`user:${username}`], revalidate: 60 * 60 },
   );
 };
 

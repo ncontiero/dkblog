@@ -22,8 +22,8 @@ const createCacheForGetTag = (slug: string) => {
           },
         },
       }),
-    [`tag-${slug}`],
-    { tags: [`tag-${slug}`], revalidate: 60 * 10 },
+    [`tag:${slug}`],
+    { tags: [`tag:${slug}`], revalidate: 60 * 60 },
   );
 };
 

@@ -97,11 +97,11 @@ export async function PATCH(request: Request, segmentData: { params: Params }) {
 
     if (post.status === "PUBLISHED" || updatedPost.status === "PUBLISHED") {
       revalidateTag("posts");
-      post.tags.forEach((tag) => revalidateTag(`tag-${tag.slug}`));
-      updatedPost.tags.forEach((tag) => revalidateTag(`tag-${tag.slug}`));
+      post.tags.forEach((tag) => revalidateTag(`tag:${tag.slug}`));
+      updatedPost.tags.forEach((tag) => revalidateTag(`tag:${tag.slug}`));
     }
-    revalidateTag(`user-${updatedPost.user.username}`);
-    revalidateTag(`post-${updatedPost.user.username}-${updatedPost.slug}`);
+    revalidateTag(`user:${updatedPost.user.username}`);
+    revalidateTag(`post:${updatedPost.user.username}:${updatedPost.slug}`);
 
     return new Response(JSON.stringify(updatedPost), {
       headers: { "content-type": "application/json" },
@@ -143,10 +143,10 @@ export async function DELETE(
 
     if (post.status === "PUBLISHED") {
       revalidateTag("posts");
-      post.tags.forEach((tag) => revalidateTag(`tag-${tag.slug}`));
+      post.tags.forEach((tag) => revalidateTag(`tag:${tag.slug}`));
     }
-    revalidateTag(`user-${post.user.username}`);
-    revalidateTag(`post-${post.user.username}-${post.slug}`);
+    revalidateTag(`user:${post.user.username}`);
+    revalidateTag(`post:${post.user.username}:${post.slug}`);
 
     return new Response(JSON.stringify(post), {
       headers: { "content-type": "application/json" },
