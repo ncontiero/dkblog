@@ -32,11 +32,8 @@ export function CreateOrUpdatePostForm({
   tags,
 }: CreateOrUpdatePostFormProps) {
   const createOrUpdatePost = useAction(createOrUpdatePostAction, {
-    onError: ({ error }) => {
-      toast.error(
-        `Error ${post ? "updating" : "creating"} post: ${error.serverError}`,
-      );
-      console.error(error.serverError);
+    onError: () => {
+      toast.error(`Error ${post ? "updating" : "creating"} post`);
     },
     onSuccess: () => {
       toast.success(`Post ${post ? "updated" : "created"} successfully`);
