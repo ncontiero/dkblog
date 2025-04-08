@@ -104,7 +104,7 @@ export default async function PostPage({ params }: Props) {
           <div className="relative mr-3 size-full">
             <Image
               src={post.image}
-              alt="Post image preview"
+              alt={post.title}
               width={1000}
               height={420}
               className="flex items-center justify-center object-contain sm:rounded-t-md"
@@ -121,7 +121,7 @@ export default async function PostPage({ params }: Props) {
             />
             {user && user.username === post.user.username ? (
               <div className="flex gap-1">
-                <DeletePostBtn postSlug={post.slug} username={user.username!} />
+                <DeletePostBtn postSlug={post.slug} />
                 <Button asChild>
                   <Link href={`/${user.username}/${post.slug}/edit`}>Edit</Link>
                 </Button>

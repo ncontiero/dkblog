@@ -1,33 +1,36 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { toast } from "react-toastify";
 import { Loader } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useAction } from "next-safe-action/hooks";
+import { deletePostAction } from "@/actions/posts";
 import { Button } from "@/components/ui/Button";
 
 interface DeletePostBtnProps {
   readonly postSlug: string;
-  readonly username: string;
 }
 
-export function DeletePostBtn({ postSlug, username }: DeletePostBtnProps) {
-  const router = useRouter();
-  const [deleting, setDeleting] = useState(false);
-
-  const deletePost = useCallback(async () => {
-    setDeleting(true);
-    await fetch(`/api/posts/${postSlug}`, { method: "DELETE" });
-    setDeleting(false);
-    router.push(`/${username}`);
-  }, [postSlug, router, username]);
+export function DeletePostBtn({ postSlug }: DeletePostBtnProps) {
+  const deletePost = useAction(deletePostAction, {
+    onError: () => {
+      toast.error("Failed to delete post");
+    },
+    onSuccess: () => {
+      toast.success("Post deleted");
+    },
+  });
 
   return (
     <Button
       variant="destructive"
-      onClick={() => deletePost()}
-      disabled={deleting}
+      onClick={() => deletePost.execute({ slug: postSlug })}
+      disabled={deletePost.status === "executing"}
     >
-      {deleting ? <Loader className="size-4 animate-spin" /> : "Delete"}
+      {deletePost.status === "executing" ? (
+        <Loader className="size-4 animate-spin" />
+      ) : (
+        "Delete"
+      )}
     </Button>
   );
 }

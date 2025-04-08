@@ -1,7 +1,7 @@
 import { randomBytes } from "node:crypto";
 import fs from "node:fs";
 import { env } from "@/env";
-import { uploadFile } from "@/lib/storage";
+import { createFile, uploadFile } from "@/lib/storage";
 
 // DEV
 const PUBLIC_FOLDER = "./public";
@@ -47,16 +47,16 @@ export async function saveFile(file: Blob, options: saveFileProps) {
       return { filePath, fileURL };
     }
     case "production": {
-      const newFile = fs.createWriteStream(fileName);
-      newFile.write(Buffer.from(await file.arrayBuffer()));
-      newFile.close();
-      const dest = `${options.folder}/${fileName}`;
+      const buffer = Buffer.from(await file.arrayBuffer());
+      const tempPath = `temp_${fileName}`;
+      await fs.promises.writeFile(tempPath, buffer);
 
-      await uploadFile(newFile.path.toString(), {
+      const dest = `${options.folder}/${fileName}`;
+      await uploadFile(tempPath, {
         destination: dest,
       });
 
-      fs.unlinkSync(newFile.path.toString());
+      await fs.promises.unlink(tempPath);
 
       fileURL = GS_URL + dest;
       filePath = fileURL;
@@ -64,4 +64,35 @@ export async function saveFile(file: Blob, options: saveFileProps) {
   }
 
   return { filePath, fileURL };
+}
+
+export async function deleteFile(filePath: string, folder: string) {
+  const filename = filePath.split("/").pop();
+
+  if (!filename) {
+    throw new Error("Invalid file path");
+  }
+
+  switch (env.NODE_ENV) {
+    case "development": {
+      const file = `${UPLOAD_FOLDER}${folder}/${filename}`;
+
+      if (fs.existsSync(file)) {
+        fs.unlinkSync(file);
+      } else {
+        console.error("File not found");
+      }
+      return;
+    }
+    case "production": {
+      const file = createFile(`${folder}/${filename}`);
+
+      if (await file.exists()) {
+        await file.delete();
+      } else {
+        console.error("File not found");
+      }
+      return;
+    }
+  }
 }

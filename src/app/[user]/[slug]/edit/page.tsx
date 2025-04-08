@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { currentUser } from "@clerk/nextjs/server";
 import { notFound } from "next/navigation";
-import { CreatePost } from "@/components/CreatePost";
+import { CreateOrUpdatePost } from "@/components/CreateOrUpdatePost";
 import { createCacheForGetPost } from "../page";
 
 export const metadata: Metadata = {
@@ -26,15 +26,5 @@ export default async function EditPostPage({ params }: Props) {
   const post = await getCachedPost();
   if (!post) return notFound();
 
-  return (
-    <CreatePost
-      title={post.title}
-      description={post.description || undefined}
-      content={post.content}
-      image={post.image || undefined}
-      tags={post.tags}
-      slug={post.slug}
-      isEdit
-    />
-  );
+  return <CreateOrUpdatePost post={post} />;
 }

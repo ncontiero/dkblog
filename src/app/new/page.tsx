@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { CreatePost } from "@/components/CreatePost";
+import { CreateOrUpdatePost } from "@/components/CreateOrUpdatePost";
 
 export const metadata: Metadata = {
   title: "Create a new post",
 };
 
 export default function CreatePostPage() {
-  return <CreatePost content="" title="" />;
+  return <CreateOrUpdatePost />;
 }

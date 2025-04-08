@@ -1,87 +1,62 @@
 "use client";
 
-import {
-  type FormEvent,
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import type { User } from "@prisma/client";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Loader } from "lucide-react";
+import { useAction } from "next-safe-action/hooks";
+import { updateUserInfoAction } from "@/actions/users";
+import {
+  type UpdateUserInfoSchema,
+  updateUserInfoSchema,
+} from "@/actions/users/schema";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
-import { env } from "@/env";
 
 interface UpdateUserDataProps {
-  readonly userId: string;
-  readonly initialBrandColor?: string;
-  readonly initialBio?: string;
+  readonly user: User;
 }
 
-export function UpdateUserData({
-  userId,
-  initialBrandColor = "",
-  initialBio = "",
-}: UpdateUserDataProps) {
+export function UpdateUserData({ user }: UpdateUserDataProps) {
   const [dataChanged, setDataChanged] = useState(false);
-  const [brandColor, setBrandColor] = useState({
-    old: initialBrandColor,
-    new: initialBrandColor,
-  });
-  const [bio, setBio] = useState({ old: initialBio, new: initialBio });
 
-  const brandColorIsValidAndChanged = useMemo(() => {
-    const brandColorIsValid =
-      brandColor.new?.match(/^#(?:[\da-f]{3}){1,2}$/i) != null;
-    return brandColorIsValid && brandColor.old !== brandColor.new;
-  }, [brandColor.new, brandColor.old]);
+  const updateUserInfo = useAction(updateUserInfoAction, {
+    onError: () => {
+      toast.error("Something went wrong while updating your profile");
+    },
+    onSuccess: () => {
+      toast.success("Profile updated successfully");
+      setDataChanged(false);
+    },
+  });
+
+  const form = useForm({
+    resolver: zodResolver(updateUserInfoSchema),
+    defaultValues: {
+      bio: user.bio || undefined,
+      brandColor: user.brandColor,
+    },
+  });
+
+  function onSubmit(data: UpdateUserInfoSchema) {
+    updateUserInfo.execute(data);
+  }
 
   useEffect(() => {
-    setDataChanged(brandColorIsValidAndChanged || bio.old !== bio.new);
-  }, [bio, brandColorIsValidAndChanged]);
-
-  const handleUpdateData = useCallback(
-    async (e: FormEvent<HTMLFormElement>) => {
-      e.preventDefault();
-      if (!dataChanged) {
-        return;
-      }
-
-      const toastLoading = toast.loading("Updating...");
-      const data = { brandColor: brandColor.new, bio: bio.new };
-      try {
-        const res = await fetch(`${env.NEXT_PUBLIC_API_URL}/users/${userId}`, {
-          method: "PATCH",
-          body: JSON.stringify(data),
-        });
-
-        if (res.ok) {
-          setBrandColor({ old: brandColor.new, new: brandColor.new });
-          setBio({ old: bio.new, new: bio.new });
-          toast.update(toastLoading, {
-            render: "Profile updated successfully!",
-            type: "success",
-            isLoading: false,
-            autoClose: 1000,
-          });
-        }
-      } catch {
-        toast.update(toastLoading, {
-          render: "Failed to update profile!",
-          type: "error",
-          isLoading: false,
-          autoClose: 1000,
-        });
-      }
-    },
-    [bio.new, brandColor.new, dataChanged, userId],
-  );
+    form.watch((value) => {
+      setDataChanged(
+        value.bio !== user.bio || value.brandColor !== user.brandColor,
+      );
+    });
+  }, [form, user.bio, user.brandColor]);
 
   return (
     <form
       className="relative flex w-full flex-col gap-6"
-      onSubmit={handleUpdateData}
+      onSubmit={form.handleSubmit(onSubmit)}
     >
       <div className="flex w-full flex-col gap-4 rounded-2xl border border-primary/50 px-8 py-9">
         <h2 className="text-3xl font-bold">Basic</h2>
@@ -91,9 +66,7 @@ export function UpdateUserData({
             <Textarea
               id="user-bio"
               placeholder="A little bit about yourself"
-              value={bio.new}
-              onChange={(e) => setBio({ old: bio.old, new: e.target.value })}
-              maxLength={200}
+              {...form.register("bio")}
             />
           </div>
         </div>
@@ -106,21 +79,19 @@ export function UpdateUserData({
           <div className="mt-2 flex items-center">
             <input
               type="color"
-              value={brandColor.new}
-              onChange={(e) =>
-                setBrandColor({ old: brandColor.old, new: e.target.value })
-              }
               className="absolute ml-2 w-4 rounded-md border p-4"
-              style={{ backgroundColor: brandColor.new }}
+              style={{ backgroundColor: form.watch("brandColor") }}
+              {...form.register("brandColor", {
+                onChange: (e) => {
+                  form.setValue("brandColor", e.target.value);
+                },
+              })}
             />
             <Input
-              type="text"
-              value={brandColor.new}
-              onChange={(e) =>
-                setBrandColor({ old: brandColor.old, new: e.target.value })
-              }
-              className="w-full pl-12 sm:w-1/2"
               id="brand-color"
+              type="text"
+              className="w-full pl-12 sm:w-1/2"
+              {...form.register("brandColor")}
             />
           </div>
         </div>
@@ -132,8 +103,18 @@ export function UpdateUserData({
             : "rounded-2xl px-8 py-9"
         } w-full flex-col gap-4 border border-primary/50 duration-200`}
       >
-        <Button type="submit" disabled={!dataChanged}>
-          Save Profile Information
+        <Button
+          type="submit"
+          disabled={updateUserInfo.status === "executing" || !dataChanged}
+        >
+          {updateUserInfo.status === "executing" ? (
+            <div className="flex items-center gap-2">
+              Updating...
+              <Loader className="animate-spin" />
+            </div>
+          ) : (
+            "Save Profile Information"
+          )}
         </Button>
       </div>
     </form>

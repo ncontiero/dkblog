@@ -58,7 +58,7 @@
   }
   body {
     font-family: var(--font-merriweather-sans), system-ui, sans-serif;
-    @apply bg-background text-foreground overscroll-none;
+    @apply relative bg-background text-foreground overscroll-none;
   }
 
   ::-webkit-scrollbar {

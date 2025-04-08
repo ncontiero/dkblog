@@ -4,7 +4,7 @@ import { currentUser } from "@clerk/nextjs/server";
 import { unstable_cache } from "next/cache";
 import { redirect } from "next/navigation";
 import { Link } from "@/components/ui/Link";
-import { getUser } from "@/utils/data/users";
+import { getUser } from "@/utils/db-queries/users";
 import { UpdateUserData } from "./UpdateUserData";
 
 export const metadata: Metadata = {
@@ -36,13 +36,7 @@ export default async function UserSettingsPage() {
           </Link>
         </h1>
         <UserProfile path="/settings" />
-        {dbUser ? (
-          <UpdateUserData
-            userId={user.id}
-            initialBio={dbUser.bio || undefined}
-            initialBrandColor={dbUser.brandColor}
-          />
-        ) : null}
+        {dbUser ? <UpdateUserData user={dbUser} /> : null}
       </div>
     </div>
   );

@@ -41,7 +41,7 @@ const inputFileVariants = cva(
   },
 );
 
-interface InputFileProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface InputFileProps extends InputHTMLAttributes<HTMLInputElement> {
   readonly variant?: VariantProps<typeof inputFileVariants>["variant"];
   readonly btnSize?: VariantProps<typeof inputFileVariants>["size"];
   readonly labelText?: string;
