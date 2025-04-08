@@ -51,8 +51,7 @@ export const createOrUpdatePostAction = authActionClient
         update: {
           ...data,
           title,
-          image:
-            file?.fileURL || (updateImage ? null : post?.image) || undefined,
+          image: file?.fileURL || (updateImage ? null : post?.image) || null,
           tags: { set: tags.map((tag) => ({ slug: tag })) },
         },
       });
