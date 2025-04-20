@@ -1,10 +1,11 @@
+import type { NextRequest } from "next/server";
 import { randomBytes } from "node:crypto";
 import { verifyWebhook } from "@clerk/nextjs/webhooks";
 import { revalidateTag } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { errorResponse } from "@/utils/errorResponse";
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   let username = "";
   try {
     const evt = await verifyWebhook(req);
