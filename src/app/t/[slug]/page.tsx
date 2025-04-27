@@ -4,11 +4,24 @@ import { compareDesc } from "date-fns";
 import { unstable_cache } from "next/cache";
 import { notFound } from "next/navigation";
 import { PostCard } from "@/components/PostCard";
-import { getTag } from "@/utils/db-queries/tags";
+import { getTag, getTags } from "@/utils/db-queries/tags";
 
 type Props = {
   readonly params: Promise<{ slug: string }>;
 };
+
+export const revalidate = 3600; // 1 hour
+export const dynamicParams = true;
+
+export async function generateStaticParams() {
+  const tags = await getTags({
+    select: { slug: true },
+  });
+
+  return tags.map((tag) => ({
+    slug: tag.slug,
+  }));
+}
 
 const createCacheForGetTag = (slug: string) => {
   return unstable_cache(
