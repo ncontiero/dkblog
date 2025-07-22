@@ -9,10 +9,10 @@ export const createOrUpdatePostSchema = z.object({
   image: z
     .instanceof(File)
     .refine((file) => file.type.startsWith("image/"), {
-      message: "Cover image must be an image",
+      error: "Cover image must be an image",
     })
     .refine((file) => file.size <= 1024 * 1024 * 5, {
-      message: "Image must be less than 5MB",
+      error: "Image must be less than 5MB",
     })
     .optional(),
   updateImage: z.boolean().optional(),
