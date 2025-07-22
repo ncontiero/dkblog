@@ -13,18 +13,18 @@ export const env = createEnv({
       .default("development"),
 
     // Database (Prisma)
-    DATABASE_URL: z.string().url(),
+    DATABASE_URL: z.url(),
 
     // these variables are used for the site's SEO
     SITE_NAME: z.string().default("DkBlog"),
     SITE_LOCALE: z.string().default("en_US"),
     // URLs
-    SITE_BASEURL: z.string().url().default("http://localhost:3000"),
+    SITE_BASEURL: z.url().default("http://localhost:3000"),
 
     // Google Storage (Only PROD)
     GS_BUCKET_NAME: z.string().min(1),
     GS_PROJECT_ID: z.string().min(1),
-    GS_CLIENT_EMAIL: z.string().email(),
+    GS_CLIENT_EMAIL: z.email(),
     GS_PRIVATE_KEY: z.string().min(1),
 
     // Clerk
