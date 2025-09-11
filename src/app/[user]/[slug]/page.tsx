@@ -2,7 +2,6 @@ import type { Metadata, ResolvingMetadata } from "next";
 
 import { currentUser } from "@clerk/nextjs/server";
 import { format } from "date-fns";
-import { unstable_cache } from "next/cache";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -10,35 +9,12 @@ import { MdRenderer } from "@/components/MdRenderer";
 import { Tag } from "@/components/Tag";
 import { Button } from "@/components/ui/Button";
 import { UserHoverCard } from "@/components/UserHoverCard";
-import { prismaSkip } from "@/lib/prisma";
-import { getPost } from "@/utils/db-queries/posts";
+import { createCacheForGetPost } from "./cacheUtils";
 import { DeletePostBtn } from "./DeletePostBtn";
 
 type Params = { user: string; slug: string };
 type Props = {
   readonly params: Promise<Params>;
-};
-
-export const createCacheForGetPost = (
-  username: string,
-  postSlug: string,
-  clerkUser?: string | null,
-) => {
-  return unstable_cache(
-    async () => {
-      const status = clerkUser === username ? undefined : "PUBLISHED";
-      return await getPost({
-        where: {
-          user: { username },
-          slug: postSlug,
-          status: status || prismaSkip,
-        },
-        include: { user: true, tags: true },
-      });
-    },
-    [`post:${username}:${postSlug}`, clerkUser || ""],
-    { tags: [`post:${username}:${postSlug}`], revalidate: 60 * 60 },
-  );
 };
 
 export async function generateMetadata(

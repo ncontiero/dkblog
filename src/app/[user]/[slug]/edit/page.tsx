@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { currentUser } from "@clerk/nextjs/server";
 import { notFound } from "next/navigation";
 import { CreateOrUpdatePost } from "@/components/CreateOrUpdatePost";
-import { createCacheForGetPost } from "../page";
+import { createCacheForGetPost } from "../cacheUtils";
 
 export const metadata: Metadata = {
   title: "Edit Post",
