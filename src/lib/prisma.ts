@@ -18,3 +18,5 @@ export const prisma = globalForPrisma.prisma ?? createPrismaClient();
 export const prismaSkip = Prisma.skip;
 
 if (env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;
+
+export * from "./generated/prisma/client";

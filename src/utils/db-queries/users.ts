@@ -1,5 +1,4 @@
-import type { Prisma } from "@prisma/client";
-import { prisma } from "@/lib/prisma";
+import { type Prisma, prisma } from "@/lib/prisma";
 
 type UserPayload<T extends Prisma.UserDefaultArgs> = Prisma.UserGetPayload<T>;
 

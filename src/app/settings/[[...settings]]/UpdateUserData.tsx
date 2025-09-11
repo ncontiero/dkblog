@@ -1,6 +1,6 @@
 "use client";
 
-import type { User } from "@prisma/client";
+import type { User } from "@/lib/prisma";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";

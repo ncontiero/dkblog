@@ -1,4 +1,4 @@
-import type { Tag } from "@prisma/client";
+import type { Tag } from "@/lib/prisma";
 import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 import { ChevronsUpDown, X } from "lucide-react";

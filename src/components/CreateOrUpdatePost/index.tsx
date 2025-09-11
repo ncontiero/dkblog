@@ -1,4 +1,4 @@
-import type { Post, Tag } from "@prisma/client";
+import type { Post, Tag } from "@/lib/prisma";
 import { unstable_cache } from "next/cache";
 import { getTags } from "@/utils/db-queries/tags";
 import { Tabs, TabsList, TabsTrigger } from "../ui/Tabs";

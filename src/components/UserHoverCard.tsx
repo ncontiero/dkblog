@@ -1,4 +1,4 @@
-import type { User } from "@prisma/client";
+import type { User } from "@/lib/prisma";
 
 import { format } from "date-fns";
 import { CalendarDays } from "lucide-react";

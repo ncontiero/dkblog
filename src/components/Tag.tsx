@@ -1,4 +1,4 @@
-import type { Tag as TagType } from "@prisma/client";
+import type { Tag as TagType } from "@/lib/prisma";
 import type { HTMLAttributes } from "react";
 
 import Link from "next/link";

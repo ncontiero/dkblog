@@ -1,6 +1,6 @@
 "use client";
 
-import type { Post, Tag as TagProps } from "@prisma/client";
+import type { Post, Tag as TagProps } from "@/lib/prisma";
 import { useEffect, useRef, useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
