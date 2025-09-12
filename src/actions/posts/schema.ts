@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { PostStatus } from "@/lib/prisma";
+import { PostStatus } from "@/lib/generated/prisma/browser";
 
 export const createOrUpdatePostSchema = z.object({
   id: z.string().optional(),
