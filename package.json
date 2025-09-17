@@ -59,7 +59,7 @@
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
     "unified": "^11.0.5",
-    "zod": "^4.1.8"
+    "zod": "^4.1.9"
   },
   "devDependencies": {
     "@ncontiero/eslint-config": "6.1.0",
