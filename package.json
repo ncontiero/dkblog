@@ -62,7 +62,7 @@
     "zod": "^4.1.11"
   },
   "devDependencies": {
-    "@ncontiero/eslint-config": "6.2.0",
+    "@ncontiero/eslint-config": "6.2.1",
     "@tailwindcss/typography": "^0.5.19",
     "@types/node": "^24.6.1",
     "@types/react": "^19.1.16",
