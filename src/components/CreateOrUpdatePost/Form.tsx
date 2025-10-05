@@ -2,7 +2,7 @@
 
 import type { Post, Tag as TagProps } from "@/lib/prisma";
 import { useEffect, useRef, useState } from "react";
-import { FormProvider, useForm } from "react-hook-form";
+import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { toast } from "react-toastify";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader } from "lucide-react";
@@ -31,6 +31,7 @@ export function CreateOrUpdatePostForm({
   post,
   tags,
 }: CreateOrUpdatePostFormProps) {
+  const [contentHeight, setContentHeight] = useState(250);
   const createOrUpdatePost = useAction(createOrUpdatePostAction, {
     onError: () => {
       toast.error(`Error ${post ? "updating" : "creating"} post`);
@@ -54,15 +55,21 @@ export function CreateOrUpdatePostForm({
     },
   });
 
+  const watchedValues = useWatch({
+    control: form.control,
+  });
+
   useEffect(() => {
-    if (
-      form.watch("content") &&
-      contentRef.current &&
-      contentRef.current.scrollHeight > 500
-    ) {
-      contentRef.current.style.minHeight = `${contentRef.current.scrollHeight}px`;
+    if (!contentRef.current || contentRef.current.scrollHeight <= 250) return;
+
+    contentRef.current.style.minHeight = `${contentRef.current.scrollHeight}px`;
+    setContentHeight(contentRef.current.scrollHeight);
+
+    if (watchedValues.content === "") {
+      contentRef.current.style.minHeight = "250px";
+      setContentHeight(250);
     }
-  }, [form]);
+  }, [watchedValues.content]);
 
   function onSubmit(data: CreateOrUpdatePostSchema) {
     createOrUpdatePost.execute({
@@ -137,7 +144,7 @@ export function CreateOrUpdatePostForm({
                     <SelectTag
                       tags={tags}
                       initialValue={tags.find(
-                        (tag) => tag.slug === form.watch("tags")[i],
+                        (tag) => tag.slug === watchedValues.tags?.[i],
                       )}
                     />
                   </li>
@@ -147,7 +154,7 @@ export function CreateOrUpdatePostForm({
             <div
               className="mb-10 h-full p-4 sm:px-16"
               style={{
-                minHeight: `${contentRef.current?.scrollHeight || 500}px`,
+                minHeight: `${contentHeight}px`,
               }}
             >
               <Textarea
@@ -155,10 +162,10 @@ export function CreateOrUpdatePostForm({
                 aria-label="Post Content"
                 className="h-full resize-none overflow-hidden whitespace-pre-wrap bg-background/20 text-lg transition-shadow duration-500"
                 style={{
-                  minHeight: `${contentRef.current?.scrollHeight || 500}px`,
+                  minHeight: `${contentHeight}px`,
                 }}
                 ref={contentRef}
-                value={form.watch("content")}
+                value={watchedValues.content || ""}
                 onChange={(e) => form.setValue("content", e.target.value)}
               />
             </div>
@@ -181,16 +188,16 @@ export function CreateOrUpdatePostForm({
               ) : null}
               <div className="w-full p-4 sm:px-16 ">
                 <h1 className="relative mb-2 mt-4 w-full scroll-m-20 text-4xl font-bold tracking-tight">
-                  {form.watch("title")}
+                  {watchedValues.title || "Post Title"}
                 </h1>
-                {form.watch("tags").length > 0 ? (
+                {(watchedValues.tags || []).length > 0 ? (
                   <div className="mt-1.5 flex flex-wrap gap-0.5">
-                    {form.watch("tags").map((tag) => (
+                    {watchedValues.tags?.map((tag) => (
                       <Tag key={tag} tag={tags.find((t) => t.slug === tag)!} />
                     ))}
                   </div>
                 ) : null}
-                <MdRenderer.Client content={form.watch("content")} />
+                <MdRenderer.Client content={watchedValues.content || ""} />
               </div>
             </div>
           </TabsContent>

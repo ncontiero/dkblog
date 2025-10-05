@@ -40,7 +40,7 @@ export interface LinkProps
   readonly href: string;
 }
 
-const Link = forwardRef<HTMLAnchorElement, LinkProps>(
+export const Link = forwardRef<HTMLAnchorElement, LinkProps>(
   (
     { href, className, variant, size, radius, asChild = false, ...props },
     ref,
@@ -57,5 +57,3 @@ const Link = forwardRef<HTMLAnchorElement, LinkProps>(
   },
 );
 Link.displayName = "Link";
-
-export { Link, linkVariants };

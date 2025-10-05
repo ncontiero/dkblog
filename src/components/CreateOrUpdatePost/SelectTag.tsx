@@ -1,6 +1,6 @@
 import type { Tag } from "@/lib/prisma";
 import { useState } from "react";
-import { useFormContext } from "react-hook-form";
+import { useFormContext, useWatch } from "react-hook-form";
 import { ChevronsUpDown, X } from "lucide-react";
 import { Button } from "../ui/Button";
 import {
@@ -24,13 +24,17 @@ export function SelectTag({ tags, initialValue }: SelectTagProps) {
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<Tag | undefined>(initialValue);
 
+  const watchedTags = useWatch({
+    control: formContext.control,
+    name: "tags",
+  });
+
+  const shouldPopoverBeOpen = open
+    ? watchedTags.length <= 4 && tags.length > 0
+    : false;
+
   return (
-    <Popover
-      open={
-        open ? formContext.watch("tags").length <= 4 && tags.length > 0 : false
-      }
-      onOpenChange={setOpen}
-    >
+    <Popover open={shouldPopoverBeOpen} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         {selected ? (
           <div
@@ -51,9 +55,7 @@ export function SelectTag({ tags, initialValue }: SelectTagProps) {
               aria-label="Remove tag"
               onClick={() => {
                 formContext.setValue("tags", [
-                  ...formContext
-                    .watch("tags")
-                    .filter((t: string) => t !== selected.slug),
+                  ...watchedTags.filter((t: string) => t !== selected.slug),
                 ]);
                 setSelected(undefined);
               }}
@@ -85,22 +87,22 @@ export function SelectTag({ tags, initialValue }: SelectTagProps) {
               <CommandEmpty>No tags found</CommandEmpty>
               <CommandGroup>
                 {tags
-                  .filter((t) => !formContext.watch("tags").includes(t.slug))
+                  .filter((t) => !watchedTags.includes(t.slug))
                   .map((tag) => (
                     <CommandItem
                       key={tag.id}
                       value={tag.slug}
                       onSelect={(currentValue) => {
                         formContext.setValue("tags", [
-                          ...formContext
-                            .watch("tags")
-                            .filter((t: string) => t !== selected?.slug),
+                          ...watchedTags.filter(
+                            (t: string) => t !== selected?.slug,
+                          ),
                           currentValue,
                         ]);
                         setSelected(tag);
                         setOpen(false);
                       }}
-                      disabled={formContext.watch("tags").includes(tag.slug)}
+                      disabled={watchedTags.includes(tag.slug)}
                       className="flex flex-col items-start gap-2 py-3"
                     >
                       <span>

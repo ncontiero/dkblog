@@ -1,8 +1,7 @@
 "use client";
 
 import type { User } from "@/lib/prisma";
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { toast } from "react-toastify";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader } from "lucide-react";
@@ -21,15 +20,12 @@ interface UpdateUserDataProps {
 }
 
 export function UpdateUserData({ user }: UpdateUserDataProps) {
-  const [dataChanged, setDataChanged] = useState(false);
-
   const updateUserInfo = useAction(updateUserInfoAction, {
     onError: () => {
       toast.error("Something went wrong while updating your profile");
     },
     onSuccess: () => {
       toast.success("Profile updated successfully");
-      setDataChanged(false);
     },
   });
 
@@ -45,13 +41,17 @@ export function UpdateUserData({ user }: UpdateUserDataProps) {
     updateUserInfo.execute(data);
   }
 
-  useEffect(() => {
-    form.watch((value) => {
-      setDataChanged(
-        value.bio !== user.bio || value.brandColor !== user.brandColor,
-      );
-    });
-  }, [form, user.bio, user.brandColor]);
+  const watchedValues = useWatch({
+    control: form.control,
+    defaultValue: {
+      bio: user.bio || "",
+      brandColor: user.brandColor,
+    },
+  });
+
+  const dataChanged =
+    watchedValues.bio !== (user.bio || "") ||
+    watchedValues.brandColor !== user.brandColor;
 
   return (
     <form
@@ -80,7 +80,7 @@ export function UpdateUserData({ user }: UpdateUserDataProps) {
             <input
               type="color"
               className="absolute ml-2 w-4 rounded-md border p-4"
-              style={{ backgroundColor: form.watch("brandColor") }}
+              style={{ backgroundColor: watchedValues.brandColor || "" }}
               {...form.register("brandColor", {
                 onChange: (e) => {
                   form.setValue("brandColor", e.target.value);
