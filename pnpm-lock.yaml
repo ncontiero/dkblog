@@ -15,8 +15,8 @@ importers:
         specifier: ^2.4.25
         version: 2.4.25
       '@google-cloud/storage':
-        specifier: ^7.17.1
-        version: 7.17.1
+        specifier: ^7.17.2
+        version: 7.17.2
       '@hookform/resolvers':
         specifier: ^5.2.2
         version: 5.2.2(react-hook-form@7.64.0(react@19.2.0))
@@ -492,8 +492,8 @@ packages:
     resolution: {integrity: sha512-Orxzlfb9c67A15cq2JQEyVc7wEsmFBmHjZWZYQMUyJ1qivXyMwdyNOs9odi79hze+2zqdTtu1E19IM/FtqZ10g==}
     engines: {node: '>=14'}
 
-  '@google-cloud/storage@7.17.1':
-    resolution: {integrity: sha512-2FMQbpU7qK+OtBPaegC6n+XevgZksobUGo6mGKnXNmeZpvLiAo1gTAE3oTKsrMGDV4VtL8Zzpono0YsK/Q7Iqg==}
+  '@google-cloud/storage@7.17.2':
+    resolution: {integrity: sha512-6xN0KNO8L/LIA5zu3CJwHkJiB6n65eykBLOb0E+RooiHYgX8CSao6lvQiKT9TBk2gL5g33LL3fmhDodZnt56rw==}
     engines: {node: '>=14'}
 
   '@hookform/resolvers@5.2.2':
@@ -4307,7 +4307,7 @@ snapshots:
 
   '@google-cloud/promisify@4.0.0': {}
 
-  '@google-cloud/storage@7.17.1':
+  '@google-cloud/storage@7.17.2':
     dependencies:
       '@google-cloud/paginator': 5.0.2
       '@google-cloud/projectify': 4.0.0
