@@ -22,7 +22,10 @@ export function PostCard({
         <h2 className="text-xl font-bold sm:text-2xl">
           <Link
             href={`/${post.user.username}/${post.slug}`}
-            className="rounded-md duration-200 hover:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            className={`
+              rounded-md duration-200 hover:opacity-70 focus-visible:outline-none focus-visible:ring-2
+              focus-visible:ring-ring
+            `}
           >
             {post.title}
           </Link>

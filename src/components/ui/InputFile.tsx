@@ -10,7 +10,11 @@ import {
 } from "./Tooltip";
 
 const inputFileVariants = cva(
-  "inline-flex cursor-pointer items-center justify-center rounded-md text-sm font-medium ring-offset-background duration-200 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+  `
+    inline-flex cursor-pointer items-center justify-center rounded-md text-sm font-medium ring-offset-background
+    duration-200 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 disabled:pointer-events-none
+    disabled:opacity-50
+  `,
   {
     variants: {
       variant: {
@@ -22,8 +26,9 @@ const inputFileVariants = cva(
           "border border-input bg-background focus-within:ring-ring hover:bg-accent hover:text-accent-foreground",
         outlinePrimary:
           "border border-primary bg-background focus-within:ring-ring hover:bg-primary hover:text-primary-foreground",
-        secondary:
-          "bg-secondary text-secondary-foreground focus-within:ring-ring hover:bg-secondary/60 dark:hover:bg-secondary/80",
+        secondary: `
+          bg-secondary text-secondary-foreground focus-within:ring-ring hover:bg-secondary/60 dark:hover:bg-secondary/80
+        `,
         ghost:
           "focus-within:ring-ring hover:bg-accent hover:text-accent-foreground",
       },

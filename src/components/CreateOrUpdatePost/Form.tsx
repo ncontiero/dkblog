@@ -126,7 +126,9 @@ export function CreateOrUpdatePostForm({
                 </div>
               </div>
               <Textarea
-                className="resize-none border-transparent bg-secondary pl-0 text-3xl font-bold sm:text-5xl sm:font-extrabold"
+                className={`
+                  resize-none border-transparent bg-secondary pl-0 text-3xl font-bold sm:text-5xl sm:font-extrabold
+                `}
                 placeholder="New post title here..."
                 aria-label="Post Title"
                 {...form.register("title")}
@@ -160,7 +162,10 @@ export function CreateOrUpdatePostForm({
               <Textarea
                 placeholder="Write your post content here..."
                 aria-label="Post Content"
-                className="h-full resize-none overflow-hidden whitespace-pre-wrap bg-background/20 text-lg transition-shadow duration-500"
+                className={`
+                  h-full resize-none overflow-hidden whitespace-pre-wrap bg-background/20 text-lg transition-shadow
+                  duration-500
+                `}
                 style={{
                   minHeight: `${contentHeight}px`,
                 }}
@@ -186,7 +191,7 @@ export function CreateOrUpdatePostForm({
                   />
                 </div>
               ) : null}
-              <div className="w-full p-4 sm:px-16 ">
+              <div className="w-full p-4 sm:px-16">
                 <h1 className="relative mb-2 mt-4 w-full scroll-m-20 text-4xl font-bold tracking-tight">
                   {watchedValues.title || "Post Title"}
                 </h1>

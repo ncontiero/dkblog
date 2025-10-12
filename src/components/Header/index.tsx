@@ -14,7 +14,10 @@ export async function Header() {
       <div className="flex size-full items-center justify-between px-4 sm:container">
         <Link
           href="/"
-          className="rounded-md p-2 text-2xl font-bold duration-200 hover:opacity-70 focus:outline-none focus:ring focus:ring-ring"
+          className={`
+            rounded-md p-2 text-2xl font-bold duration-200 hover:opacity-70 focus:outline-none focus:ring
+            focus:ring-ring
+          `}
         >
           DkBlog
         </Link>
@@ -31,7 +34,11 @@ export async function Header() {
           <SignedOut>
             <Link
               href="/sign-in"
-              className="flex h-full items-center justify-center rounded-md p-2 uppercase ring-ring duration-200 hover:text-primary focus:text-primary focus:outline-none focus:ring-2 active:opacity-70 sm:w-auto sm:px-4 sm:py-2 sm:font-bold"
+              className={`
+                flex h-full items-center justify-center rounded-md p-2 uppercase ring-ring duration-200
+                hover:text-primary focus:text-primary focus:outline-none focus:ring-2 active:opacity-70 sm:w-auto
+                sm:px-4 sm:py-2 sm:font-bold
+              `}
             >
               Login
             </Link>
