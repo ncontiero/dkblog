@@ -2,6 +2,9 @@ import { experimental_createTheme as createTheme, dark } from "@clerk/themes";
 
 export const clerkTheme = createTheme({
   baseTheme: dark,
+  variables: {
+    colorForeground: "var(--foreground)",
+  },
   elements: {
     // Box
     logoBox: "[&>a]:border [&>a]:border-primary/50",
@@ -21,7 +24,7 @@ export const clerkTheme = createTheme({
     formFieldLabel: "text-foreground",
     formFieldHintText: "text-foreground/70",
     formFieldInput:
-      "ring-1 ring-input py-2 bg-background text-foreground !shadow-none ring-offset-input hover:ring-foreground/20 focus:ring-2 focus:ring-ring focus:ring-offset-2",
+      "ring-1 ring-input py-2 bg-background text-foreground !shadow-none ring-offset-input hover:ring-foreground/20 focus:ring-2 focus:ring-ring focus:ring-offset-2 placeholder:text-foreground/60",
     otpCodeFieldInput:
       "ring-1 ring-input bg-background text-foreground !shadow-none ring-offset-input hover:ring-foreground/40 focus:ring-2 focus:ring-ring focus:ring-offset-2",
     formFieldInputShowPasswordButton:
@@ -71,21 +74,20 @@ export const clerkTheme = createTheme({
     profileSectionItem: "[&_p]:text-foreground",
     // NavBar
     navbar:
-      "!bg-none !bg-card [&_h1]:text-foreground [&_p]:text-foreground/70 [&_.cl-internal-lqfubk]:hidden",
+      "!bg-none !bg-card [&_h1]:text-foreground [&_p]:text-foreground/70 [&_.cl-internal-1dauvpw]:hidden",
     navbarMobileMenuRow: "!bg-none !bg-card",
     navbarMobileMenuButton:
       "text-foreground/80 hover:bg-secondary focus:ring-1 focus:ring-ring",
     navbarButton:
       "text-foreground/80 data-[active=true]:text-foreground hover:bg-secondary focus:ring-1 focus:ring-ring",
     // Footer
-    footer: "[&>.cl-internal-180wb59]:hidden bg-none",
+    footer: "[&>.cl-internal-1dauvpw]:hidden bg-none",
     footerAction: "bg-card/60 w-full flex justify-center border-t border-input",
     footerActionText: "text-foreground",
     footerActionLink:
       "text-primary ring-ring rounded hover:text-primary active:text-primary focus:outline-none focus:ring-2",
     // Devices
-    activeDevice:
-      "[&_.cl-internal-rvg68x]:text-foreground [&_p]:text-foreground/70",
+    activeDevice: "[&_p]:text-foreground/70",
     // Extras
     badge: "text-primary bg-primary/20",
     dividerText: "text-foreground/70",
