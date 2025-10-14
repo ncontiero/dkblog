@@ -21,7 +21,11 @@ export const clerkTheme = createTheme({
     identityPreviewEditButton:
       "text-primary/80 hover:text-primary active:text-primary focus:ring focus:ring-ring",
     // Form
+    socialButtonsBlockButton:
+      "!shadow-none ring-ring ring-offset-input bg-secondary text-foreground border border-border hover:bg-foreground/10 focus:bg-foreground/20 active:ring-2 focus:ring-2 focus:ring-offset-2 dark:hover:bg-foreground/20 dark:focus:bg-foreground/30",
+    socialButtonsProviderIcon: "dark:invert-[1]",
     formFieldLabel: "text-foreground",
+    lastAuthenticationStrategyBadge: "text-foreground bg-secondary",
     formFieldHintText: "text-foreground/70",
     formFieldInput:
       "ring-1 ring-input py-2 bg-background text-foreground !shadow-none ring-offset-input hover:ring-foreground/20 focus:ring-2 focus:ring-ring focus:ring-offset-2 placeholder:text-foreground/60",
@@ -49,7 +53,7 @@ export const clerkTheme = createTheme({
       "!shadow-none hover:bg-secondary/80 active:bg-secondary focus:ring-2 focus:ring-ring",
     // User Menu
     userButtonTrigger:
-      "!shadow-none ring-ring ring-offset-input activate:ring-2 focus:ring-2 focus:ring-offset-2",
+      "!shadow-none ring-ring ring-offset-input active:ring-2 focus:ring-2 focus:ring-offset-2",
     userButtonPopoverCard: "border border-primary/50",
     userButtonPopoverMain: "bg-card",
     userPreviewTextContainer: "*:text-foreground",
