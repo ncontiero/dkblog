@@ -61,7 +61,7 @@ export default function RootLayout({
   readonly children: ReactNode;
 }) {
   return (
-    <ClerkProvider appearance={{ baseTheme: clerkTheme }}>
+    <ClerkProvider appearance={{ theme: clerkTheme }}>
       <html lang="en" suppressHydrationWarning>
         <body className={merriweatherSans.variable}>
           <ThemeProvider attribute="class">

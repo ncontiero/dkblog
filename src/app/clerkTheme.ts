@@ -1,7 +1,7 @@
 import { experimental_createTheme as createTheme, dark } from "@clerk/themes";
 
 export const clerkTheme = createTheme({
-  baseTheme: dark,
+  theme: dark,
   variables: {
     colorForeground: "var(--foreground)",
   },
@@ -22,13 +22,15 @@ export const clerkTheme = createTheme({
       "text-primary/80 hover:text-primary active:text-primary focus:ring focus:ring-ring",
     // Form
     socialButtonsBlockButton:
-      "!shadow-none ring-ring ring-offset-input bg-secondary text-foreground border border-border hover:bg-foreground/10 focus:bg-foreground/20 active:ring-2 focus:ring-2 focus:ring-offset-2 dark:hover:bg-foreground/20 dark:focus:bg-foreground/30",
-    socialButtonsProviderIcon: "dark:invert-[1]",
+      "!shadow-none ring-ring ring-offset-input bg-secondary text-foreground hover:bg-foreground/10 focus:bg-foreground/20 active:ring-2 focus:ring-2 focus:ring-offset-2 dark:hover:bg-foreground/20 dark:focus:bg-foreground/30",
+    socialButtonsProviderIcon: "invert-0 dark:invert-[1]",
+    dividerLine: "bg-foreground/40",
     formFieldLabel: "text-foreground",
     lastAuthenticationStrategyBadge: "text-foreground bg-secondary",
     formFieldHintText: "text-foreground/70",
     formFieldInput:
       "ring-1 ring-input py-2 bg-background text-foreground !shadow-none ring-offset-input hover:ring-foreground/20 focus:ring-2 focus:ring-ring focus:ring-offset-2 placeholder:text-foreground/60",
+    checkbox: "checked:bg-primary",
     otpCodeFieldInput:
       "ring-1 ring-input bg-background text-foreground !shadow-none ring-offset-input hover:ring-foreground/40 focus:ring-2 focus:ring-ring focus:ring-offset-2",
     formFieldInputShowPasswordButton:
@@ -77,16 +79,17 @@ export const clerkTheme = createTheme({
     profileSectionTitleText: "text-foreground",
     profileSectionItem: "[&_p]:text-foreground",
     // NavBar
-    navbar:
-      "!bg-none !bg-card [&_h1]:text-foreground [&_p]:text-foreground/70 [&_.cl-internal-1dauvpw]:hidden",
+    navbar: "!bg-none !bg-card [&_h1]:text-foreground [&_p]:text-foreground/70",
     navbarMobileMenuRow: "!bg-none !bg-card",
     navbarMobileMenuButton:
       "text-foreground/80 hover:bg-secondary focus:ring-1 focus:ring-ring",
     navbarButton:
       "text-foreground/80 data-[active=true]:text-foreground hover:bg-secondary focus:ring-1 focus:ring-ring",
     // Footer
-    footer: "[&>.cl-internal-1dauvpw]:hidden bg-none",
-    footerAction: "bg-card/60 w-full flex justify-center border-t border-input",
+    footer:
+      "[&>.cl-internal-1dauvpw]:bg-primary [&>.cl-internal-1dauvpw]:text-primary-foreground dark:[&>.cl-internal-1dauvpw]:bg-primary/50",
+    footerAction:
+      "bg-card/80 w-full flex justify-center pt-2 border-t border-foreground/30 dark:border-foreground/10 dark:bg-card/60",
     footerActionText: "text-foreground",
     footerActionLink:
       "text-primary ring-ring rounded hover:text-primary active:text-primary focus:outline-none focus:ring-2",
