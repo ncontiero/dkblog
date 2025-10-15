@@ -9,7 +9,7 @@ export function InputFile(props: InputFileProps) {
       {...props}
       variant="outlinePrimary"
       className={`
-        bg-secondary py-4 text-foreground focus-within:bg-primary focus-within:text-primary-foreground sm:py-6
+        bg-secondary text-foreground py-4 focus-within:bg-primary focus-within:text-primary-foreground sm:py-6
         sm:text-base
       `}
       id="cover-image"

@@ -51,7 +51,7 @@ export function SelectTag({ tags, initialValue }: SelectTagProps) {
             </span>
             <button
               type="button"
-              className="rounded-full p-1 text-sm duration-200 hover:bg-destructive hover:text-destructive-foreground"
+              className="hover:bg-destructive hover:text-primary-foreground rounded-full p-1 text-sm duration-200"
               aria-label="Remove tag"
               onClick={() => {
                 formContext.setValue("tags", [
@@ -77,7 +77,7 @@ export function SelectTag({ tags, initialValue }: SelectTagProps) {
         )}
       </PopoverTrigger>
       <PopoverContent
-        className="z-[999999] mt-1 w-screen p-0 sm:w-full"
+        className="z-999999 mt-1 w-screen p-0 sm:w-full"
         align="start"
       >
         <ScrollArea className="h-96">

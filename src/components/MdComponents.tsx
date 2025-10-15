@@ -38,9 +38,9 @@ function HeadingLinked({
   const Comp = as;
   const childrenHasAnchor = children && typeof children === "object";
   const className = `
-    group flex w-fit items-center rounded-md no-underline underline-offset-4 ring-offset-background duration-200
-    hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
-    active:opacity-70
+    group ring-offset-background flex w-fit items-center rounded-md no-underline underline-offset-4 duration-200
+    focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden
+    hover:underline active:opacity-70
   `;
 
   return id && !childrenHasAnchor ? (
@@ -126,10 +126,7 @@ export const MdComponents: Components = {
   ),
   a: (props) => <AnchorLink {...props} />,
   p: ({ className, ...props }) => (
-    <p
-      className={cn("leading-7 [&:not(:first-child)]:mt-6", className)}
-      {...props}
-    />
+    <p className={cn("leading-7 not-first:mt-6", className)} {...props} />
   ),
   ul: ({ className, ...props }) => (
     <ul className={cn("my-6 list-disc pl-8", className)} {...props} />
@@ -139,17 +136,14 @@ export const MdComponents: Components = {
   ),
   li: ({ className, ...props }) => (
     <li
-      className={cn("my-1 marker:text-muted-foreground", className)}
+      className={cn("marker:text-muted-foreground my-1", className)}
       {...props}
     />
   ),
   blockquote: ({ className, ...props }) => (
     <blockquote
       className={cn(
-        `
-          mt-6 border-l-2 border-zinc-400 pl-3 font-normal text-foreground/70 dark:border-zinc-600
-          [&>*]:text-foreground/70
-        `,
+        `text-foreground/70 mt-6 border-l-2 border-zinc-400 pl-3 font-normal *:text-foreground/70 dark:border-zinc-600`,
         className,
       )}
       {...props}
@@ -159,7 +153,7 @@ export const MdComponents: Components = {
     // eslint-disable-next-line nextjs/no-img-element
     <img
       className={cn(
-        "mx-auto my-0 w-full rounded-md border border-border shadow-xl shadow-border",
+        "border-border shadow-border mx-auto my-0 w-full rounded-md border shadow-xl",
         className,
       )}
       alt={alt}
@@ -204,7 +198,7 @@ export const MdComponents: Components = {
   pre: ({ className, ...props }) => (
     <pre
       className={cn(
-        "my-4 overflow-x-auto rounded-lg bg-background px-0 py-4",
+        "bg-background my-4 overflow-x-auto rounded-lg px-0 py-4",
         className,
       )}
       {...props}
@@ -213,7 +207,7 @@ export const MdComponents: Components = {
   code: ({ className, ...props }) => (
     <code
       className={cn(
-        "relative rounded bg-secondary-foreground/10 px-1.5 py-1 font-mono",
+        "bg-secondary-foreground/10 relative rounded-sm px-1.5 py-1 font-mono",
         className,
       )}
       {...props}

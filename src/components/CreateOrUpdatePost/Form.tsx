@@ -82,7 +82,7 @@ export function CreateOrUpdatePostForm({
   return (
     <FormProvider {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <ScrollArea className="mt-2 h-[calc(100vh-12rem)] w-full bg-secondary sm:rounded-md">
+        <ScrollArea className="bg-secondary mt-2 h-[calc(100vh-12rem)] w-full sm:rounded-md">
           <TabsContent value="edit">
             <div className="p-4 sm:px-16">
               <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:gap-0">
@@ -127,14 +127,14 @@ export function CreateOrUpdatePostForm({
               </div>
               <Textarea
                 className={`
-                  resize-none border-transparent bg-secondary pl-0 text-3xl font-bold sm:text-5xl sm:font-extrabold
+                  bg-secondary resize-none border-transparent pl-0 text-3xl font-bold sm:text-5xl sm:font-extrabold
                 `}
                 placeholder="New post title here..."
                 aria-label="Post Title"
                 {...form.register("title")}
               />
               <Textarea
-                className="mt-2 resize-none bg-secondary py-0 pl-0 text-xl font-bold sm:font-extrabold"
+                className="bg-secondary mt-2 resize-none py-0 pl-0 text-xl font-bold sm:font-extrabold"
                 placeholder="Post description here..."
                 aria-label="Post Description"
                 {...form.register("description")}
@@ -163,7 +163,7 @@ export function CreateOrUpdatePostForm({
                 placeholder="Write your post content here..."
                 aria-label="Post Content"
                 className={`
-                  h-full resize-none overflow-hidden whitespace-pre-wrap bg-background/20 text-lg transition-shadow
+                  bg-background/20 h-full resize-none overflow-hidden text-lg whitespace-pre-wrap transition-shadow
                   duration-500
                 `}
                 style={{
@@ -192,7 +192,7 @@ export function CreateOrUpdatePostForm({
                 </div>
               ) : null}
               <div className="w-full p-4 sm:px-16">
-                <h1 className="relative mb-2 mt-4 w-full scroll-m-20 text-4xl font-bold tracking-tight">
+                <h1 className="relative mt-4 mb-2 w-full scroll-m-20 text-4xl font-bold tracking-tight">
                   {watchedValues.title || "Post Title"}
                 </h1>
                 {(watchedValues.tags || []).length > 0 ? (
@@ -202,12 +202,14 @@ export function CreateOrUpdatePostForm({
                     ))}
                   </div>
                 ) : null}
-                <MdRenderer.Client content={watchedValues.content || ""} />
+                <MdRenderer.Client
+                  content={watchedValues.content || "Nothing here..."}
+                />
               </div>
             </div>
           </TabsContent>
         </ScrollArea>
-        <div className="sticky bottom-0 flex w-full max-w-5xl gap-2 bg-background px-2 py-4 sm:px-0">
+        <div className="bg-background sticky bottom-0 flex w-full max-w-5xl gap-2 px-2 py-4 sm:px-0">
           <Button
             type="button"
             onClick={() =>

@@ -10,13 +10,13 @@ export async function Header() {
   const user = await currentUser();
 
   return (
-    <header className="sticky inset-x-0 top-0 z-[9999] h-16 w-full border-b-2 bg-secondary/80 backdrop-blur">
+    <header className="bg-secondary/80 sticky inset-x-0 top-0 z-9999 h-16 w-full border-b-2 backdrop-blur-sm">
       <div className="flex size-full items-center justify-between px-4 sm:container">
         <Link
           href="/"
           className={`
-            rounded-md p-2 text-2xl font-bold duration-200 hover:opacity-70 focus:outline-none focus:ring
-            focus:ring-ring
+            focus:ring-ring focus:ring-3 focus:outline-hidden rounded-md p-2 text-2xl font-bold duration-200
+            hover:opacity-70
           `}
         >
           DkBlog
@@ -35,8 +35,8 @@ export async function Header() {
             <Link
               href="/sign-in"
               className={`
-                flex h-full items-center justify-center rounded-md p-2 uppercase ring-ring duration-200
-                hover:text-primary focus:text-primary focus:outline-none focus:ring-2 active:opacity-70 sm:w-auto
+                ring-ring flex h-full items-center justify-center rounded-md p-2 uppercase duration-200
+                hover:text-primary focus:text-primary focus:ring-2 focus:outline-hidden active:opacity-70 sm:w-auto
                 sm:px-4 sm:py-2 sm:font-bold
               `}
             >

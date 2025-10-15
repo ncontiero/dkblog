@@ -86,7 +86,7 @@ export default async function TagPage({ params }: Props) {
 
   return (
     <div className="mx-auto my-0 min-h-screen max-w-4xl sm:my-8">
-      <div className="w-full bg-secondary sm:rounded-md">
+      <div className="bg-secondary w-full sm:rounded-md">
         <div
           className="w-full bg-[hsl(var(--tag-color)/0.8)] py-2 sm:rounded-t-md"
           style={{

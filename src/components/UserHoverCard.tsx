@@ -29,7 +29,7 @@ export function UserHoverCard({
             postPage ? "gap-3" : "gap-2"
           } rounded-md sm:px-3 ${
             postPage ? "py-2" : "sm:py-1"
-          } duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring sm:hover:bg-background`}
+          } focus-visible:ring-ring focus-visible:ring-2 focus-visible:outline-hidden sm:hover:bg-background duration-200`}
         >
           <Image
             src={user.image}
@@ -52,7 +52,7 @@ export function UserHoverCard({
         </Link>
       </HoverCardTrigger>
       <HoverCardContent className="relative">
-        <div className="absolute inset-x-0 top-0 z-[-1] h-8 w-full rounded-t-md bg-primary" />
+        <div className="bg-primary absolute inset-x-0 top-0 z-[-1] h-8 w-full rounded-t-md" />
         <Link
           href={`/${user.username}`}
           className="group mt-1 flex items-center space-x-2.5"
@@ -64,7 +64,7 @@ export function UserHoverCard({
             height={40}
             className="size-10 rounded-full"
           />
-          <h4 className="self-end text-lg font-bold duration-200 group-hover:text-primary">
+          <h4 className="group-hover:text-primary self-end text-lg font-bold duration-200">
             {user.username}
           </h4>
         </Link>
@@ -73,7 +73,7 @@ export function UserHoverCard({
         </Button>
         <div className="flex items-center pt-4">
           <CalendarDays className="mr-2 size-4 opacity-70" />{" "}
-          <span className="text-xs text-muted-foreground">
+          <span className="text-muted-foreground text-xs">
             Joined{" "}
             <time dateTime={new Date(user.createdAt).toISOString()}>
               {format(new Date(user.createdAt), "MMMM yyyy")}

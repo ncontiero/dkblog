@@ -11,8 +11,8 @@ import {
 
 const inputFileVariants = cva(
   `
-    inline-flex cursor-pointer items-center justify-center rounded-md text-sm font-medium ring-offset-background
-    duration-200 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 disabled:pointer-events-none
+    ring-offset-background inline-flex cursor-pointer items-center justify-center rounded-md text-sm font-medium
+    duration-200 focus-within:ring-2 focus-within:ring-offset-2 focus-within:outline-hidden disabled:pointer-events-none
     disabled:opacity-50
   `,
   {
@@ -21,11 +21,11 @@ const inputFileVariants = cva(
         default:
           "bg-primary text-primary-foreground focus-within:ring-ring hover:bg-primary/90 dark:hover:bg-primary/80",
         destructive:
-          "bg-destructive text-destructive-foreground focus-within:ring-destructive hover:bg-destructive/80",
+          "bg-destructive text-primary-foreground focus-within:ring-destructive hover:bg-destructive/80",
         outline:
-          "border border-input bg-background focus-within:ring-ring hover:bg-accent hover:text-accent-foreground",
+          "border-input bg-background border focus-within:ring-ring hover:bg-accent hover:text-accent-foreground",
         outlinePrimary:
-          "border border-primary bg-background focus-within:ring-ring hover:bg-primary hover:text-primary-foreground",
+          "border-primary bg-background border focus-within:ring-ring hover:bg-primary hover:text-primary-foreground",
         secondary: `
           bg-secondary text-secondary-foreground focus-within:ring-ring hover:bg-secondary/60 dark:hover:bg-secondary/80
         `,

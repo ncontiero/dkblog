@@ -58,7 +58,7 @@ export function UpdateUserData({ user }: UpdateUserDataProps) {
       className="relative flex w-full flex-col gap-6"
       onSubmit={form.handleSubmit(onSubmit)}
     >
-      <div className="flex w-full flex-col gap-4 rounded-2xl border border-primary/50 px-8 py-9">
+      <div className="border-primary/50 flex w-full flex-col gap-4 rounded-2xl border px-8 py-9">
         <h2 className="text-3xl font-bold">Basic</h2>
         <div className="flex flex-col gap-1">
           <label htmlFor="user-bio">Bio</label>
@@ -71,7 +71,7 @@ export function UpdateUserData({ user }: UpdateUserDataProps) {
           </div>
         </div>
       </div>
-      <div className="flex w-full flex-col gap-4 rounded-2xl border border-primary/50 px-8 py-9">
+      <div className="border-primary/50 flex w-full flex-col gap-4 rounded-2xl border px-8 py-9">
         <h2 className="text-3xl font-bold">Branding</h2>
         <div className="flex flex-col gap-1">
           <label htmlFor="brand-color">Brand color</label>
@@ -99,9 +99,9 @@ export function UpdateUserData({ user }: UpdateUserDataProps) {
       <div
         className={`flex ${
           dataChanged
-            ? "sticky bottom-0 rounded-md p-4 animate-in"
+            ? "animate-in sticky bottom-0 rounded-md p-4"
             : "rounded-2xl px-8 py-9"
-        } w-full flex-col gap-4 border border-primary/50 duration-200`}
+        } border-primary/50 w-full flex-col gap-4 border duration-200`}
       >
         <Button
           type="submit"

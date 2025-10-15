@@ -13,7 +13,7 @@ export function PostCard({
   return (
     <div
       className={cn(
-        "relative w-1/2 gap-2 rounded-none bg-secondary p-6 sm:rounded-md",
+        "bg-secondary relative w-1/2 gap-2 rounded-none p-6 sm:rounded-md",
         className,
       )}
     >
@@ -23,8 +23,8 @@ export function PostCard({
           <Link
             href={`/${post.user.username}/${post.slug}`}
             className={`
-              rounded-md duration-200 hover:opacity-70 focus-visible:outline-none focus-visible:ring-2
-              focus-visible:ring-ring
+              focus-visible:ring-ring focus-visible:ring-2 focus-visible:outline-hidden rounded-md duration-200
+              hover:opacity-70
             `}
           >
             {post.title}

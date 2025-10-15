@@ -105,7 +105,7 @@ export default async function PostPage({ params }: Props) {
             ) : null}
           </div>
           <div className="sm:px-1">
-            <h1 className="relative mb-2 mt-4 w-full scroll-m-20 text-3xl tracking-tight sm:text-4xl sm:font-bold">
+            <h1 className="relative mt-4 mb-2 w-full scroll-m-20 text-3xl tracking-tight sm:text-4xl sm:font-bold">
               {post.title}
             </h1>
             {post.tags && post.tags.length > 0 ? (
@@ -116,7 +116,7 @@ export default async function PostPage({ params }: Props) {
               </div>
             ) : null}
           </div>
-          <div className="prose prose-quoteless pl-1 pt-7 dark:prose-invert">
+          <div className="prose prose-quoteless dark:prose-invert pt-7 pl-1">
             <MdRenderer.Server content={post.content} />
           </div>
         </div>

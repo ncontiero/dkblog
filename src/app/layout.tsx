@@ -1,5 +1,4 @@
 import "./globals.css";
-import "./mdx.css";
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 
@@ -74,8 +73,8 @@ export default function RootLayout({
               pauseOnFocusLoss={false}
               limit={3}
               stacked
-              className="z-[999999] bg-background font-merriweatherSans text-foreground"
-              toastClassName="bg-background text-foreground"
+              className="bg-background! font-merriweather-sans! text-foreground! z-999999"
+              toastClassName="bg-background! text-foreground!"
             />
             {children}
           </ThemeProvider>
