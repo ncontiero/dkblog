@@ -6,8 +6,8 @@
   counter-reset: line;
   box-decoration-break: clone;
 }
-code[data-theme*=" "],
-code[data-theme*=" "] span {
+code[data-theme],
+code[data-theme] span {
   @apply bg-[var(--shiki-light-bg)] text-[var(--shiki-light)] dark:bg-[var(--shiki-dark-bg)] dark:text-[var(--shiki-dark)];
 }
 [data-rehype-pretty-code-figure] [data-line] {
