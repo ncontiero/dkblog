@@ -136,7 +136,7 @@ importers:
         specifier: ^0.5.19
         version: 0.5.19(tailwindcss@4.1.15)
       '@types/node':
-        specifier: ^24.9.0
+        specifier: ^24.9.1
         version: 24.9.1
       '@types/react':
         specifier: ^19.2.2
