@@ -10,7 +10,7 @@ import { slugify } from "@/utils/slugify";
 import { createOrUpdatePostSchema, deletePostSchema } from "./schema";
 
 export const createOrUpdatePostAction = authActionClient
-  .schema(createOrUpdatePostSchema)
+  .inputSchema(createOrUpdatePostSchema)
   .action(async ({ parsedInput, ctx: { user } }) => {
     const { id, title, tags, image, updateImage, ...data } = parsedInput;
 
@@ -79,7 +79,7 @@ export const createOrUpdatePostAction = authActionClient
   });
 
 export const deletePostAction = authActionClient
-  .schema(deletePostSchema)
+  .inputSchema(deletePostSchema)
   .action(async ({ clientInput: { slug }, ctx: { user } }) => {
     const post = await prisma.post.findUnique({
       where: { slug, user: { externalId: user.id } },

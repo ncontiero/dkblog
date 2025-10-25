@@ -6,7 +6,7 @@ import { authActionClient } from "@/lib/safe-action";
 import { updateUserInfoSchema } from "./schema";
 
 export const updateUserInfoAction = authActionClient
-  .schema(updateUserInfoSchema)
+  .inputSchema(updateUserInfoSchema)
   .action(async ({ clientInput: { brandColor, bio }, ctx: { user } }) => {
     await prisma.user.update({
       where: { externalId: user.id },
