@@ -51,7 +51,7 @@ export async function POST(req: NextRequest) {
     ]);
   }
 
-  revalidateTag(`user:${username}`);
+  revalidateTag(`user:${username}`, "max");
 
   return new Response("", { status: 201 });
 }

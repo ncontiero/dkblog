@@ -11,9 +11,7 @@ import { Button } from "@/components/ui/Button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 import { getUser } from "@/utils/db-queries/users";
 
-type Props = {
-  readonly params: Promise<{ user: string }>;
-};
+type Props = PageProps<"/[user]">;
 
 const createCacheForGetUser = (username: string) => {
   return unstable_cache(

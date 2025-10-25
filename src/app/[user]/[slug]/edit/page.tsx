@@ -8,11 +8,9 @@ export const metadata: Metadata = {
   title: "Edit Post",
 };
 
-type Props = {
-  readonly params: Promise<{ user: string; slug: string }>;
-};
-
-export default async function EditPostPage({ params }: Props) {
+export default async function EditPostPage({
+  params,
+}: PageProps<"/[user]/[slug]/edit">) {
   const { user: username, slug: postSlug } = await params;
 
   const clerkUser = await currentUser();

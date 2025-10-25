@@ -1,6 +1,6 @@
 "use server";
 
-import { revalidateTag } from "next/cache";
+import { updateTag } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { authActionClient } from "@/lib/safe-action";
 import { updateUserInfoSchema } from "./schema";
@@ -16,6 +16,6 @@ export const updateUserInfoAction = authActionClient
       },
     });
 
-    revalidateTag(`user:${user.username}:settings`);
-    revalidateTag(`user:${user.username}`);
+    updateTag(`user:${user.username}:settings`);
+    updateTag(`user:${user.username}`);
   });

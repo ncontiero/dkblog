@@ -12,10 +12,7 @@ import { UserHoverCard } from "@/components/UserHoverCard";
 import { createCacheForGetPost } from "./cacheUtils";
 import { DeletePostBtn } from "./DeletePostBtn";
 
-type Params = { user: string; slug: string };
-type Props = {
-  readonly params: Promise<Params>;
-};
+type Props = PageProps<"/[user]/[slug]">;
 
 export async function generateMetadata(
   { params }: Props,

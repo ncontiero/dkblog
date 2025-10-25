@@ -1,7 +1,7 @@
 "use server";
 
 import { randomBytes } from "node:crypto";
-import { revalidateTag } from "next/cache";
+import { updateTag } from "next/cache";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { authActionClient } from "@/lib/safe-action";
@@ -64,16 +64,16 @@ export const createOrUpdatePostAction = authActionClient
     });
 
     if (post?.status === "PUBLISHED" || updatedPost.status === "PUBLISHED") {
-      revalidateTag("posts");
-      tags.forEach((tag) => revalidateTag(`tag:${tag}`));
+      updateTag("posts");
+      tags.forEach((tag) => updateTag(`tag:${tag}`));
       post?.tags.forEach((tag) => {
         if (!tags.includes(tag.slug)) {
-          revalidateTag(`tag:${tag.slug}`);
+          updateTag(`tag:${tag.slug}`);
         }
       });
     }
-    revalidateTag(`user:${user.username}`);
-    revalidateTag(`post:${user.username}:${slug}`);
+    updateTag(`user:${user.username}`);
+    updateTag(`post:${user.username}:${slug}`);
 
     redirect(`/${user.username}/${slug}`);
   });
@@ -94,11 +94,11 @@ export const deletePostAction = authActionClient
     post.image && (await deleteFile(post.image, "posts"));
 
     if (post.status === "PUBLISHED") {
-      revalidateTag("posts");
-      post.tags.forEach((tag) => revalidateTag(`tag:${tag.slug}`));
+      updateTag("posts");
+      post.tags.forEach((tag) => updateTag(`tag:${tag.slug}`));
     }
-    revalidateTag(`user:${user.username}`);
-    revalidateTag(`post:${user.username}:${post.slug}`);
+    updateTag(`user:${user.username}`);
+    updateTag(`post:${user.username}:${post.slug}`);
 
     redirect(`/${user.username}`);
   });

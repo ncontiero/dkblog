@@ -1,6 +1,5 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
 
 import { ToastContainer } from "react-toastify";
 import { ClerkProvider } from "@clerk/nextjs";
@@ -54,11 +53,7 @@ export const metadata: Metadata = {
     card: "summary",
   },
 };
-export default function RootLayout({
-  children,
-}: {
-  readonly children: ReactNode;
-}) {
+export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <ClerkProvider appearance={{ theme: clerkTheme }}>
       <html lang="en" suppressHydrationWarning>

@@ -6,12 +6,9 @@ import { notFound } from "next/navigation";
 import { PostCard } from "@/components/PostCard";
 import { getTag, getTags } from "@/utils/db-queries/tags";
 
-type Props = {
-  readonly params: Promise<{ slug: string }>;
-};
+type Props = PageProps<"/t/[slug]">;
 
 export const revalidate = 3600; // 1 hour
-export const dynamicParams = true;
 
 export async function generateStaticParams() {
   const tags = await getTags({
