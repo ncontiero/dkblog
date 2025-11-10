@@ -21,10 +21,10 @@ importers:
         specifier: ^5.2.2
         version: 5.2.2(react-hook-form@7.66.0(react@19.2.0))
       '@prisma/adapter-pg':
-        specifier: ^6.19.0
+        specifier: 6.19.0
         version: 6.19.0
       '@prisma/client':
-        specifier: ^6.19.0
+        specifier: 6.19.0
         version: 6.19.0(prisma@6.19.0(typescript@5.9.3))(typescript@5.9.3)
       '@radix-ui/react-dialog':
         specifier: ^1.1.15
@@ -130,7 +130,7 @@ importers:
         specifier: 6.4.1
         version: 6.4.1(@types/eslint@9.6.1)(@typescript-eslint/utils@8.46.3(eslint@9.39.1(jiti@2.6.1))(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint@9.39.1(jiti@2.6.1))(jiti@2.6.1)(tailwindcss@4.1.17)(typescript@5.9.3)
       '@tailwindcss/postcss':
-        specifier: ^4.1.17
+        specifier: 4.1.17
         version: 4.1.17
       '@tailwindcss/typography':
         specifier: ^0.5.19
@@ -157,10 +157,10 @@ importers:
         specifier: ^8.5.6
         version: 8.5.6
       prisma:
-        specifier: ^6.19.0
+        specifier: 6.19.0
         version: 6.19.0(typescript@5.9.3)
       tailwindcss:
-        specifier: ^4.1.17
+        specifier: 4.1.17
         version: 4.1.17
       tsx:
         specifier: ^4.20.6
