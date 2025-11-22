@@ -14,7 +14,7 @@
     "lint:fix": "pnpm lint --fix",
     "typecheck": "tsc --noEmit",
     "check": "pnpm lint && pnpm typecheck",
-    "prisma:seed": "tsx prisma/seed.ts",
+    "prisma:seed": "prisma db seed",
     "postinstall": "prisma generate && next typegen",
     "prepare": "husky",
     "pre-commit": "lint-staged"
@@ -67,6 +67,7 @@
     "@types/node": "^24.10.1",
     "@types/react": "19.2.6",
     "@types/react-dom": "19.2.3",
+    "dotenv": "^17.2.3",
     "eslint": "^9.39.1",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.6",

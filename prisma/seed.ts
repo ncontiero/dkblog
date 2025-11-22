@@ -1,8 +1,12 @@
 /* eslint-disable no-console */
+import "dotenv/config";
+import { PrismaPg } from "@prisma/adapter-pg";
+import { env } from "@/env";
 import { type PostStatus, type Tag, PrismaClient } from "@/lib/prisma";
 import { slugify } from "@/utils/slugify";
 
-const prisma = new PrismaClient();
+const adapter = new PrismaPg({ connectionString: env.DATABASE_URL });
+const prisma = new PrismaClient({ adapter });
 
 type createUserProps = {
   externalId: string;
