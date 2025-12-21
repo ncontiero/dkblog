@@ -6,9 +6,9 @@ import { cn } from "@/lib/utils";
 
 const linkVariants = cva(
   `
-    ring-offset-background inline-flex items-center justify-center font-medium underline-offset-4 duration-200
-    focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden
-    hover:underline active:opacity-70
+    ring-offset-background focus-visible:ring-ring inline-flex items-center justify-center font-medium
+    underline-offset-4 duration-200 hover:underline focus-visible:ring-2 focus-visible:ring-offset-2
+    focus-visible:outline-hidden active:opacity-70
   `,
   {
     variants: {
@@ -38,7 +38,8 @@ const linkVariants = cva(
 );
 
 export interface LinkProps
-  extends AnchorHTMLAttributes<HTMLAnchorElement>,
+  extends
+    AnchorHTMLAttributes<HTMLAnchorElement>,
     VariantProps<typeof linkVariants> {
   readonly asChild?: boolean;
   readonly href: string;

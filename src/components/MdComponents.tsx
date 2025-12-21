@@ -38,9 +38,9 @@ function HeadingLinked({
   const Comp = as;
   const childrenHasAnchor = children && typeof children === "object";
   const className = `
-    group ring-offset-background flex w-fit items-center rounded-md no-underline underline-offset-4 duration-200
-    focus-visible:ring-ring focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden
-    hover:underline active:opacity-70
+    group ring-offset-background focus-visible:ring-ring flex w-fit items-center rounded-md no-underline
+    underline-offset-4 duration-200 hover:underline focus-visible:ring-2 focus-visible:ring-offset-2
+    focus-visible:outline-hidden active:opacity-70
   `;
 
   return id && !childrenHasAnchor ? (
@@ -143,7 +143,7 @@ export const MdComponents: Components = {
   blockquote: ({ className, ...props }) => (
     <blockquote
       className={cn(
-        `text-foreground/70 mt-6 border-l-2 border-zinc-400 pl-3 font-normal *:text-foreground/70 dark:border-zinc-600`,
+        `text-foreground/70 *:text-foreground/70 mt-6 border-l-2 border-zinc-400 pl-3 font-normal dark:border-zinc-600`,
         className,
       )}
       {...props}

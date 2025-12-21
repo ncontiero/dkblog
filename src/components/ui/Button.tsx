@@ -17,9 +17,9 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive text-primary-foreground hover:bg-destructive/80 focus-visible:ring-destructive",
         outline:
-          "border-input bg-background border hover:bg-accent hover:text-accent-foreground focus-visible:ring-ring",
+          "border-input bg-background hover:bg-accent hover:text-accent-foreground focus-visible:ring-ring border",
         outlinePrimary:
-          "border-primary bg-background border hover:bg-primary hover:text-primary-foreground focus-visible:ring-ring",
+          "border-primary bg-background hover:bg-primary hover:text-primary-foreground focus-visible:ring-ring border",
         secondary: `
           bg-secondary text-secondary-foreground hover:bg-secondary/60 focus-visible:ring-ring
           dark:hover:bg-secondary/80
@@ -42,7 +42,8 @@ const buttonVariants = cva(
 );
 
 export interface ButtonProps
-  extends ButtonHTMLAttributes<HTMLButtonElement>,
+  extends
+    ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   readonly asChild?: boolean;
 }

@@ -23,8 +23,8 @@ export function PostCard({
           <Link
             href={`/${post.user.username}/${post.slug}`}
             className={`
-              focus-visible:ring-ring focus-visible:ring-2 focus-visible:outline-hidden rounded-md duration-200
-              hover:opacity-70
+              focus-visible:ring-ring rounded-md duration-200 hover:opacity-70 focus-visible:ring-2
+              focus-visible:outline-hidden
             `}
           >
             {post.title}

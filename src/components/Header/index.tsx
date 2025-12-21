@@ -15,8 +15,8 @@ export async function Header() {
         <Link
           href="/"
           className={`
-            focus:ring-ring focus:ring-3 focus:outline-hidden rounded-md p-2 text-2xl font-bold duration-200
-            hover:opacity-70
+            focus:ring-ring rounded-md p-2 text-2xl font-bold duration-200 hover:opacity-70 focus:ring-3
+            focus:outline-hidden
           `}
         >
           DkBlog
@@ -35,9 +35,9 @@ export async function Header() {
             <Link
               href="/sign-in"
               className={`
-                ring-ring flex h-full items-center justify-center rounded-md p-2 uppercase duration-200
-                hover:text-primary focus:text-primary focus:ring-2 focus:outline-hidden active:opacity-70 sm:w-auto
-                sm:px-4 sm:py-2 sm:font-bold
+                ring-ring hover:text-primary focus:text-primary flex h-full items-center justify-center rounded-md p-2
+                uppercase duration-200 focus:ring-2 focus:outline-hidden active:opacity-70 sm:w-auto sm:px-4 sm:py-2
+                sm:font-bold
               `}
             >
               Login

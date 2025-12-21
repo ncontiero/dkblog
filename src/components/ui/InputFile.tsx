@@ -23,9 +23,9 @@ const inputFileVariants = cva(
         destructive:
           "bg-destructive text-primary-foreground focus-within:ring-destructive hover:bg-destructive/80",
         outline:
-          "border-input bg-background border focus-within:ring-ring hover:bg-accent hover:text-accent-foreground",
+          "border-input bg-background focus-within:ring-ring hover:bg-accent hover:text-accent-foreground border",
         outlinePrimary:
-          "border-primary bg-background border focus-within:ring-ring hover:bg-primary hover:text-primary-foreground",
+          "border-primary bg-background focus-within:ring-ring hover:bg-primary hover:text-primary-foreground border",
         secondary: `
           bg-secondary text-secondary-foreground focus-within:ring-ring hover:bg-secondary/60 dark:hover:bg-secondary/80
         `,

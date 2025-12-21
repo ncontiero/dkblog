@@ -24,9 +24,9 @@ export function MdRendererClient({ content }: { readonly content: string }) {
 
   return loading ? (
     <div className="mt-8 flex flex-col gap-4">
-      <Skeleton className="bg-background h-8 w-full dark:bg-background/30" />
-      <Skeleton className="bg-background h-8 w-2/3 dark:bg-background/30" />
-      <Skeleton className="bg-background h-8 w-3/4 dark:bg-background/30" />
+      <Skeleton className="bg-background dark:bg-background/30 h-8 w-full" />
+      <Skeleton className="bg-background dark:bg-background/30 h-8 w-2/3" />
+      <Skeleton className="bg-background dark:bg-background/30 h-8 w-3/4" />
     </div>
   ) : (
     <div className="prose prose-quoteless dark:prose-invert w-full pt-7 pl-1">

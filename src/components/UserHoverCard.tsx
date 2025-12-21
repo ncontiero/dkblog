@@ -29,7 +29,7 @@ export function UserHoverCard({
             postPage ? "gap-3" : "gap-2"
           } rounded-md sm:px-3 ${
             postPage ? "py-2" : "sm:py-1"
-          } focus-visible:ring-ring focus-visible:ring-2 focus-visible:outline-hidden sm:hover:bg-background duration-200`}
+          } focus-visible:ring-ring sm:hover:bg-background duration-200 focus-visible:ring-2 focus-visible:outline-hidden`}
         >
           <Image
             src={user.image}
