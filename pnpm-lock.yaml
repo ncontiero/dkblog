@@ -9,10 +9,10 @@ importers:
   .:
     dependencies:
       '@clerk/nextjs':
-        specifier: ^6.36.9
+        specifier: ^6.36.10
         version: 6.36.10(next@16.1.4(@babel/core@7.28.5)(react-dom@19.2.3(react@19.2.3))(react@19.2.3))(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@clerk/themes':
-        specifier: ^2.4.49
+        specifier: ^2.4.50
         version: 2.4.50(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       '@google-cloud/storage':
         specifier: ^7.18.0
