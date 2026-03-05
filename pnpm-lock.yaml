@@ -90,8 +90,8 @@ importers:
         specifier: ^11.0.5
         version: 11.0.5(react-dom@19.2.4(react@19.2.4))(react@19.2.4)
       rehype-pretty-code:
-        specifier: ^0.14.1
-        version: 0.14.1(shiki@4.0.0)
+        specifier: ^0.14.3
+        version: 0.14.3(shiki@4.0.0)
       rehype-react:
         specifier: ^8.0.0
         version: 8.0.0
@@ -267,6 +267,7 @@ packages:
   '@clerk/clerk-react@5.61.3':
     resolution: {integrity: sha512-W21aNEeHtqh3xJLuW5g2ydben/1D5pSnxsl/kCnv0IY1zma7lO+aIJ7Br2bR4FKKkiu695mPnjtY+fvkQmCXBg==}
     engines: {node: '>=18.17.0'}
+    deprecated: 'This package is no longer supported. Please use @clerk/react instead. See the upgrade guide for more info: https://clerk.com/docs/guides/development/upgrading/upgrade-guides/core-3'
     peerDependencies:
       react: ^18.0.0 || ~19.0.3 || ~19.1.4 || ~19.2.3 || ~19.3.0-0
       react-dom: ^18.0.0 || ~19.0.3 || ~19.1.4 || ~19.2.3 || ~19.3.0-0
@@ -298,6 +299,7 @@ packages:
   '@clerk/types@4.101.20':
     resolution: {integrity: sha512-MHvr1tGL5lwxD6zdzzixkHICbbZz/S1LChONKR52Qeu0yRGChZomPknsgqBMG9J3yNeyhaj0SWa5phQgQUk0lg==}
     engines: {node: '>=18.17.0'}
+    deprecated: 'This package is no longer supported. Please import types from @clerk/shared/types instead. See the upgrade guide for more info: https://clerk.com/docs/guides/development/upgrading/upgrade-guides/core-3'
 
   '@electric-sql/pglite-socket@0.0.20':
     resolution: {integrity: sha512-J5nLGsicnD9wJHnno9r+DGxfcZWh+YJMCe0q/aCgtG6XOm9Z7fKeite8IZSNXgZeGltSigM9U/vAWZQWdgcSFg==}
@@ -3822,11 +3824,11 @@ packages:
   rehype-parse@9.0.1:
     resolution: {integrity: sha512-ksCzCD0Fgfh7trPDxr2rSylbwq9iYDkSn8TCDmEJ49ljEUBxDVCzCHv7QNzZOfODanX4+bWQ4WZqLCRWYLfhag==}
 
-  rehype-pretty-code@0.14.1:
-    resolution: {integrity: sha512-IpG4OL0iYlbx78muVldsK86hdfNoht0z63AP7sekQNW2QOTmjxB7RbTO+rhIYNGRljgHxgVZoPwUl6bIC9SbjA==}
+  rehype-pretty-code@0.14.3:
+    resolution: {integrity: sha512-Cz692FeYusTjT5cfFWLc4r7JhgC3/JlJptgUh4iffBxWxUnWW1oqbWFi7jGCeq00DYUm8yzoTnvpocaYa5x82g==}
     engines: {node: '>=18'}
     peerDependencies:
-      shiki: ^1.0.0 || ^2.0.0 || ^3.0.0
+      shiki: ^1.0.0 || ^2.0.0 || ^3.0.0 || ^4.0.0
 
   rehype-react@8.0.0:
     resolution: {integrity: sha512-vzo0YxYbB2HE+36+9HWXVdxNoNDubx63r5LBzpxBGVWM8s9mdnMdbmuJBAX6TTyuGdZjZix6qU3GcSuKCIWivw==}
@@ -8498,7 +8500,7 @@ snapshots:
       hast-util-from-html: 2.0.3
       unified: 11.0.5
 
-  rehype-pretty-code@0.14.1(shiki@4.0.0):
+  rehype-pretty-code@0.14.3(shiki@4.0.0):
     dependencies:
       '@types/hast': 3.0.4
       hast-util-to-string: 3.0.1
