@@ -1,5 +1,8 @@
-import type { DeleteOptions } from "node_modules/@google-cloud/storage/build/esm/src/nodejs-common/service-object";
-import { type UploadOptions, Storage } from "@google-cloud/storage";
+import {
+  type DeleteFileOptions,
+  type UploadOptions,
+  Storage,
+} from "@google-cloud/storage";
 import { env } from "@/env";
 
 const storage = new Storage({
@@ -21,6 +24,6 @@ export async function uploadFile(name: string, options: UploadOptions = {}) {
   return await bucket.upload(name, options);
 }
 
-export async function deleteFile(fileName: string, opts?: DeleteOptions) {
+export async function deleteFile(fileName: string, opts?: DeleteFileOptions) {
   return await createFile(fileName).delete(opts);
 }

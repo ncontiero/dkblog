@@ -1,4 +1,4 @@
-import { SignedIn, SignedOut } from "@clerk/nextjs";
+import { Show } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
 import { Pencil } from "lucide-react";
 import Link from "next/link";
@@ -22,7 +22,7 @@ export async function Header() {
           DkBlog
         </Link>
         <div className="flex items-center gap-3">
-          <SignedIn>
+          <Show when="signed-in">
             <Button asChild variant="outlinePrimary" size="sm">
               <Link href="/new" aria-label="Go to create post page">
                 <span className="hidden sm:flex">Create Post</span>
@@ -30,8 +30,8 @@ export async function Header() {
               </Link>
             </Button>
             <UserButton username={user?.username} />
-          </SignedIn>
-          <SignedOut>
+          </Show>
+          <Show when="signed-out">
             <Link
               href="/sign-in"
               className={`
@@ -42,7 +42,7 @@ export async function Header() {
             >
               Login
             </Link>
-          </SignedOut>
+          </Show>
           <ThemeToggle />
         </div>
       </div>
