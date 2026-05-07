@@ -3,9 +3,9 @@
 import { UserButton as ClerkUserButton } from "@clerk/nextjs";
 import { UserIcon } from "lucide-react";
 
-type UserButtonProps = {
+interface UserButtonProps {
   readonly username?: string | null;
-};
+}
 
 export function UserButton({ username }: UserButtonProps) {
   return (

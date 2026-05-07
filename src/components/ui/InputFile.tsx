@@ -1,4 +1,4 @@
-import { type InputHTMLAttributes, type ReactNode, forwardRef } from "react";
+import type { ComponentProps, ReactNode } from "react";
 import { type VariantProps, cva } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 import { Button } from "./Button";
@@ -46,52 +46,40 @@ const inputFileVariants = cva(
   },
 );
 
-export interface InputFileProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface InputFileProps extends ComponentProps<"input"> {
   readonly variant?: VariantProps<typeof inputFileVariants>["variant"];
   readonly btnSize?: VariantProps<typeof inputFileVariants>["size"];
   readonly labelText?: string;
   readonly tooltipContent?: ReactNode;
 }
 
-export const InputFile = forwardRef<HTMLInputElement, InputFileProps>(
-  (
-    {
-      className,
-      variant,
-      btnSize,
-      labelText = "Add a cover image",
-      id,
-      tooltipContent,
-      ...props
-    },
-    ref,
-  ) => {
-    return (
-      <TooltipProvider>
-        <Tooltip delayDuration={100}>
-          <TooltipTrigger asChild>
-            <Button
-              variant={variant}
-              size={btnSize}
-              className={cn(inputFileVariants({ variant, className }))}
-              asChild
-            >
-              <label htmlFor={id}>
-                <input
-                  type="file"
-                  className="w-[0px]"
-                  id={id}
-                  ref={ref}
-                  {...props}
-                />
-                {labelText}
-              </label>
-            </Button>
-          </TooltipTrigger>
-          <TooltipContent>{tooltipContent}</TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    );
-  },
-);
-InputFile.displayName = "InputFile";
+export function InputFile({
+  className,
+  variant,
+  btnSize,
+  labelText = "Add a cover image",
+  id,
+  tooltipContent,
+  ...props
+}: InputFileProps) {
+  return (
+    <TooltipProvider>
+      <Tooltip delayDuration={100}>
+        <TooltipTrigger asChild>
+          <Button
+            variant={variant}
+            size={btnSize}
+            className={cn(inputFileVariants({ variant, className }))}
+            asChild
+          >
+            <label htmlFor={id}>
+              <input type="file" className="w-0" id={id} {...props} />
+              {labelText}
+            </label>
+          </Button>
+        </TooltipTrigger>
+        <TooltipContent>{tooltipContent}</TooltipContent>
+      </Tooltip>
+    </TooltipProvider>
+  );
+}

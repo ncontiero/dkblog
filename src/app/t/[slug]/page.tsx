@@ -87,8 +87,7 @@ export default async function TagPage({ params }: Props) {
         <div
           className="w-full bg-[hsl(var(--tag-color)/0.8)] py-2 sm:rounded-t-md"
           style={{
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
+            // @ts-expect-error - This is a custom CSS variable, so TypeScript doesn't recognize it.
             "--tag-color": `${tag.color}`,
           }}
         />

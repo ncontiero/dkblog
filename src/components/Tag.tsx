@@ -21,8 +21,7 @@ export function Tag({ tag, className, ...props }: TagProps) {
         className,
       )}
       style={{
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
+        // @ts-expect-error - This is a custom CSS variable, so TypeScript doesn't recognize it.
         "--tag-color": `${tag.color}`,
       }}
       {...props}

@@ -8,7 +8,7 @@ import { slugify } from "@/utils/slugify";
 const adapter = new PrismaPg({ connectionString: env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
 
-type createUserProps = {
+interface createUserProps {
   externalId: string;
   firstName: string;
   lastName: string;
@@ -17,21 +17,21 @@ type createUserProps = {
   image?: string;
   bio?: string;
   brandColor?: string;
-};
-type createPostProps = {
+}
+interface createPostProps {
   title: string;
   description?: string | null;
   content: string;
   userId: string;
   status?: PostStatus;
   tags?: Tag[];
-};
-type createTagProps = {
+}
+interface createTagProps {
   title: string;
   description?: string;
   image?: string;
   color?: string;
-};
+}
 
 async function createUser(data: createUserProps) {
   return await prisma.user.create({

@@ -7,8 +7,7 @@ import { Skeleton } from "../ui/Skeleton";
 
 export function MdRendererClient({ content }: { readonly content: string }) {
   const [loading, setLoading] = useState(true);
-  // eslint-disable-next-line react/hook-use-state
-  const [Content, setContent] = useState(createElement(Fragment));
+  const [Content, setContent] = useState(() => createElement(Fragment));
 
   useEffect(() => {
     const processContent = async () => {

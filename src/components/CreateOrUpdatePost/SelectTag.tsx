@@ -39,8 +39,7 @@ export function SelectTag({ tags, initialValue }: SelectTagProps) {
         {selected ? (
           <div
             style={{
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-              // @ts-ignore
+              // @ts-expect-error - This is a custom CSS variable, so TypeScript doesn't recognize it.
               "--tag-color": `${selected.color}`,
             }}
             className="flex items-center justify-between gap-2 rounded-md bg-[hsl(var(--tag-color)/0.1)] p-2"
@@ -108,8 +107,7 @@ export function SelectTag({ tags, initialValue }: SelectTagProps) {
                       <span>
                         <span
                           style={{
-                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                            // @ts-ignore
+                            // @ts-expect-error - This is a custom CSS variable, so TypeScript doesn't recognize it.
                             "--tag-color": `${tag.color}`,
                           }}
                           className="text-[hsl(var(--tag-color))]"

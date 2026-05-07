@@ -1,3 +1,4 @@
+/* eslint-disable e18e/prefer-static-regex */
 export function slugify(text: string) {
   return text
     .toString()

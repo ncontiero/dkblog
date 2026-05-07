@@ -1,7 +1,7 @@
 "use client";
 
 import type { Post, Tag as TagProps } from "@/lib/prisma";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { FormProvider, useForm, useWatch } from "react-hook-form";
 import { toast } from "react-toastify";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -59,18 +59,6 @@ export function CreateOrUpdatePostForm({
     control: form.control,
   });
 
-  useEffect(() => {
-    if (!contentRef.current || contentRef.current.scrollHeight <= 250) return;
-
-    contentRef.current.style.minHeight = `${contentRef.current.scrollHeight}px`;
-    setContentHeight(contentRef.current.scrollHeight);
-
-    if (watchedValues.content === "") {
-      contentRef.current.style.minHeight = "250px";
-      setContentHeight(250);
-    }
-  }, [watchedValues.content]);
-
   function onSubmit(data: CreateOrUpdatePostSchema) {
     createOrUpdatePost.execute({
       ...data,
@@ -87,7 +75,7 @@ export function CreateOrUpdatePostForm({
             <div className="p-4 sm:px-16">
               <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:gap-0">
                 {imgPreview ? (
-                  <div className="relative mr-3 h-[105px] w-[250px]">
+                  <div className="relative mr-3 h-26.25 w-62.5">
                     <Image
                       src={imgPreview}
                       alt="Post image preview"
@@ -171,7 +159,13 @@ export function CreateOrUpdatePostForm({
                 }}
                 ref={contentRef}
                 value={watchedValues.content || ""}
-                onChange={(e) => form.setValue("content", e.target.value)}
+                onChange={(e) => {
+                  const content = e.target.value;
+                  form.setValue("content", content);
+                  setContentHeight(
+                    content === "" ? 250 : e.target.scrollHeight,
+                  );
+                }}
               />
             </div>
           </TabsContent>
