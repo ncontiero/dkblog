@@ -43,7 +43,7 @@ function ScrollBar({
     >
       <ScrollAreaPrimitive.ScrollAreaThumb
         className={cn(
-          "bg-primary/20 relative rounded-full",
+          "relative rounded-full bg-primary/20",
           orientation === "vertical" && "flex-1",
         )}
       />

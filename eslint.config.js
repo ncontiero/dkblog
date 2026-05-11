@@ -9,4 +9,10 @@ export default ncontiero({
       ],
     },
   },
+  jsx: {
+    a11y: true,
+  },
+  typescript: {
+    tsconfigPath: "./tsconfig.json",
+  },
 });

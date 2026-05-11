@@ -25,8 +25,8 @@ function DropdownMenuSubTrigger({
     <DropdownMenuPrimitive.SubTrigger
       className={cn(
         `
-          focus:bg-accent data-[state=open]:bg-accent flex cursor-default items-center rounded-sm px-2 py-1.5 text-sm
-          outline-hidden select-none
+          flex cursor-default items-center rounded-sm px-2 py-1.5 text-sm outline-hidden select-none focus:bg-accent
+          data-[state=open]:bg-accent
         `,
         inset && "pl-8",
         className,
@@ -47,11 +47,11 @@ function DropdownMenuSubContent({
     <DropdownMenuPrimitive.SubContent
       className={cn(
         `
-          bg-popover text-popover-foreground data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95
-          data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2
-          data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2
-          data-[side=top]:slide-in-from-bottom-2 data-[state=open]:animate-in data-[state=closed]:animate-out z-50
-          min-w-32 overflow-hidden rounded-md border p-1 shadow-lg
+          z-50 min-w-32 overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-lg
+          data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2
+          data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-[state=closed]:animate-out
+          data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[state=open]:animate-in
+          data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95
         `,
         className,
       )}
@@ -71,11 +71,11 @@ function DropdownMenuContent({
         sideOffset={sideOffset}
         className={cn(
           `
-            bg-popover text-popover-foreground data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95
-            data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2
-            data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2
-            data-[side=top]:slide-in-from-bottom-2 data-[state=open]:animate-in data-[state=closed]:animate-out z-50
-            min-w-32 overflow-hidden rounded-md border p-1 shadow-md
+            z-50 min-w-32 overflow-hidden rounded-md border bg-popover p-1 text-popover-foreground shadow-md
+            data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2
+            data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2
+            data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95
+            data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-95
           `,
           className,
         )}
@@ -94,8 +94,8 @@ function DropdownMenuItem({
     <DropdownMenuPrimitive.Item
       className={cn(
         `
-          focus:bg-accent focus:text-accent-foreground relative flex cursor-default items-center rounded-sm px-2 py-1.5
-          text-sm outline-hidden transition-colors select-none data-disabled:pointer-events-none
+          relative flex cursor-default items-center rounded-sm px-2 py-1.5 text-sm outline-hidden transition-colors
+          select-none focus:bg-accent focus:text-accent-foreground data-disabled:pointer-events-none
           data-disabled:opacity-50
         `,
         inset && "pl-8",
@@ -116,8 +116,8 @@ function DropdownMenuCheckboxItem({
     <DropdownMenuPrimitive.CheckboxItem
       className={cn(
         `
-          focus:bg-accent focus:text-accent-foreground relative flex cursor-default items-center rounded-sm py-1.5 pr-2
-          pl-8 text-sm outline-hidden transition-colors select-none data-disabled:pointer-events-none
+          relative flex cursor-default items-center rounded-sm py-1.5 pr-2 pl-8 text-sm outline-hidden transition-colors
+          select-none focus:bg-accent focus:text-accent-foreground data-disabled:pointer-events-none
           data-disabled:opacity-50
         `,
         className,
@@ -144,8 +144,8 @@ function DropdownMenuRadioItem({
     <DropdownMenuPrimitive.RadioItem
       className={cn(
         `
-          focus:bg-accent focus:text-accent-foreground relative flex cursor-default items-center rounded-sm py-1.5 pr-2
-          pl-8 text-sm outline-hidden transition-colors select-none data-disabled:pointer-events-none
+          relative flex cursor-default items-center rounded-sm py-1.5 pr-2 pl-8 text-sm outline-hidden transition-colors
+          select-none focus:bg-accent focus:text-accent-foreground data-disabled:pointer-events-none
           data-disabled:opacity-50
         `,
         className,
@@ -186,7 +186,7 @@ function DropdownMenuSeparator({
 }: ComponentProps<typeof DropdownMenuPrimitive.Separator>) {
   return (
     <DropdownMenuPrimitive.Separator
-      className={cn("bg-muted -mx-1 my-1 h-px", className)}
+      className={cn("-mx-1 my-1 h-px bg-muted", className)}
       {...props}
     />
   );

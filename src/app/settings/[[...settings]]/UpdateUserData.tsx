@@ -1,6 +1,7 @@
 "use client";
 
 import type { User } from "@/lib/prisma";
+import type { ChangeEvent } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { toast } from "react-toastify";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -32,7 +33,7 @@ export function UpdateUserData({ user }: UpdateUserDataProps) {
   const form = useForm({
     resolver: zodResolver(updateUserInfoSchema),
     defaultValues: {
-      bio: user.bio || undefined,
+      bio: user.bio ?? undefined,
       brandColor: user.brandColor,
     },
   });
@@ -44,21 +45,22 @@ export function UpdateUserData({ user }: UpdateUserDataProps) {
   const watchedValues = useWatch({
     control: form.control,
     defaultValue: {
-      bio: user.bio || "",
+      bio: user.bio ?? "",
       brandColor: user.brandColor,
     },
   });
 
   const dataChanged =
-    watchedValues.bio !== (user.bio || "") ||
+    watchedValues.bio !== (user.bio ?? "") ||
     watchedValues.brandColor !== user.brandColor;
 
   return (
     <form
       className="relative flex w-full flex-col gap-6"
+      // eslint-disable-next-line ts/no-misused-promises
       onSubmit={form.handleSubmit(onSubmit)}
     >
-      <div className="border-primary/50 flex w-full flex-col gap-4 rounded-2xl border px-8 py-9">
+      <div className="flex w-full flex-col gap-4 rounded-2xl border border-primary/50 px-8 py-9">
         <h2 className="text-3xl font-bold">Basic</h2>
         <div className="flex flex-col gap-1">
           <label htmlFor="user-bio">Bio</label>
@@ -71,7 +73,7 @@ export function UpdateUserData({ user }: UpdateUserDataProps) {
           </div>
         </div>
       </div>
-      <div className="border-primary/50 flex w-full flex-col gap-4 rounded-2xl border px-8 py-9">
+      <div className="flex w-full flex-col gap-4 rounded-2xl border border-primary/50 px-8 py-9">
         <h2 className="text-3xl font-bold">Branding</h2>
         <div className="flex flex-col gap-1">
           <label htmlFor="brand-color">Brand color</label>
@@ -80,9 +82,9 @@ export function UpdateUserData({ user }: UpdateUserDataProps) {
             <input
               type="color"
               className="absolute ml-2 w-4 rounded-md border p-4"
-              style={{ backgroundColor: watchedValues.brandColor || "" }}
+              style={{ backgroundColor: watchedValues.brandColor ?? "" }}
               {...form.register("brandColor", {
-                onChange: (e) => {
+                onChange: (e: ChangeEvent<HTMLInputElement>) => {
                   form.setValue("brandColor", e.target.value);
                 },
               })}
@@ -99,9 +101,9 @@ export function UpdateUserData({ user }: UpdateUserDataProps) {
       <div
         className={`flex ${
           dataChanged
-            ? "animate-in sticky bottom-0 rounded-md p-4"
+            ? "sticky bottom-0 animate-in rounded-md p-4"
             : "rounded-2xl px-8 py-9"
-        } border-primary/50 w-full flex-col gap-4 border duration-200`}
+        } w-full flex-col gap-4 border border-primary/50 duration-200`}
       >
         <Button
           type="submit"

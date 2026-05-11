@@ -14,10 +14,10 @@ export async function POST(req: NextRequest) {
       case "user.created":
       case "user.updated": {
         username =
-          evt.data.username || `user_${randomBytes(15).toString("hex")}`;
+          evt.data.username ?? `user_${randomBytes(15).toString("hex")}`;
         const emails = evt.data.email_addresses;
 
-        if (emails.length === 0 || !emails[0]?.email_address) {
+        if (emails.length === 0 || emails[0]?.email_address == null) {
           throw new Error("No email address provided");
         }
 

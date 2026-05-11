@@ -77,7 +77,7 @@ export default async function UserPage({ params }: Props) {
         style={{ backgroundColor: user.brandColor }}
       />
       <div
-        className="bg-secondary mt-28 flex flex-col items-center justify-center border-2 sm:mx-2 sm:rounded-md"
+        className="mt-28 flex flex-col items-center justify-center border-2 bg-secondary sm:mx-2 sm:rounded-md"
         style={{ borderColor: user.brandColor }}
       >
         <div className="relative mb-3 flex w-full items-center px-6 sm:justify-center sm:px-0">
@@ -104,12 +104,12 @@ export default async function UserPage({ params }: Props) {
         </div>
         <div className="flex w-full flex-col p-6 sm:items-center sm:justify-center sm:text-center">
           <h1 className="mb-4 text-3xl font-bold">{user.username}</h1>
-          {user.bio ? (
+          {user.bio != null ? (
             <p className="mb-8 max-w-[75%] sm:mx-auto">{user.bio}</p>
           ) : null}
           <div className="flex">
             <CalendarDays className="mr-2 size-4 opacity-70" />{" "}
-            <span className="text-muted-foreground text-xs">
+            <span className="text-xs text-muted-foreground">
               Joined on{" "}
               <time dateTime={new Date(user.createdAt).toISOString()}>
                 {joinedOn}
@@ -119,7 +119,7 @@ export default async function UserPage({ params }: Props) {
         </div>
       </div>
       <div className="mt-4 flex grid-cols-3 flex-col gap-4 sm:mx-2 sm:grid">
-        <div className="bg-secondary flex h-fit flex-col gap-4 p-4 sm:rounded-md">
+        <div className="flex h-fit flex-col gap-4 bg-secondary p-4 sm:rounded-md">
           <div className="flex items-center gap-3 font-normal">
             <ScrollText size={24} /> {publishedPosts.length} posts published
           </div>

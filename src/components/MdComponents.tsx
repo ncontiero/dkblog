@@ -1,6 +1,10 @@
 /* eslint-disable react-refresh/only-export-components */
 import type { Components } from "rehype-react";
-import type { AnchorHTMLAttributes, HTMLAttributes } from "react";
+import type {
+  AnchorHTMLAttributes,
+  ComponentProps,
+  HTMLAttributes,
+} from "react";
 
 import { Link as LinkIcon } from "lucide-react";
 import NextLink from "next/link";
@@ -36,14 +40,14 @@ function HeadingLinked({
   ...props
 }: HeadingLinkedProps) {
   const Comp = as;
-  const childrenHasAnchor = children && typeof children === "object";
+  const childrenHasAnchor = typeof children === "object";
   const className = `
-    group ring-offset-background focus-visible:ring-ring flex w-fit items-center rounded-md no-underline
-    underline-offset-4 duration-200 hover:underline focus-visible:ring-2 focus-visible:ring-offset-2
+    group flex w-fit items-center rounded-md no-underline underline-offset-4 ring-offset-background duration-200
+    hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
     focus-visible:outline-hidden active:opacity-70
   `;
 
-  return id && !childrenHasAnchor ? (
+  return id != null && !childrenHasAnchor ? (
     <Comp id={id} {...props}>
       <NextLink
         href={`#${id}`}
@@ -65,7 +69,7 @@ function HeadingLinked({
 }
 
 export const MdComponents: Components = {
-  h1: ({ className, ...props }) => (
+  h1: ({ className, ...props }: ComponentProps<"h1">) => (
     <HeadingLinked
       className={cn(
         "relative mt-2 w-full scroll-m-20 text-4xl font-bold tracking-tight",
@@ -74,7 +78,7 @@ export const MdComponents: Components = {
       {...props}
     />
   ),
-  h2: ({ className, ...props }) => (
+  h2: ({ className, ...props }: ComponentProps<"h1">) => (
     <HeadingLinked
       as="h2"
       className={cn(
@@ -84,7 +88,7 @@ export const MdComponents: Components = {
       {...props}
     />
   ),
-  h3: ({ className, ...props }) => (
+  h3: ({ className, ...props }: ComponentProps<"h1">) => (
     <HeadingLinked
       as="h3"
       className={cn(
@@ -94,7 +98,7 @@ export const MdComponents: Components = {
       {...props}
     />
   ),
-  h4: ({ className, ...props }) => (
+  h4: ({ className, ...props }: ComponentProps<"h1">) => (
     <HeadingLinked
       as="h4"
       className={cn(
@@ -104,7 +108,7 @@ export const MdComponents: Components = {
       {...props}
     />
   ),
-  h5: ({ className, ...props }) => (
+  h5: ({ className, ...props }: ComponentProps<"h1">) => (
     <HeadingLinked
       as="h5"
       className={cn(
@@ -114,7 +118,7 @@ export const MdComponents: Components = {
       {...props}
     />
   ),
-  h6: ({ className, ...props }) => (
+  h6: ({ className, ...props }: ComponentProps<"h1">) => (
     <HeadingLinked
       as="h6"
       className={cn(
@@ -125,35 +129,35 @@ export const MdComponents: Components = {
     />
   ),
   a: (props) => <AnchorLink {...props} />,
-  p: ({ className, ...props }) => (
+  p: ({ className, ...props }: ComponentProps<"p">) => (
     <p className={cn("leading-7 not-first:mt-6", className)} {...props} />
   ),
-  ul: ({ className, ...props }) => (
+  ul: ({ className, ...props }: ComponentProps<"ul">) => (
     <ul className={cn("my-6 list-disc pl-8", className)} {...props} />
   ),
-  ol: ({ className, ...props }) => (
+  ol: ({ className, ...props }: ComponentProps<"ol">) => (
     <ol className={cn("my-6 list-decimal pl-8", className)} {...props} />
   ),
-  li: ({ className, ...props }) => (
+  li: ({ className, ...props }: ComponentProps<"li">) => (
     <li
-      className={cn("marker:text-muted-foreground my-1", className)}
+      className={cn("my-1 marker:text-muted-foreground", className)}
       {...props}
     />
   ),
-  blockquote: ({ className, ...props }) => (
+  blockquote: ({ className, ...props }: ComponentProps<"blockquote">) => (
     <blockquote
       className={cn(
-        `text-foreground/70 *:text-foreground/70 mt-6 border-l-2 border-zinc-400 pl-3 font-normal dark:border-zinc-600`,
+        `mt-6 border-l-2 border-zinc-400 pl-3 font-normal text-foreground/70 *:text-foreground/70 dark:border-zinc-600`,
         className,
       )}
       {...props}
     />
   ),
-  img: ({ className, alt, ...props }) => (
+  img: ({ className, alt, ...props }: ComponentProps<"img">) => (
     // eslint-disable-next-line nextjs/no-img-element
     <img
       className={cn(
-        "border-border shadow-border mx-auto my-0 w-full rounded-md border shadow-xl",
+        "mx-auto my-0 w-full rounded-md border border-border shadow-xl shadow-border",
         className,
       )}
       alt={alt}
@@ -163,12 +167,12 @@ export const MdComponents: Components = {
   hr: ({ ...props }) => (
     <hr className="my-4 border-zinc-400 md:my-8" {...props} />
   ),
-  table: ({ className, ...props }) => (
+  table: ({ className, ...props }: ComponentProps<"table">) => (
     <div className="my-6 w-full overflow-y-auto">
       <table className={cn("w-full", className)} {...props} />
     </div>
   ),
-  tr: ({ className, ...props }) => (
+  tr: ({ className, ...props }: ComponentProps<"tr">) => (
     <tr
       className={cn(
         "m-0 border-t border-zinc-300 p-0 even:bg-zinc-100",
@@ -177,37 +181,37 @@ export const MdComponents: Components = {
       {...props}
     />
   ),
-  th: ({ className, ...props }) => (
+  th: ({ className, ...props }: ComponentProps<"th">) => (
     <th
       className={cn(
-        "border border-zinc-200 px-4 py-2 text-left font-bold [&[align=center]]:text-center [&[align=right]]:text-right",
+        "border border-zinc-200 px-4 py-2 text-left font-bold [[align=center]]:text-center [[align=right]]:text-right",
         className,
       )}
       {...props}
     />
   ),
-  td: ({ className, ...props }) => (
+  td: ({ className, ...props }: ComponentProps<"td">) => (
     <td
       className={cn(
-        "border border-zinc-200 px-4 py-2 text-left [&[align=center]]:text-center [&[align=right]]:text-right",
+        "border border-zinc-200 px-4 py-2 text-left [[align=center]]:text-center [[align=right]]:text-right",
         className,
       )}
       {...props}
     />
   ),
-  pre: ({ className, ...props }) => (
+  pre: ({ className, ...props }: ComponentProps<"pre">) => (
     <pre
       className={cn(
-        "bg-background my-4 overflow-x-auto rounded-lg px-0 py-4",
+        "my-4 overflow-x-auto rounded-lg bg-background px-0 py-4",
         className,
       )}
       {...props}
     />
   ),
-  code: ({ className, ...props }) => (
+  code: ({ className, ...props }: ComponentProps<"code">) => (
     <code
       className={cn(
-        "bg-secondary-foreground/10 relative rounded-sm px-1.5 py-1 font-mono",
+        "relative rounded-sm bg-secondary-foreground/10 px-1.5 py-1 font-mono",
         className,
       )}
       {...props}

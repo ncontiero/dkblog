@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
   `
-    ring-offset-background inline-flex items-center justify-center rounded-md text-sm font-medium duration-200
+    inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background duration-200
     focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:outline-hidden disabled:pointer-events-none
     disabled:cursor-not-allowed disabled:opacity-50
   `,
@@ -17,9 +17,9 @@ const buttonVariants = cva(
         destructive:
           "bg-destructive text-primary-foreground hover:bg-destructive/80 focus-visible:ring-destructive",
         outline:
-          "border-input bg-background hover:bg-accent hover:text-accent-foreground focus-visible:ring-ring border",
+          "border border-input bg-background hover:bg-accent hover:text-accent-foreground focus-visible:ring-ring",
         outlinePrimary:
-          "border-primary bg-background hover:bg-primary hover:text-primary-foreground focus-visible:ring-ring border",
+          "border border-primary bg-background hover:bg-primary hover:text-primary-foreground focus-visible:ring-ring",
         secondary: `
           bg-secondary text-secondary-foreground hover:bg-secondary/60 focus-visible:ring-ring
           dark:hover:bg-secondary/80

@@ -1,3 +1,4 @@
+import type { CreateOrUpdatePostSchema } from "@/actions/posts/schema";
 import type { Tag } from "@/lib/prisma";
 import { useState } from "react";
 import { useFormContext, useWatch } from "react-hook-form";
@@ -20,7 +21,7 @@ interface SelectTagProps {
 }
 
 export function SelectTag({ tags, initialValue }: SelectTagProps) {
-  const formContext = useFormContext();
+  const formContext = useFormContext<CreateOrUpdatePostSchema>();
   const [open, setOpen] = useState(false);
   const [selected, setSelected] = useState<Tag | undefined>(initialValue);
 
@@ -50,7 +51,7 @@ export function SelectTag({ tags, initialValue }: SelectTagProps) {
             </span>
             <button
               type="button"
-              className="hover:bg-destructive hover:text-primary-foreground rounded-full p-1 text-sm duration-200"
+              className="rounded-full p-1 text-sm duration-200 hover:bg-destructive hover:text-primary-foreground"
               aria-label="Remove tag"
               onClick={() => {
                 formContext.setValue("tags", [

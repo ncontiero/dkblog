@@ -29,7 +29,7 @@ export function UserHoverCard({
             postPage ? "gap-3" : "gap-2"
           } rounded-md sm:px-3 ${
             postPage ? "py-2" : "sm:py-1"
-          } focus-visible:ring-ring sm:hover:bg-background duration-200 focus-visible:ring-2 focus-visible:outline-hidden`}
+          } duration-200 focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-hidden sm:hover:bg-background`}
         >
           <Image
             src={user.image}
@@ -45,14 +45,14 @@ export function UserHoverCard({
                 dateTime={postDate.toISOString()}
                 className="text-xs font-light"
               >
-                {postDateFormatted || format(postDate, "MMM d")}
+                {postDateFormatted ?? format(postDate, "MMM d")}
               </time>
             ) : null}
           </div>
         </Link>
       </HoverCardTrigger>
       <HoverCardContent className="relative">
-        <div className="bg-primary absolute inset-x-0 top-0 z-[-1] h-8 w-full rounded-t-md" />
+        <div className="absolute inset-x-0 top-0 z-[-1] h-8 w-full rounded-t-md bg-primary" />
         <Link
           href={`/${user.username}`}
           className="group mt-1 flex items-center space-x-2.5"
@@ -64,7 +64,7 @@ export function UserHoverCard({
             height={40}
             className="size-10 rounded-full"
           />
-          <h4 className="group-hover:text-primary self-end text-lg font-bold duration-200">
+          <h4 className="self-end text-lg font-bold duration-200 group-hover:text-primary">
             {user.username}
           </h4>
         </Link>
@@ -73,7 +73,7 @@ export function UserHoverCard({
         </Button>
         <div className="flex items-center pt-4">
           <CalendarDays className="mr-2 size-4 opacity-70" />{" "}
-          <span className="text-muted-foreground text-xs">
+          <span className="text-xs text-muted-foreground">
             Joined{" "}
             <time dateTime={new Date(user.createdAt).toISOString()}>
               {format(new Date(user.createdAt), "MMMM yyyy")}

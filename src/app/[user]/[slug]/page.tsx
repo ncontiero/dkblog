@@ -41,16 +41,18 @@ export async function generateMetadata(
     },
     openGraph: {
       title: post.title,
-      description: post.description || undefined,
+      description: post.description ?? undefined,
       url: postUrl,
       type: "article",
-      images: post.image ? { url: post.image, alt: post.title } : undefined,
+      images:
+        post.image != null ? { url: post.image, alt: post.title } : undefined,
     },
     twitter: {
-      card: post.image ? "summary_large_image" : "summary",
+      card: post.image != null ? "summary_large_image" : "summary",
       title: post.title,
-      description: post.description || undefined,
-      images: post.image ? { url: post.image, alt: post.title } : undefined,
+      description: post.description ?? undefined,
+      images:
+        post.image != null ? { url: post.image, alt: post.title } : undefined,
     },
   };
 }
@@ -73,7 +75,7 @@ export default async function PostPage({ params }: Props) {
   return (
     <div className="mx-auto my-0 min-h-screen max-w-3xl sm:my-8">
       <div className="bg-secondary sm:rounded-md">
-        {post.image ? (
+        {post.image != null ? (
           <div className="relative mr-3 size-full">
             <Image
               src={post.image}
@@ -105,7 +107,7 @@ export default async function PostPage({ params }: Props) {
             <h1 className="relative mt-4 mb-2 w-full scroll-m-20 text-3xl tracking-tight sm:text-4xl sm:font-bold">
               {post.title}
             </h1>
-            {post.tags && post.tags.length > 0 ? (
+            {post.tags?.length > 0 ? (
               <div className="mt-1.5 flex flex-wrap gap-0.5">
                 {post.tags.map((tag) => (
                   <Tag key={tag.id} tag={tag} />
@@ -113,7 +115,7 @@ export default async function PostPage({ params }: Props) {
               </div>
             ) : null}
           </div>
-          <div className="prose prose-quoteless dark:prose-invert pt-7 pl-1">
+          <div className="prose pt-7 pl-1 dark:prose-invert">
             <MdRenderer.Server content={post.content} />
           </div>
         </div>

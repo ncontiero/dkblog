@@ -13,7 +13,7 @@ export function PostCard({
   return (
     <div
       className={cn(
-        "bg-secondary relative w-1/2 gap-2 rounded-none p-6 sm:rounded-md",
+        "relative w-1/2 gap-2 rounded-none bg-secondary p-6 sm:rounded-md",
         className,
       )}
     >
@@ -23,14 +23,14 @@ export function PostCard({
           <Link
             href={`/${post.user.username}/${post.slug}`}
             className={`
-              focus-visible:ring-ring rounded-md duration-200 hover:opacity-70 focus-visible:ring-2
+              rounded-md duration-200 hover:opacity-70 focus-visible:ring-2 focus-visible:ring-ring
               focus-visible:outline-hidden
             `}
           >
             {post.title}
           </Link>
         </h2>
-        {post.tags && post.tags.length > 0 ? (
+        {post.tags?.length > 0 ? (
           <div className="mt-2 flex flex-wrap gap-0.5">
             {post.tags.map((tag) => (
               <Tag key={tag.id} tag={tag} />

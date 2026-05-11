@@ -14,7 +14,7 @@ function Command({
   return (
     <CommandPrimitive
       className={cn(
-        "bg-popover text-popover-foreground flex size-full flex-col overflow-hidden rounded-md",
+        "flex size-full flex-col overflow-hidden rounded-md bg-popover text-popover-foreground",
         className,
       )}
       {...props}
@@ -28,10 +28,10 @@ function CommandDialog({ children, ...props }: DialogProps) {
       <DialogContent className="overflow-hidden p-0 shadow-lg">
         <Command
           className={`
-            [&_[cmdk-group-heading]]:text-muted-foreground [&_[cmdk-group-heading]]:px-2
-            [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group]]:px-2 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0
-            [&_[cmdk-input-wrapper]_svg]:size-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3
-            [&_[cmdk-item]_svg]:size-5
+            [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-input-wrapper]_svg]:size-5
+            [&_[cmdk-item]_svg]:size-5 **:[[cmdk-group-heading]]:px-2 **:[[cmdk-group-heading]]:font-medium
+            **:[[cmdk-group-heading]]:text-muted-foreground **:[[cmdk-group]]:px-2 **:[[cmdk-input]]:h-12
+            **:[[cmdk-item]]:px-2 **:[[cmdk-item]]:py-3
           `}
         >
           {children}
@@ -51,7 +51,7 @@ function CommandInput({
       <CommandPrimitive.Input
         className={cn(
           `
-            placeholder:text-muted-foreground flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-hidden
+            flex h-11 w-full rounded-md bg-transparent py-3 text-sm outline-hidden placeholder:text-muted-foreground
             disabled:cursor-not-allowed disabled:opacity-50
           `,
           className,
@@ -88,9 +88,9 @@ function CommandGroup({
     <CommandPrimitive.Group
       className={cn(
         `
-          text-foreground [&_[cmdk-group-heading]]:text-muted-foreground overflow-hidden p-1
-          [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs
-          [&_[cmdk-group-heading]]:font-medium
+          overflow-hidden p-1 text-foreground **:[[cmdk-group-heading]]:px-2 **:[[cmdk-group-heading]]:py-1.5
+          **:[[cmdk-group-heading]]:text-xs **:[[cmdk-group-heading]]:font-medium
+          **:[[cmdk-group-heading]]:text-muted-foreground
         `,
         className,
       )}
@@ -105,7 +105,7 @@ function CommandSeparator({
 }: ComponentProps<typeof CommandPrimitive.Separator>) {
   return (
     <CommandPrimitive.Separator
-      className={cn("bg-border -mx-1 h-px", className)}
+      className={cn("-mx-1 h-px bg-border", className)}
       {...props}
     />
   );
@@ -119,8 +119,8 @@ function CommandItem({
     <CommandPrimitive.Item
       className={cn(
         `
-          aria-selected:bg-accent aria-selected:text-accent-foreground relative flex cursor-default items-center
-          rounded-sm px-2 py-1.5 text-sm outline-hidden select-none data-[disabled='true']:pointer-events-none
+          relative flex cursor-default items-center rounded-sm px-2 py-1.5 text-sm outline-hidden select-none
+          aria-selected:bg-accent aria-selected:text-accent-foreground data-[disabled='true']:pointer-events-none
           data-[disabled='true']:opacity-50
         `,
         className,
@@ -134,7 +134,7 @@ function CommandShortcut({ className, ...props }: ComponentProps<"span">) {
   return (
     <span
       className={cn(
-        "text-muted-foreground ml-auto text-xs tracking-widest",
+        "ml-auto text-xs tracking-widest text-muted-foreground",
         className,
       )}
       {...props}

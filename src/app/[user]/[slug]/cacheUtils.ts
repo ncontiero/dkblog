@@ -19,7 +19,7 @@ export const createCacheForGetPost = (
         include: { user: true, tags: true },
       });
     },
-    [`post:${username}:${postSlug}`, clerkUser || ""],
+    [`post:${username}:${postSlug}`, clerkUser ?? ""],
     { tags: [`post:${username}:${postSlug}`], revalidate: 60 * 60 },
   );
 };

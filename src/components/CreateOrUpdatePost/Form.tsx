@@ -69,12 +69,13 @@ export function CreateOrUpdatePostForm({
 
   return (
     <FormProvider {...form}>
+      {/* eslint-disable-next-line ts/no-misused-promises */}
       <form onSubmit={form.handleSubmit(onSubmit)}>
-        <ScrollArea className="bg-secondary mt-2 h-[calc(100vh-12rem)] w-full sm:rounded-md">
+        <ScrollArea className="mt-2 h-[calc(100vh-12rem)] w-full bg-secondary sm:rounded-md">
           <TabsContent value="edit">
             <div className="p-4 sm:px-16">
               <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:gap-0">
-                {imgPreview ? (
+                {imgPreview != null ? (
                   <div className="relative mr-3 h-26.25 w-62.5">
                     <Image
                       src={imgPreview}
@@ -86,7 +87,9 @@ export function CreateOrUpdatePostForm({
                 ) : null}
                 <div className="flex gap-1">
                   <InputFile
-                    labelText={imgPreview ? "Change" : "Add a cover image"}
+                    labelText={
+                      imgPreview != null ? "Change" : "Add a cover image"
+                    }
                     onChange={(e) => {
                       const files = e.target.files;
                       if (
@@ -99,7 +102,7 @@ export function CreateOrUpdatePostForm({
                       }
                     }}
                   />
-                  {imgPreview ? (
+                  {imgPreview != null ? (
                     <Button
                       variant="destructive"
                       className="border border-transparent py-4 sm:py-6 sm:text-base"
@@ -115,14 +118,14 @@ export function CreateOrUpdatePostForm({
               </div>
               <Textarea
                 className={`
-                  bg-secondary resize-none border-transparent pl-0 text-3xl font-bold sm:text-5xl sm:font-extrabold
+                  resize-none border-transparent bg-secondary pl-0 text-3xl font-bold sm:text-5xl sm:font-extrabold
                 `}
                 placeholder="New post title here..."
                 aria-label="Post Title"
                 {...form.register("title")}
               />
               <Textarea
-                className="bg-secondary mt-2 resize-none py-0 pl-0 text-xl font-bold sm:font-extrabold"
+                className="mt-2 resize-none bg-secondary py-0 pl-0 text-xl font-bold sm:font-extrabold"
                 placeholder="Post description here..."
                 aria-label="Post Description"
                 {...form.register("description")}
@@ -151,14 +154,14 @@ export function CreateOrUpdatePostForm({
                 placeholder="Write your post content here..."
                 aria-label="Post Content"
                 className={`
-                  bg-background/20 h-full resize-none overflow-hidden text-lg whitespace-pre-wrap transition-shadow
+                  h-full resize-none overflow-hidden bg-background/20 text-lg whitespace-pre-wrap transition-shadow
                   duration-500
                 `}
                 style={{
                   minHeight: `${contentHeight}px`,
                 }}
                 ref={contentRef}
-                value={watchedValues.content || ""}
+                value={watchedValues.content ?? ""}
                 onChange={(e) => {
                   const content = e.target.value;
                   form.setValue("content", content);
@@ -174,7 +177,7 @@ export function CreateOrUpdatePostForm({
             className="mx-auto min-h-screen max-w-3xl"
           >
             <div className="flex w-full flex-col items-center">
-              {imgPreview ? (
+              {imgPreview != null ? (
                 <div className="mr-3 size-full">
                   <Image
                     src={imgPreview}
@@ -187,7 +190,7 @@ export function CreateOrUpdatePostForm({
               ) : null}
               <div className="w-full p-4 sm:px-16">
                 <h1 className="relative mt-4 mb-2 w-full scroll-m-20 text-4xl font-bold tracking-tight">
-                  {watchedValues.title || "Post Title"}
+                  {watchedValues.title ?? "Post Title"}
                 </h1>
                 {(watchedValues.tags || []).length > 0 ? (
                   <div className="mt-1.5 flex flex-wrap gap-0.5">
@@ -197,13 +200,13 @@ export function CreateOrUpdatePostForm({
                   </div>
                 ) : null}
                 <MdRenderer.Client
-                  content={watchedValues.content || "Nothing here..."}
+                  content={watchedValues.content ?? "Nothing here..."}
                 />
               </div>
             </div>
           </TabsContent>
         </ScrollArea>
-        <div className="bg-background sticky bottom-0 flex w-full max-w-5xl gap-2 px-2 py-4 sm:px-0">
+        <div className="sticky bottom-0 flex w-full max-w-5xl gap-2 bg-background px-2 py-4 sm:px-0">
           <Button
             type="button"
             onClick={() =>

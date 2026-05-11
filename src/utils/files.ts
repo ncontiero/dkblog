@@ -25,7 +25,7 @@ export async function saveFile(file: Blob, options: saveFileProps) {
   const { returnFileURLWithAbsoluteURL } = options;
   const absoluteURL = returnFileURLWithAbsoluteURL ? env.SITE_BASEURL : "";
 
-  const name = options.fileName || randomBytes(12).toString("hex");
+  const name = options.fileName ?? randomBytes(12).toString("hex");
   const fileExt = file.type.split("/").pop();
   const fileName = `${name}.${fileExt}`;
 
@@ -60,7 +60,10 @@ export async function saveFile(file: Blob, options: saveFileProps) {
 
       fileURL = GS_URL + dest;
       filePath = fileURL;
+      break;
     }
+    default:
+      throw new Error("Invalid environment");
   }
 
   return { filePath, fileURL };
@@ -69,7 +72,7 @@ export async function saveFile(file: Blob, options: saveFileProps) {
 export async function deleteFile(filePath: string, folder: string) {
   const filename = filePath.split("/").pop();
 
-  if (!filename) {
+  if (filename == null) {
     throw new Error("Invalid file path");
   }
 
@@ -87,12 +90,14 @@ export async function deleteFile(filePath: string, folder: string) {
     case "production": {
       const file = createFile(`${folder}/${filename}`);
 
-      if (await file.exists()) {
+      if ((await file.exists())[0]) {
         await file.delete();
       } else {
         console.error("File not found");
       }
       return;
     }
+    default:
+      throw new Error("Invalid environment");
   }
 }

@@ -11,7 +11,7 @@ import {
 
 const inputFileVariants = cva(
   `
-    ring-offset-background inline-flex cursor-pointer items-center justify-center rounded-md text-sm font-medium
+    inline-flex cursor-pointer items-center justify-center rounded-md text-sm font-medium ring-offset-background
     duration-200 focus-within:ring-2 focus-within:ring-offset-2 focus-within:outline-hidden disabled:pointer-events-none
     disabled:opacity-50
   `,
@@ -23,9 +23,9 @@ const inputFileVariants = cva(
         destructive:
           "bg-destructive text-primary-foreground focus-within:ring-destructive hover:bg-destructive/80",
         outline:
-          "border-input bg-background focus-within:ring-ring hover:bg-accent hover:text-accent-foreground border",
+          "border border-input bg-background focus-within:ring-ring hover:bg-accent hover:text-accent-foreground",
         outlinePrimary:
-          "border-primary bg-background focus-within:ring-ring hover:bg-primary hover:text-primary-foreground border",
+          "border border-primary bg-background focus-within:ring-ring hover:bg-primary hover:text-primary-foreground",
         secondary: `
           bg-secondary text-secondary-foreground focus-within:ring-ring hover:bg-secondary/60 dark:hover:bg-secondary/80
         `,

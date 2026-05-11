@@ -68,7 +68,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               pauseOnFocusLoss={false}
               limit={3}
               stacked
-              className="bg-background! font-merriweather-sans! text-foreground! z-999999"
+              className="z-999999 bg-background! font-merriweather-sans! text-foreground!"
               toastClassName="bg-background! text-foreground!"
             />
             {children}

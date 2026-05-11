@@ -21,5 +21,5 @@ export const authActionClient = actionClient.use(async ({ next }) => {
     throw new Error("Você deve estar logado para executar esta ação.");
   }
 
-  return next({ ctx: { user } });
+  return await next({ ctx: { user } });
 });

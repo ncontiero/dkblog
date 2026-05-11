@@ -1,3 +1,7 @@
+/* eslint-disable ts/no-unsafe-return */
+/* eslint-disable ts/no-unsafe-call */
+/* eslint-disable ts/no-unsafe-member-access */
+import type { ReactNode } from "react";
 import * as prod from "react/jsx-runtime";
 import rehypePrettyCode, {
   type Options as PrettyCodeOptions,
@@ -10,7 +14,6 @@ import remarkGfm from "remark-gfm";
 import remarkParse from "remark-parse";
 import remarkRehype from "remark-rehype";
 import { unified } from "unified";
-
 import { MdComponents } from "@/components/MdComponents";
 
 const production = {
@@ -41,7 +44,10 @@ interface ProcessMd {
   getHighlighter?: PrettyCodeOptions["getHighlighter"];
 }
 
-export async function processMd({ content, getHighlighter }: ProcessMd) {
+export async function processMd({
+  content,
+  getHighlighter,
+}: ProcessMd): Promise<{ result: ReactNode }> {
   return await unified()
     .use(remarkParse)
     .use(remarkGfm)
