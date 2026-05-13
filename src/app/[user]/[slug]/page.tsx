@@ -44,15 +44,13 @@ export async function generateMetadata(
       description: post.description ?? undefined,
       url: postUrl,
       type: "article",
-      images:
-        post.image != null ? { url: post.image, alt: post.title } : undefined,
+      images: post.image ? { url: post.image, alt: post.title } : undefined,
     },
     twitter: {
-      card: post.image != null ? "summary_large_image" : "summary",
+      card: post.image ? "summary_large_image" : "summary",
       title: post.title,
       description: post.description ?? undefined,
-      images:
-        post.image != null ? { url: post.image, alt: post.title } : undefined,
+      images: post.image ? { url: post.image, alt: post.title } : undefined,
     },
   };
 }
@@ -75,7 +73,7 @@ export default async function PostPage({ params }: Props) {
   return (
     <div className="mx-auto my-0 min-h-screen max-w-3xl sm:my-8">
       <div className="bg-secondary sm:rounded-md">
-        {post.image != null ? (
+        {post.image ? (
           <div className="relative mr-3 size-full">
             <Image
               src={post.image}

@@ -10,7 +10,7 @@ interface UserButtonProps {
 export function UserButton({ username }: UserButtonProps) {
   return (
     <ClerkUserButton userProfileMode="navigation" userProfileUrl="/settings">
-      {username != null ? (
+      {username ? (
         <ClerkUserButton.MenuItems>
           <ClerkUserButton.Link
             labelIcon={<UserIcon size={18} />}

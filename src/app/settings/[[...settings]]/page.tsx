@@ -21,7 +21,7 @@ const createCacheForGetUser = (username: string) => {
 
 export default async function UserSettingsPage() {
   const user = await currentUser();
-  if (!user || user.username == null) {
+  if (!user || !user.username) {
     redirect("/sign-in?redirect_url=/settings");
   }
   const getCachedDbUser = createCacheForGetUser(user.username);

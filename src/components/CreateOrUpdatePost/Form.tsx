@@ -74,7 +74,7 @@ export function CreateOrUpdatePostForm({
           <TabsContent value="edit">
             <div className="p-4 sm:px-16">
               <div className="mb-6 flex flex-col gap-2 sm:flex-row sm:gap-0">
-                {imgPreview != null ? (
+                {imgPreview ? (
                   <div className="relative mr-3 h-26.25 w-62.5">
                     <Image
                       src={imgPreview}
@@ -86,9 +86,7 @@ export function CreateOrUpdatePostForm({
                 ) : null}
                 <div className="flex gap-1">
                   <InputFile
-                    labelText={
-                      imgPreview != null ? "Change" : "Add a cover image"
-                    }
+                    labelText={imgPreview ? "Change" : "Add a cover image"}
                     onChange={(e) => {
                       const files = e.target.files;
                       if (
@@ -101,7 +99,7 @@ export function CreateOrUpdatePostForm({
                       }
                     }}
                   />
-                  {imgPreview != null ? (
+                  {imgPreview ? (
                     <Button
                       variant="destructive"
                       className="border border-transparent py-4 sm:py-6 sm:text-base"
@@ -176,7 +174,7 @@ export function CreateOrUpdatePostForm({
             className="mx-auto min-h-screen max-w-3xl"
           >
             <div className="flex w-full flex-col items-center">
-              {imgPreview != null ? (
+              {imgPreview ? (
                 <div className="mr-3 size-full">
                   <Image
                     src={imgPreview}

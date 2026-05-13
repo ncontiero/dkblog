@@ -47,7 +47,7 @@ function HeadingLinked({
     focus-visible:outline-hidden active:opacity-70
   `;
 
-  return id != null && !childrenHasAnchor ? (
+  return id && !childrenHasAnchor ? (
     <Comp id={id} {...props}>
       <NextLink
         href={`#${id}`}

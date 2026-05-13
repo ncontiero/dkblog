@@ -72,7 +72,7 @@ export async function saveFile(file: Blob, options: saveFileProps) {
 export async function deleteFile(filePath: string, folder: string) {
   const filename = filePath.split("/").pop();
 
-  if (filename == null) {
+  if (!filename) {
     throw new Error("Invalid file path");
   }
 

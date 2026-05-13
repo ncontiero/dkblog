@@ -22,7 +22,7 @@ export const createOrUpdatePostAction = authActionClient
       where: { id: id ?? "" },
       include: { tags: true },
     });
-    if (id != null && !post) {
+    if (id && !post) {
       throw new Error("Post not found");
     }
 
@@ -56,7 +56,7 @@ export const createOrUpdatePostAction = authActionClient
         },
       });
 
-      if (post?.image != null && post.image !== updatedPost.image) {
+      if (post?.image && post.image !== updatedPost.image) {
         await deleteFile(post.image, "posts");
       }
 
@@ -91,7 +91,7 @@ export const deletePostAction = authActionClient
 
     await prisma.post.delete({ where: { slug } });
 
-    if (post.image != null) {
+    if (post.image) {
       await deleteFile(post.image, "posts");
     }
 

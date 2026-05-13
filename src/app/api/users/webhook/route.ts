@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
           evt.data.username ?? `user_${randomBytes(15).toString("hex")}`;
         const emails = evt.data.email_addresses;
 
-        if (emails.length === 0 || emails[0]?.email_address == null) {
+        if (emails.length === 0 || !emails[0]?.email_address) {
           throw new Error("No email address provided");
         }
 
