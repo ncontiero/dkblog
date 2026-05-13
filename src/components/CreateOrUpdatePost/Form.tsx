@@ -69,7 +69,6 @@ export function CreateOrUpdatePostForm({
 
   return (
     <FormProvider {...form}>
-      {/* eslint-disable-next-line ts/no-misused-promises */}
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <ScrollArea className="mt-2 h-[calc(100vh-12rem)] w-full bg-secondary sm:rounded-md">
           <TabsContent value="edit">

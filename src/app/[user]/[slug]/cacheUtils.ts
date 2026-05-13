@@ -10,7 +10,7 @@ export const createCacheForGetPost = (
   return unstable_cache(
     async () => {
       const status = clerkUser === username ? undefined : "PUBLISHED";
-      return await getPost({
+      return getPost({
         where: {
           user: { username },
           slug: postSlug,

@@ -23,7 +23,7 @@ export async function generateStaticParams() {
 const createCacheForGetTag = (slug: string) => {
   return unstable_cache(
     async () =>
-      await getTag({
+      getTag({
         where: { slug },
         include: {
           posts: {

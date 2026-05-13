@@ -57,7 +57,6 @@ export function UpdateUserData({ user }: UpdateUserDataProps) {
   return (
     <form
       className="relative flex w-full flex-col gap-6"
-      // eslint-disable-next-line ts/no-misused-promises
       onSubmit={form.handleSubmit(onSubmit)}
     >
       <div className="flex w-full flex-col gap-4 rounded-2xl border border-primary/50 px-8 py-9">

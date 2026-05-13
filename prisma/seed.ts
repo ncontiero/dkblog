@@ -34,12 +34,12 @@ interface createTagProps {
 }
 
 async function createUser(data: createUserProps) {
-  return await prisma.user.create({
+  return prisma.user.create({
     data,
   });
 }
 async function createPost({ tags, ...props }: createPostProps) {
-  return await prisma.post.create({
+  return prisma.post.create({
     data: {
       ...props,
       slug: slugify(props.title),
@@ -48,7 +48,7 @@ async function createPost({ tags, ...props }: createPostProps) {
   });
 }
 async function createTag(props: createTagProps) {
-  return await prisma.tag.create({
+  return prisma.tag.create({
     data: {
       ...props,
       slug: slugify(props.title),
@@ -140,7 +140,7 @@ async function main() {
 
 main()
   .then(async () => {
-    return await prisma.$disconnect();
+    return prisma.$disconnect();
   })
   .catch(async (error) => {
     console.error(error);

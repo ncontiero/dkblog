@@ -16,7 +16,7 @@ type Props = PageProps<"/[user]">;
 const createCacheForGetUser = (username: string) => {
   return unstable_cache(
     async () =>
-      await getUser({
+      getUser({
         where: { username },
         include: { posts: { include: { user: true, tags: true } } },
       }),

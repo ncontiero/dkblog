@@ -8,7 +8,7 @@ interface CreateOrUpdatePostProps {
   readonly post?: Post & { tags: Tag[] };
 }
 
-const cacheTags = unstable_cache(async () => await getTags({}), ["tags"], {
+const cacheTags = unstable_cache(async () => getTags({}), ["tags"], {
   tags: ["tags"],
   revalidate: 60 * 60 * 24,
 });

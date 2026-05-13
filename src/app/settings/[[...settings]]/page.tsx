@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 
 const createCacheForGetUser = (username: string) => {
   return unstable_cache(
-    async () => await getUser({ where: { username } }),
+    async () => getUser({ where: { username } }),
     [`user:${username}:settings`],
     { tags: [`user:${username}:settings`], revalidate: 60 * 60 },
   );

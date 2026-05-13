@@ -21,9 +21,9 @@ export function createFile(fileName: string) {
 }
 
 export async function uploadFile(name: string, options: UploadOptions = {}) {
-  return await bucket.upload(name, options);
+  return bucket.upload(name, options);
 }
 
 export async function deleteFile(fileName: string, opts?: DeleteFileOptions) {
-  return await createFile(fileName).delete(opts);
+  return createFile(fileName).delete(opts);
 }
