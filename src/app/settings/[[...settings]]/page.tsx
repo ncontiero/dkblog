@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import { UserProfile } from "@clerk/nextjs";
+import { RedirectToSignIn, UserProfile } from "@clerk/nextjs";
 import { currentUser } from "@clerk/nextjs/server";
 import { unstable_cache } from "next/cache";
-import { redirect } from "next/navigation";
 import { Link } from "@/components/ui/Link";
 import { getUser } from "@/utils/db-queries/users";
 import { UpdateUserData } from "./UpdateUserData";
@@ -21,9 +20,8 @@ const createCacheForGetUser = (username: string) => {
 
 export default async function UserSettingsPage() {
   const user = await currentUser();
-  if (!user || !user.username) {
-    redirect("/sign-in?redirect_url=/settings");
-  }
+  if (!user || !user.username) return <RedirectToSignIn />;
+
   const getCachedDbUser = createCacheForGetUser(user.username);
   const dbUser = await getCachedDbUser();
 
