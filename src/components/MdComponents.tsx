@@ -1,10 +1,10 @@
 /* eslint-disable react-refresh/only-export-components */
-import type { Components } from "rehype-react";
 import type {
   AnchorHTMLAttributes,
   ComponentProps,
   HTMLAttributes,
 } from "react";
+import type { Components } from "rehype-react";
 
 import { Link as LinkIcon } from "lucide-react";
 import NextLink from "next/link";
@@ -43,8 +43,8 @@ function HeadingLinked({
   const childrenHasAnchor = typeof children === "object";
   const className = `
     group flex w-fit items-center rounded-md no-underline underline-offset-4 ring-offset-background duration-200
-    hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2
-    focus-visible:outline-hidden active:opacity-70
+    hover:underline focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-hidden
+    active:opacity-70
   `;
 
   return id && !childrenHasAnchor ? (

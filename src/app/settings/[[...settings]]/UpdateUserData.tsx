@@ -1,7 +1,7 @@
 "use client";
 
-import type { User } from "@/lib/prisma";
 import type { ChangeEvent } from "react";
+import type { User } from "@/lib/prisma";
 import { useForm, useWatch } from "react-hook-form";
 import { toast } from "react-toastify";
 import { zodResolver } from "@hookform/resolvers/zod";

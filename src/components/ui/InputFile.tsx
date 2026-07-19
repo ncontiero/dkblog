@@ -11,8 +11,8 @@ import {
 
 const inputFileVariants = cva(
   `
-    inline-flex cursor-pointer items-center justify-center rounded-md text-sm font-medium ring-offset-background
-    duration-200 focus-within:ring-2 focus-within:ring-offset-2 focus-within:outline-hidden disabled:pointer-events-none
+    inline-flex cursor-pointer items-center justify-center rounded-md text-sm font-medium ring-offset-background duration-200
+    focus-within:ring-2 focus-within:ring-offset-2 focus-within:outline-hidden disabled:pointer-events-none
     disabled:opacity-50
   `,
   {

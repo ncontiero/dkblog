@@ -1,5 +1,5 @@
-import type { Tag as TagType } from "@/lib/prisma";
 import type { HTMLAttributes } from "react";
+import type { Tag as TagType } from "@/lib/prisma";
 
 import Link from "next/link";
 import { cn } from "@/lib/utils";

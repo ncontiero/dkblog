@@ -21,8 +21,7 @@ const buttonVariants = cva(
         outlinePrimary:
           "border border-primary bg-background hover:bg-primary hover:text-primary-foreground focus-visible:ring-ring",
         secondary: `
-          bg-secondary text-secondary-foreground hover:bg-secondary/60 focus-visible:ring-ring
-          dark:hover:bg-secondary/80
+          bg-secondary text-secondary-foreground hover:bg-secondary/60 focus-visible:ring-ring dark:hover:bg-secondary/80
         `,
         ghost:
           "hover:bg-accent hover:text-accent-foreground focus-visible:ring-ring",
